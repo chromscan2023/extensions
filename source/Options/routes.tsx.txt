@@ -1,0 +1,26 @@
+import React from "react";
+import {createBrowserRouter} from "react-router-dom";
+import {useParams} from 'react-router-dom';
+import Options from './Options';
+import ErrorPage from "./ErrorPage";
+
+
+/** 
+function AddressByAddress(){
+    const {address} = useParams();
+    return <Address address={address} />;
+
+}
+*/
+
+const router = createBrowserRouter([
+    {
+        path:"/",
+        element:<Options />,
+        errorElement:<ErrorPage />
+    },
+
+
+]);
+
+export default router;

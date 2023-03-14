@@ -1,0 +1,129 @@
+@font-face {
+  font-family: roboto;
+  src: url(../fonts/Roboto-Regular.ttf);
+}
+body{
+      font-family: roboto;
+   
+}
+
+/* variables  */
+:root{
+ --gold : rgba(165,117,61,1);
+ --text-color : #666666;
+ --btn_hover: rgb(205 136 56);
+     --purple: #583DA5;
+
+ 
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 14px;
+    color: #383838;
+}
+a{
+    text-decoration: none;
+    cursor: pointer;
+    color: unset;
+}
+p{
+    color: #383838;
+}
+
+.grey-text{
+    color: var(--text-color);
+}
+.gold-text{
+    color: var(--gold);
+}
+.purple-text {
+    color: var(--purple);
+}
+
+.size-18{
+    font-size: 18px;
+}
+
+   .hollow-btn{
+    background: none !important;
+    color: var(--gold);
+    border-color: var(--gold);
+   }
+   .hollow-btn:hover{
+    color: rgb(205 136 56) !important;
+    border-color:  rgb(205 136 56) !important;
+   }
+
+   .gold-btn{
+    background: var(--gold);
+    color: white ;
+     border-color: var(--gold);
+   }
+   .gold-btn:hover{
+    background-color:  rgb(205 136 56) !important;
+    border-color:  rgb(205 136 56) !important;
+   }
+
+
+
+/*    imporove page */
+
+.welcome-head h3{
+    color: var(--gold);
+    font-weight: 500;
+    font-size: 48px;
+
+    
+   }
+
+.grow-img-div .bi-bar-chart-fill {
+    color: #E8DCBA;
+    font-size: 45px;
+}
+
+
+/* imporove end */
+
+/* new user page */
+.page-heading div{
+    font-size: 32px;
+}
+
+.already_user, .new_user{
+    border: 1px solid #BDC0C4;
+}
+
+.import-icon > img{
+    position: relative;
+    margin-top: 25px;
+    cursor: pointer;
+}
+.down-arrow-icon img{
+    position: relative;
+    margin-top: -88px;
+    cursor: pointer;
+}
+
+.add-icon i {
+        color: #E8DCBA;
+    font-size: 45px;
+    cursor: pointer;
+}
+
+
+/* new user end */
+
+/* create password */
+
+.form-head p{
+    font-size: 48px;
+    line-height: 58px;
+}
+span.purple-text.link{
+    cursor: pointer;
+}
+
+/* create password end */

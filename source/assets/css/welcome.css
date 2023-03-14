@@ -1,0 +1,89 @@
+@font-face {
+  font-family: roboto;
+  src: url(../fonts/Roboto-Regular.ttf);
+}
+body{
+      font-family: roboto;
+   
+}
+
+/* variables  */
+:root{
+ --gold : rgba(165,117,61,1);
+ --text-color : #666666;
+ 
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 18px;
+}
+a{
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+.login-btn{
+    background-color: var(--gold);
+    border-color: var(--gold);
+}
+span.login-icon {
+    background: var(--gold);
+    width: 28px;
+    height: 27px;
+    padding: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+span.login-icon i{
+    font-size: 14px;
+}
+
+/* navbar  */
+
+.navbar-brand{
+/* ChromeScan */
+
+/* position: absolute;
+width: 110px;
+height: 22px;
+left: 83.17px;
+top: 26.22px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 500;
+font-size: 17.8339px;
+line-height: 22px; */
+/* identical to box height */
+
+background: linear-gradient(90.05deg, #A16F38 0.05%, #E0D086 40.97%, #B28349 75.02%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+text-fill-color: transparent;
+
+
+}
+
+ul.navbar-nav a.nav-link.dropdown-toggle {
+    color: #928677;
+}
+
+/* navbar end  */
+
+/* login section  */
+.grey-text{
+    color: var(--text-color);
+}
+
+.welcome-head h3{
+    color: var(--gold);
+    font-weight: bolder;
+   }
+
