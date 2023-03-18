@@ -1,5 +1,5 @@
-const rooturl="http://chromescan.terceschat.com";
-const rpcurl="http://rpc.terceschat.com";
+const rooturl="https://chromescan.terceschat.com";
+const rpcurl="https://rpc.chromescan.org";
 
 export default {
     rooturl,

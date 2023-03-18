@@ -136,8 +136,8 @@ class Setup extends React.Component<{}, IState>{
                  <div className="welcome-head text-center">
                         <div className="logo-img-div my-5"><img src={logo} alt="Logo" width="50px" height="50px" />
                         </div>
-                        <h3>Welcome to Chromescan</h3>
-                        <p className="lead grey-text">Connecting  you to Choromescan and the Decentralized Web</p>
+                        <h3>Welcome to Chromecoin</h3>
+                        <p className="lead grey-text">Connecting  you to Chromecoin and the Decentralized Web</p>
                         <p className="grey-text">We're happy to see you</p>
                     </div>
                     <button
