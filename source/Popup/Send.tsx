@@ -181,20 +181,24 @@ class Send extends React.Component<{}, IState>{
         }
         
 
-        return(<div id="popup" className="extension-spacer">
-        <div className="container">
+        return(<div id="popup">
+        <div className="container" style={{width:"400px"}}>
+        <div className="logo-img-div my-3">
+                          <div className="row">
+                            <div className="col-3">
+                            <FontAwesomeIcon onClick={this.goBack} icon={faArrowAltCircleLeft} size="2x"  className='topIcon' />
+                          
+                            </div>
+                            <div className="col-9">
+                            <div className="account-head title">Send</div>
+                            </div>
+                          </div>
+                          
+                         
+                        
+                    </div>
+        <div className="row d-flex justify-content-center">
         
-        <div className="row d-flex justify-content-center" style={{width:"400px"}}>
-            <div className="col-md-9 col-12 mx-auto d-flex mt-2 mb-4">
-                <div onClick={this.goBack} style={{width:"50px",height:"50px"}}>
-                    <FontAwesomeIcon icon={faArrowAltCircleLeft} size="2x" />
-                </div>
-                <div className="account-head title">Send</div>
-
-                
-
-                           
-            </div>
 
             <div className="col-lg-5 col-md-7 p-0 rounded" style={{boxShadow:"0px 2px 4px 0px #00000024"}}>
            
@@ -258,7 +262,7 @@ class Send extends React.Component<{}, IState>{
                     <div className="amounts d-flex align-items-center my-3">
                         <div className="col-3 d-inline">
                             <label className="col-form-label d-block" style={{fontSize:"1rem"}}>Amount:</label>
-                            <button className="btn btn-tiny"  onClick={this.setMax}>Max</button>
+                            <button className="btn btn-tiny gold-btn"  onClick={this.setMax}>Max</button>
                         </div>
                         <div className="col-9 d-inline">
                             <div className="p-3 d-flex rounded" style={{border:"1px solid #d6d9dc"}}>
@@ -321,7 +325,7 @@ class Send extends React.Component<{}, IState>{
                     <div className="footer d-flex p-3 mt-2" style={{borderTop:"1px solid #d6d9dc"}}>
                         <div className="col-6">
                                     
-                                <button className="btn btn-primary my-3 w-100 me-1 hollow-btn py-2 small-btn  rounded-pill" onClick={this.goBack}>
+                                <button className="button btn btn-primary my-3 w-100 me-1 hollow-btn py-2 small-btn  rounded-pill" onClick={this.goBack}>
                                     
                                 Cancel
                             </button>
@@ -330,7 +334,7 @@ class Send extends React.Component<{}, IState>{
                         <div className="col-6">
                                 
                             
-                            <button className="btn btn-primary my-3 gold-btn w-100 ms-1 py-2 small-btn rounded-pill"  onClick={this.sendCoin}>
+                            <button className="button btn btn-primary my-3 gold-btn w-100 ms-1 py-2 small-btn rounded-pill"  onClick={this.sendCoin}>
                                Send
                             </button>
                         </div>

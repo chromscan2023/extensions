@@ -1,116 +1,193 @@
 import React from 'react';
-import axios from 'axios';
-import Config from './Config';
-import logo from '../assets/icons/chromescan.png';
-import import1 from '../assets/icons/import1.png';
-import import2 from '../assets/icons/import2.png';
-//import  secureLocalStorage  from  "react-secure-storage";
-//import Web3 from 'web3';
-//const web3 = new Web3('http://rpc.terceschat.com');
+import './styles.scss';
+import { Link } from 'react-router-dom';
+//import Home from './Home';
+import Dashboard from './Dashboard';
+//import logo from '../assets/icons/chromescan.png';
+import Form from 'react-bootstrap/Form';
+//import logo from '../assets/icons/logo.png';
+import  secureLocalStorage  from  "react-secure-storage";
+//import TopTitle from './Components/TopTitle';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
+import Blockchain from './Blockchain';
+
 interface IState {
-  redirect: string,
-  message:string,
-  password:string,
-  privatekey:string;
+    redirect: string,
+    address:string,
+    message:string,
+    name:string,
+    checked:boolean
 }
-
   
-const API_URL=Config.rooturl;
-class CreateAccount extends React.Component<{}, IState>{
 
+class CreateNewAccount extends React.Component<{}, IState>{
+   
     constructor(props:any){
         super(props);
-        console.log("In Help");
-        this.state={redirect:"",message:"",password:"",privatekey:""}
-        
-        
+        console.log("In CreateNewAccount")
+        this.state={redirect:"",address:"",name:"",message:"",checked:true}
+        this.createWallet = this.createWallet.bind(this);
+        this.handleName = this.handleName.bind(this);
+        this.handleCheck= this.handleCheck.bind(this)
+        this.goBack = this.goBack.bind(this);
       }
 
-      componentDidMount(): void {
-          this.getTransactions();
+      goBack(){
+        this.setState({redirect:"dashboard"})
       }
 
-
-      getTransactions():void{
-        const myaddress=window.localStorage.getItem("address");
-        if(myaddress!==null){
-        var data={"address":myaddress};
-
-       axios.post(API_URL+"/dbAddressTxs",data).then(response=>{
-            console.log(response.data)
-        }); 
-         }
+      handleCheck(e:any){
+        console.log(e)
+        console.log("unchecked click")
+        if(e.target.checked){
+            console.log("unchecked false")
+            this.setState({checked:false})
+        }else{
+            console.log("unchecked false")
+            this.setState({checked:false})
+        }
+        //return;
       }
 
       
 
+      createWallet(){
+        console.log("Create Wallet")
+        if(this.state.name.length<0){
+            this.setState({message:"Please enter a valid name."});
+            return;
+        }
+        if(this.state.name!==""){
+
+            var blockchain = new Blockchain();
+            var accountinfo = blockchain.createAccount()
+            console.log(accountinfo)
+
+            try{
+            //handle accounts
+            let accountlist = secureLocalStorage.getItem("accounts")?secureLocalStorage.getItem("accounts"):"[]";
+            if(accountlist !==null && accountlist !==undefined){
+                let accounts=JSON.parse(accountlist?.toString());
+               
+                
+                let accountname=this.state.name;
+                let accountdata={"name":accountname,"address":accountinfo.address,"privateKey":accountinfo.privateKey};
+                accounts.push(accountdata);
+                console.log(accounts)
+                secureLocalStorage.setItem("accounts",JSON.stringify(accounts));
+            }
+
+            //show accounts
+            
+            let accountlist2 = secureLocalStorage.getItem("accounts")?secureLocalStorage.getItem("accounts"):"[]";
+            if(accountlist2 !==null && accountlist2 !==undefined){
+                console.log("show accounts")
+                let accounts=JSON.parse(accountlist2?.toString());
+                for(var i=0;i<=accounts.length+1;i++){
+                    console.log(accounts[i]);
+                }
+                
+            }
+
+            }catch(e){
+                console.log(e)
+            }
+
+
+           
+            secureLocalStorage.setItem("address",accountinfo.address);
+            secureLocalStorage.setItem("privateKey",accountinfo.privateKey);
+            this.setState({redirect:"dashboard"})
+
+        }else{
+            console.log("Could not create wallet")
+            this.setState({message:"Please enter a valid account name"});
+            console.log(this.state)
+        }
+       
+      }
+
+      
+
+
+      handleName(event:any){
+        this.setState({name:event.target.value});
+        //console.log(this.state.password)
+      }
+
+      
 
     render(){
+        //console.log(this.state)
+        if(this.state.redirect == "dashboard"){
+            //console.log("Go to home")
+            return (<Link to="/dashboard"><Dashboard/></Link>);
+        }
+
+        var errormessage=<div></div>
+        if(this.state.message !==""){
+            errormessage=<div className="alert alert-danger" role="alert">{this.state.message}</div>
+        }
       
         return(<div id="popup">
-        <div className="container">
-            {/**  <div className="row d-flex justify-content-center" style={{height:"100vh"}}> */} 
-            <div className="row d-flex">
-            <div className="col-9 mx-auto mb-4">
-                <div className="logo-img-div my-3"><img src={logo} alt="Logo" width="50px" height="50px" />
-                </div>
+
+
+<div className="container">
+                     <div className="logo-img-div my-3">
+                          <div className="row">
+                            <div className="col-3">
+                            <FontAwesomeIcon onClick={this.goBack} icon={faArrowAltCircleLeft} size="2x"  className='topIcon' />
+                            
+                          
+                            </div>
+                           <div className="col-9">
+                            <div className="account-head title">Create New Account</div>
+                            </div>
+                          </div>
+                    </div>
+        
+        
+       <div className="row d-flex">
+           
+            <div className="col-lg-8 d-flex flex-column justify-content-center align-items-center">
                 
-                 <div className="page-heading gold-text text-center my-5">
-                        
-                        <div>
-                            New to Chromescan?
+                
+
+                <div className="col-md-7 my-2 py-2 login-form">
+                  <h4>{errormessage}</h4>
+                    <div className="form-head">
+                    {/**<TopTitle title={"Create New Account"} />*/}
+                    </div>
+                    <Form>
+                        <div className="mb-3">
+                            <div className="forgot d-flex justify-content-between">
+                                <label className="form-label">Account Name</label>
+                            </div>
+                            <input type="text" className="form-control rounded-pill py-md-3 py-2" onChange={this.handleName} value={this.state.name} />
+
                         </div>
-              
-                       
-               </div>
-               <div className="options_to_chose">
-                   <div className="col-12 d-flex justify-content-around">
-                       <div className="already_user col-5 p-4 rounded text-center">
-                         <div className="import-icon my-1">
-                             <img src={import1} alt="import-img" />
-                             <div className="down-arrow-icon">
-                             <img src={import2} alt="import-img" />
-                             </div>
-                         </div>  
-                         <p>
-                             No, I already have a Secret Recovery Phrase
-                         </p>
-                         <p className="grey-text">
-                             Import your existing wallet using a Secret Recovery Phrase
-                         </p>
-
-                         <button className="btn btn-primary my-3 w-75 gold-btn ms-1 py-2  rounded-pill">
-                            <a href="" className="text-white">
-                         Import Wallet
-                         </a>
-                         </button>
-                       </div>
-                       <div className="new_user  col-5 p-4  rounded text-center">
-                            <div className="add-icon my-1">
-                             <i className="bi bi-plus-lg"></i>
-                         </div>  
-                         <p>
-                            Yes, let’s get set up!
-                         </p>
-                         <p className="grey-text">
-                            This will create a new wallet and Secret Recovery Phrase
-                         </p>
-
-                         <button className="btn btn-primary my-3 w-75  gold-btn ms-1 py-2  rounded-pill" style={{marginTop:"2.5rem !important"}}>
-                            <a href="" className="text-white">
-                         Create a Wallet
-                         </a>
-                         </button>
+                        
+                         
+                        <div className="btns-div d-flex ">
+                                        <button 
+                                      className="button btn btn-primary my-3 w-100 me-1 hollow-btn py-2 small-btn  rounded-pill" onClick={this.createWallet}>
+                                      Create Account
+                                      </button> 
+                    
+                        </div>
+                        
                            
-                       </div>
-                   </div>
-               </div>
-            
+                    </Form>
+                </div>
+                           
+            </div>
         </div>
-       
-     </div>
- </div>
+    </div>
   
+
+
+
 
       </div>)
     }
@@ -118,4 +195,4 @@ class CreateAccount extends React.Component<{}, IState>{
 }
 
 
-export default CreateAccount;
+export default CreateNewAccount;

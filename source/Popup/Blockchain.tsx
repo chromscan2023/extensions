@@ -21,6 +21,12 @@ class Blockchain{
         })
     }
 
+
+    createAccount(){
+        let accountinfo = this.web3.eth.accounts.create();
+        return accountinfo;
+    }
+
     async sendCoins(amountToSend:number,address:string,gas:number,privateKey:string){
         const amount = amountToSend*1000000000000000000;
         console.log(amount)

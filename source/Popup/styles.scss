@@ -5,8 +5,18 @@
 body {
   color: $black;
   background-color: $greyWhite;
+  
+}
+.my-x{
+  margin-top:0.5rem !important;
 }
 
+* {
+  font-family: "Euclid Circular B", Roboto, Helvetica, Arial, sans-serif;
+}
+.dropdown-menu{
+  min-width: 12.5rem;
+}
 .active-account button.btn.dropdown-toggle i {
   font-size: 7px;
   color: #5AB3AE;
@@ -15,7 +25,7 @@ body {
   border-color: #6e6e6e !important;
 }
 .active-account button{
-  border: 1px solid #6e6e6e !important;
+  //border: 1px solid #6e6e6e !important;
 }
 
 .user-icon i.fa-regular.fa-circle{
@@ -25,6 +35,16 @@ body {
 }
 :is(ul,ol)>:not(li), a:is(:not([href]),[href=""],[href="#"]) {
   outline: none;
+}
+.circlebtn{
+  border-radius: 50%;
+  width:50px;
+  height:50px;
+}
+
+.sb-avatar{
+  width:30px;
+  height:30px;
 }
 
 .bigfont{
@@ -43,8 +63,8 @@ img:not([alt]), img:not([height]), img:not([width]) {
 }
 
 .title{
-  margin-left: 70px;
-  font-weight:bold;
+ 
+  //font-weight:bold;
   font-size:24px;
 }
 .btn-tiny{
@@ -63,20 +83,82 @@ img:not([alt]), img:not([height]), img:not([width]) {
   
 }
 
-button{
-  min-width: 200px;
+.button{
+  min-width: 180px;
   min-height:50px;
   border-radius: 10px;
   
 }
+.networklist button{
+  height:35px;
+}
+.searchbox{
+  border:1px solid #367BCF;
+  height: 30px;
+  border-radius: 3px;
+}
+.searchbox input{
+  height:27px;
+  width:90%;
+}
+.topIcon{
+  width:30px;
+  height:30px;
+}
+.acctmenu{
+  z-index: 100;
+  width: 320px;
+}
+.iconspacer{
+  margin-right:10px;
+}
+.accountList{
+  padding: 5px 5px 5px;
+  margin-bottom:20px;
+}
 
-
+.topIcon button{
+  width:40px;
+  height:40px;
+}
+.iconDefHeight{
+  height:30px;
+}
 
 #popup {
-  min-width: 400px;
-  min-height:600px;
-  padding:20px 20px;
+  width: 400px;
+  height:600px;
+  overflow-x: hidden;
+  overflow-y: hidden;
   
+  
+  //padding:20px 20px;
+  .sendbtn {
+    background-image: url('../assets/icons/send.png');
+    background-size: cover;
+    width: 200px;
+    height: 100px;
+    font-size: 2rem;
+}
+
+.hollow-btn {
+  background: none !important;
+  color: #A5753D;
+  border-color: #A5753D;
+}
+
+.gold-btn {
+  background: #A5753D;
+  color: white;
+  border-color: #A5753D;
+}
+
+
+.rounded-pill {
+  border-radius: var(--bs-border-radius-pill)!important;
+}
+
+}
   
 
   .app-content {
@@ -163,31 +245,7 @@ button{
   flex: 1;
 }
 
-  .sendbtn {
-    background-image: url('../assets/icons/send.png');
-    background-size: cover;
-    width: 200px;
-    height: 100px;
-    font-size: 2rem;
-}
-
-.hollow-btn {
-  background: none !important;
-  color: #A5753D;
-  border-color: #A5753D;
-}
-
-.gold-btn {
-  background: #A5753D;
-  color: white;
-  border-color: #A5753D;
-}
-
-
-.rounded-pill {
-  border-radius: var(--bs-border-radius-pill)!important;
-}
-
+  
 
   .btnmin{
     min-width: 200px;
@@ -284,7 +342,7 @@ button{
 }
 
 
-}
+
 
 #popup-root{
   a{

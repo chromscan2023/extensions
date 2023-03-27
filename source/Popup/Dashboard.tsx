@@ -15,15 +15,19 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import ShowPin from './ShowPin';
 import  secureLocalStorage  from  "react-secure-storage";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faListDots } from '@fortawesome/free-solid-svg-icons';
+import { faDownload, faEllipsisV, faGear, faMessage, faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
 import Nav from 'react-bootstrap/Nav';
 import Modal from 'react-bootstrap/Modal';
+//import Avatar from 'react-avatar';
 import CreateWallet from './CreateWallet';
 import ImportPrivateKey from './ImportPrivateKey';
 import ExportPrivateKey from './ExportPrivateKey';
 import AddNewBlockchain from './AddNewBlockchain';
 import AddNewPrivateKey from './AddNewPrivateKey';
 import Blockchain from './Blockchain';
+import { openWebPage } from '../utils';
+import CreateNewAccount from './CreateAccount';
+import { ListGroup, ListGroupItem } from 'react-bootstrap';
 //import { BlockHeader, Block } from 'web3-eth' // ex. package types
 
 
@@ -77,6 +81,7 @@ class Dashboard extends React.Component<{}, IState>{
           accountsmenu:[]};
         this.goToSend= this.goToSend.bind(this);
         this.goToReceive= this.goToReceive.bind(this);
+        this.defaultAccountPicked = this.defaultAccountPicked.bind(this);
         this.goToAddNewBlockchain= this.goToAddNewBlockchain.bind(this);
         this.networkChanged = this.networkChanged.bind(this);
         this.openAccountView = this.openAccountView.bind(this);
@@ -84,6 +89,7 @@ class Dashboard extends React.Component<{}, IState>{
         this.goToCreate = this.goToCreate.bind(this);
         this.goToImport = this.goToImport.bind(this);
         this.goToAddNewPrivateKey = this.goToAddNewPrivateKey.bind(this);
+        this.goToCreateNewAccount= this.goToCreateNewAccount.bind(this);
         this.goToExport= this.goToExport.bind(this);
         this.goToSwap = this.goToSwap.bind(this);
         this.populateAccounts = this.populateAccounts.bind(this);
@@ -92,6 +98,7 @@ class Dashboard extends React.Component<{}, IState>{
         this.networkChanged = this.networkChanged.bind(this);
         this.updateDefaultAccount = this.updateDefaultAccount.bind(this);
         this.updateDefaultNetwork= this.updateDefaultNetwork.bind(this);
+        this.searchAddress = this.searchAddress.bind(this);
         
       }
 
@@ -114,8 +121,30 @@ class Dashboard extends React.Component<{}, IState>{
         
       }
 
+      searchAddress(){
+
+      }
+
       accountChanged(e:any){
-        console.log(e)
+        console.log("Value "+e);
+        if(e=="Settings"){
+          openWebPage("options.html");
+          return;
+        
+        }
+        if(e=="Support"){
+          openWebPage("https://chromescan.org/support");
+          return;
+        }
+
+        if(e=="ImportAccount"){
+          this.goToAddNewPrivateKey();
+          return;
+        }
+        if(e=="CreateAccount"){
+          this.goToCreateNewAccount();
+          return;
+        }
         this.setAccountAsDefault(e);
       }
 
@@ -149,6 +178,9 @@ class Dashboard extends React.Component<{}, IState>{
         }
       }
 
+      goToCreateNewAccount(){
+        this.setState({redirect:"createnewaccount"})
+      }
 
       componentDidMount(): void {
         console.log("componentDidMount...")
@@ -214,6 +246,11 @@ class Dashboard extends React.Component<{}, IState>{
         
       }
 
+
+      defaultAccountPicked(e:any){
+        this.setAccountAsDefault(e);
+      }
+
       setAccountAsDefault(name:string){
         let accountlist = secureLocalStorage.getItem("accounts")?secureLocalStorage.getItem("accounts"):"[]";
         if(accountlist !==null && accountlist !==undefined){
@@ -240,8 +277,7 @@ class Dashboard extends React.Component<{}, IState>{
               console.log(e)
             }
             }
-            
-            
+          
         }
 
       }
@@ -408,6 +444,11 @@ class Dashboard extends React.Component<{}, IState>{
          return (<Link to="/createwallet"><CreateWallet /></Link>); 
         }
 
+        if(this.state.redirect === "createnewaccount"){
+          console.log("Using navigate")
+         return (<Link to="/createnewaccount"><CreateNewAccount /></Link>); 
+        }
+
         if(this.state.redirect === "export"){
           console.log("Using navigate")
          return (<Link to="/exportkey"><ExportPrivateKey /></Link>); 
@@ -466,17 +507,16 @@ class Dashboard extends React.Component<{}, IState>{
 
         return(<div id="pop" className="extension-spacer">
           <div className="row d-flex justify-content-center" style={{width:"400px"}}>
-          
-          
-          <div className="col-md-9 col-12 mx-auto d-flex justify-content-between mt-2 mb-4">
-                <div className="logo-img-div "><img src={logo} alt="Logo" width="40px" style={{marginTop:"8px"}} />
-                </div>
-
-                <div className="d-flex align-items-center justify-content-end">
-                    <div className="d-flex align-items-center">
-                       
-                            <Dropdown className="active-account" onSelect={this.networkChanged}>
-                              <Dropdown.Toggle variant="default" id="dropdown-basic" className="rounded-pill">
+          <div className="logo-img-div my-3">
+       
+        <div className="row">
+                            <div className="col-3">
+                            <img src={logo} alt="Logo" className='topIcon' />
+                          
+                            </div>
+                            <div className="col-6">
+                            <Dropdown className="active-account networklist" onSelect={this.networkChanged}>
+                              <Dropdown.Toggle variant="default" id="dropdown-basic" className="button rounded-pill">
                               {this.state.defaultnetwork}
                               </Dropdown.Toggle>
                               <Dropdown.Menu>
@@ -487,37 +527,47 @@ class Dashboard extends React.Component<{}, IState>{
                       }
                       </Dropdown.Menu>
                       </Dropdown>
-                    </div>
-                  
-                </div>
+                            </div>
+                            <div className='col-3' style={{paddingLeft:"30px"}}>
+                            
+                            <Dropdown className="active-account" onSelect={this.accountChanged}>
+                              <Dropdown.Toggle className="circlebtn topIcon">
+                              {this.state.defaultaccount!==""?this.state.defaultaccount.charAt(0):defaultaccountname}
+                              </Dropdown.Toggle>
+                     
 
-                           
-          </div>
-
-            
-            
-
-
+                      <Dropdown.Menu className="acctmenu">
+                        <div className='accountList'>
+                          <div className="searchbox">
+                        <span className="iconspacer"><FontAwesomeIcon icon={faSearch} /></span><input type="text" value={this.state.address} onChange={this.searchAddress} />
+                        </div>
+                      <ListGroup style={{height:"120px",overflowX:"scroll"}}>
+                      {this.state.accountsmenu.map((_object:any,i: string | number)=>
+                      <ListGroupItem action eventKey={this.state.accountsmenu[i].name} onClick={this.defaultAccountPicked}>{this.state.accountsmenu[i].name}</ListGroupItem>
+                      
+                      )
+                      }
+                      </ListGroup>
+                      </div>
+                      <Dropdown.Item eventKey={"CreateAccount"}><span className="iconspacer"><FontAwesomeIcon icon={faPlus} /> </span> Create Account</Dropdown.Item>
+                      <Dropdown.Item eventKey={"ImportAccount"}><span className="iconspacer"><FontAwesomeIcon icon={faDownload} /></span>Import Account</Dropdown.Item>
+                      <Dropdown.Item eventKey={"Support"}><span className="iconspacer"><FontAwesomeIcon icon={faMessage} /></span>Support</Dropdown.Item>
+                      <Dropdown.Item eventKey={"Settings"}><span className="iconspacer"><FontAwesomeIcon icon={faGear} /></span>Settings</Dropdown.Item>
+                      </Dropdown.Menu>
+                      </Dropdown>
+                            </div>
+                          </div>
+      </div>
+          
+          
 
             <div className="col-md-9 p-0" style={style.backgroundWhite}>
                 <div className="col-12 d-flex justify-content-center py-3 px-3" style={style.borderBottom}>
                     <div className="account-head ms-auto">
-                      <Dropdown className="active-account" onSelect={this.accountChanged}>
-                      <Dropdown.Toggle variant="default" id="dropdown-basic">
-                      {this.state.defaultaccount!==""?this.state.defaultaccount:defaultaccountname}
-                      </Dropdown.Toggle>
-
-                      <Dropdown.Menu>
-                      {this.state.accountsmenu.map((_object:any,i: string | number)=>
-
-                      <Dropdown.Item eventKey={this.state.accountsmenu[i].name}>{this.state.accountsmenu[i].name}</Dropdown.Item>
-                      )
-                      }
-                      </Dropdown.Menu>
-                      </Dropdown>
+                    {this.state.defaultaccount!==""?this.state.defaultaccount:defaultaccountname}
                     </div>
                     <div className="more-icon ms-auto" onClick={this.openAccountView}>
-                       <FontAwesomeIcon icon={faListDots} />
+                       <FontAwesomeIcon icon={faEllipsisV} />
                     </div>
 
                     
@@ -535,7 +585,7 @@ class Dashboard extends React.Component<{}, IState>{
                     <b>{this.state.balance} {this.state.defaultcurrency}</b>
                     </div>
                     <div className="lower-div-usd text-center">
-                        $0.00USD
+                        $0.00
                     </div>
                     
                 </div>

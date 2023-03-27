@@ -1,3 +1,5 @@
-console.log('helloworld from content script');
+function hello(){
+    console.log('helloworld from content script');
+}
 
-export {};
+export {hello};

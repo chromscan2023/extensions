@@ -4,8 +4,6 @@ import {browser, Tabs} from 'webextension-polyfill-ts';
 import CreatePassword from './CreatePassword';
 import Help from './Help';
 //import logo from '../assets/icons/chromescan.png';
-//import web3icon from '../assets/web3.svg';
-import web3icon from '../assets/web3icon.png';
 import logo from '../assets/icons/logo.png';
 import './styles.scss';
 import secureLocalStorage from 'react-secure-storage';
@@ -134,30 +132,23 @@ class Setup extends React.Component<{}, IState>{
       <div id="popup">
 <div className="container">
        {/**  <div className="row d-flex justify-content-center" style={{height:"100vh"}}> */} 
-       <div className="logo-img-div my-3">
-        {/**<img src={logo} alt="Logo" width="50px" height="50px" />*/}
-                          <div className="row">
-                            <div className="col-3">
-                            <img src={logo} alt="Logo" className='topIcon' />
-                          
-                            </div>
-                            <div className="col-9">
-                            <div className="account-head title"> </div>
-                            </div>
-                          </div>
-      </div>
-      
-       <div className="row d-flex">
+       <div className="row d-flex justify-content-center" style={{width:"400px"}}>
+            {/**<div className="logo-img-div my-5">
+            <img src={logo} alt="Logo" width="50px" height="50px" />
+    </div>*/}
+            <div className="col-md-9 col-12 mx-auto d-flex mt-2 mb-1">
+            <div style={{width:"50px",height:"50px"}}>
+            <img src={logo} alt="Logo" width="50px" height="50px" />
+            </div>
+
+            </div>
+
             <div className="col-lg-8 d-flex flex-column justify-content-center align-items-center">
-                <div className=""> 
-                  <img src={web3icon} alt="Logo" width="200px" height="200px" />
-                  </div>
-                 <div className="welcome-head text-center">
+                   {/**<h4 style={{fontSize:"18px"}}>Welcome to Chromecoin</h4>*/}
+                   <TopTitle title={"Welcome to Chromecoin"} />
+                   <div className="contentBody">
                         
-                        {/**<h4 style={{fontSize:"18px"}}>Welcome to Chromecoin</h4>*/}
-                       
-                        <TopTitle title={"Welcome to Chromecoin"} />
-                       
+                        
                         <p className="lead grey-text">Connecting  you to Chromecoin and the Decentralized Web</p>
                         <p className="grey-text">We're happy to see you</p>
                     </div>

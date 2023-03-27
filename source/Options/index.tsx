@@ -1,6 +1,13 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import Options from './Options';
+import {HashRouter} from 'react-router-dom';
+//import router from './router';
+import App from './App';
 
-ReactDOM.render(<Options />, document.getElementById('options-root'));
+ReactDOM.render(<React.StrictMode>
+      <HashRouter>
+            <App />
+      </HashRouter>
+</React.StrictMode>, document.getElementById('options-root'));
+

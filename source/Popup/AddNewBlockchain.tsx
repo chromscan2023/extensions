@@ -6,6 +6,7 @@ import Dashboard from './Dashboard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import secureLocalStorage from 'react-secure-storage';
+//import TopTitle from './Components/TopTitle';
 //import logo from '../assets/icons/chromescan.png';
 //import  secureLocalStorage  from  "react-secure-storage";
 //import Web3 from 'web3';
@@ -142,24 +143,28 @@ class AddNewBlockchain extends React.Component<{}, IState>{
     
         return(<div id="popup">
        <div className="container">
-                {/**  <div className="row d-flex justify-content-center" style={{height:"100vh"}}> */} 
-                    <div className="row d-flex" style={{width:"400px"}}>
-                   
-                    <div className="col-md-9 col-12 mx-auto d-flex mt-2 mb-1">
-                      <div onClick={this.goBack} style={{width:"50px",height:"50px"}}>
-                          <FontAwesomeIcon icon={faArrowAltCircleLeft} size="2x" />
-                      </div>
-                      <div className="account-head title">Add Blockchain</div>
-                      </div>
-                    <div className="col-9 mx-auto mb-4">
-                        
-                        
-        
-                        <div className="col-md-7 my-5 py-4 login-form">
-                          <h4>{errormessage}</h4>
-                            <div className="form-head">
-                                <p className="lead gold-text">Add New Blockchain</p>
+                    <div className="logo-img-div my-3">
+                          <div className="row">
+                            <div className="col-3">
+                            <FontAwesomeIcon onClick={this.goBack} icon={faArrowAltCircleLeft} size="2x"  className='topIcon' />
+                          
                             </div>
+                           <div className="col-9">
+                            <div className="account-head title">Add New Blockchain</div>
+                            </div>
+                          </div>
+                    </div>
+                    <div className="row d-flex">
+                      
+                  <div className="col-lg-8 flex-column justify-content-center align-items-center"> 
+                   
+                      
+                            <div className="col-md-7 my-2 py-2 login-form">
+                                    <h4>{errormessage}</h4>
+                                    <div className="form-head">
+                                  {/**<TopTitle title={"Add New Blockchain"} />*/}
+                                   
+                                    </div>
                             <form>
                                 <div className="mb-3">
                                     <div className="forgot d-flex justify-content-between">
@@ -193,7 +198,7 @@ class AddNewBlockchain extends React.Component<{}, IState>{
                                 
                                 
                                 <button 
-                                              className="btn btn-primary my-3 w-25 gold-btn ms-1 py-2  rounded-pill" onClick={this.doAddChain}>
+                                              className="button btn btn-primary my-3 w-25 gold-btn ms-1 py-2  rounded-pill" onClick={this.doAddChain}>
                                               Add New Chain
                                               </button> 
                                 

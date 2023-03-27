@@ -39,7 +39,8 @@ const getExtensionFileType = (browser) => {
   }
 
   if (browser === 'firefox') {
-    return 'xpi';
+    return 'crx';
+    //return 'xpi';
   }
 
   return 'zip';
@@ -82,7 +83,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(png|jpe?g|gif)$/i,
+        test: /\.(svg|png|jpe?g|gif)$/i,
         use: [
           {
             loader: 'file-loader',

@@ -1,22 +1,15 @@
 import React from 'react';
-import {Link, Route, Switch} from 'react-router-dom';
-import CreatePassword from './CreatePassword';
-import RecoverAccount from './RecoverAccount';
-import CreateSeed from './CreateSeed';
-import CreateWallet from './CreateWallet';
-import Help from './Help';
-import Receive from './Receive';
-import Send from './Send';
-//import Setup from './Setup';
-import Dashboard from './Dashboard';
+import {Route, Switch} from 'react-router-dom';
+
 import { IdleTimerProvider } from 'react-idle-timer'
-import ShowPin from './ShowPin';
-import ImportPrivateKey from './ImportPrivateKey';
-import ExportPrivateKey from './ExportPrivateKey';
 import  secureLocalStorage  from  "react-secure-storage";
-import AddNewBlockchain from './AddNewBlockchain';
-import AddNewPrivateKey from './AddNewPrivateKey';
-import CreateNewAccount from './CreateAccount';
+import Settings from './Settings';
+import Networks from './Networks';
+import Advance from './Advance';
+import Security from './Security';
+import Contacts from './Contacts';
+import Demo from './Demo';
+
 
 
 
@@ -97,37 +90,22 @@ class App extends React.Component<{}, IState> {
   public render() {
   
    
-   if(this.state.redirect=="showpin"){
-
-    return (<Link to="/showpin"><ShowPin/></Link>);
-
-   }
+   
     
     return (
       <IdleTimerProvider
       timeout={1000 * 60}
-      //onPresenceChange={this.onPresenceChange}
       onPrompt={this.onPrompt}
-      onIdle={this.onIdle} 
-      //onActive={this.onActive}
-      //onAction={this.onAction}
+      onIdle={this.onIdle}
     >
       <Switch>
-      <Route path="/"><Dashboard /></Route>
-      <Route path="createpassword"><CreatePassword /></Route>
-      <Route path="recoveraccount"><RecoverAccount /></Route>
-      <Route path="createwallet"><CreateWallet /></Route>
-      <Route path="createnewaccount"><CreateNewAccount /></Route>
-      <Route path="createseed"><CreateSeed /></Route>
-      <Route path="dashboard"><Dashboard /></Route>
-      <Route path="help"><Help /></Route>
-      <Route path="receive"><Receive /></Route>
-      <Route path="send"><Send /></Route>
-      <Route path="showpin"><ShowPin /></Route>
-      <Route path="importwallet"><ImportPrivateKey /></Route>
-      <Route path="addnewblockchain"><AddNewBlockchain /></Route>
-      <Route path="addnewprivatekey"><AddNewPrivateKey /></Route>
-      <Route path="exportkey"><ExportPrivateKey /></Route>
+      <Route path="/"><Demo /></Route>
+      <Route path="/s"><Settings /></Route>
+      <Route path="/networks"><Networks /></Route>
+      <Route path="/advance"><Advance /></Route>
+      <Route path="/security"><Security /></Route>
+      <Route path="/contacts"><Contacts /></Route>
+      
       </Switch>
       </IdleTimerProvider>
     );

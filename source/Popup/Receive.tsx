@@ -100,11 +100,24 @@ class Receive extends React.Component<{}, IState>{
     }
 
         return(<div id="popup">
-        <div className="container">
-        
-        <div className="row d-flex justify-content-center" style={{width:"400px"}}>
+        <div className="container"  style={{width:"400px"}}>
+        <div className="logo-img-div my-3">
+                          <div className="row">
+                            <div className="col-3">
+                            <FontAwesomeIcon onClick={this.goBack} icon={faArrowAltCircleLeft} size="2x"  className='topIcon' />
+                          
+                            </div>
+                            <div className="col-9">
+                            <div className="account-head title">Receive</div>
+                            </div>
+                          </div>
+                          
+                         
+                        
+                    </div>
+        <div className="row d-flex justify-content-center">
             
-       <div className="col-md-9 col-12 mx-auto d-flex mt-2 mb-4">
+       {/*<div className="col-md-9 col-12 mx-auto d-flex mt-2 mb-4">
                 <div onClick={this.goBack} style={{width:"50px",height:"50px"}}>
                     <FontAwesomeIcon icon={faArrowAltCircleLeft} size="2x" />
                 </div>
@@ -113,7 +126,7 @@ class Receive extends React.Component<{}, IState>{
                 
 
                            
-        </div>
+        </div>*/}
         <div className="mb-3">
         <div className="col text-center">
         
@@ -126,7 +139,7 @@ class Receive extends React.Component<{}, IState>{
 
 
         <button
-         className="btn btn-primary my-3 w-25 gold-btn ms-1 py-2  rounded-pill"
+         className="button btn btn-primary my-3 w-25 gold-btn ms-1 py-2  rounded-pill"
           type="button"
 
           onClick={this.copyTextToClipboard}

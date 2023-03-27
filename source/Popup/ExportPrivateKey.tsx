@@ -114,7 +114,7 @@ class ExportPrivateKey extends React.Component<{}, IState>{
                                 
                                 
                                 <button 
-                                              className="btn btn-primary my-3 w-25 gold-btn ms-1 py-2  rounded-pill" onClick={this.doExportPrivateKey}>
+                                              className="button btn btn-primary my-3 w-25 gold-btn ms-1 py-2  rounded-pill" onClick={this.doExportPrivateKey}>
                                               Export Private Key
                                               </button> 
                                 

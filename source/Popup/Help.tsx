@@ -4,6 +4,7 @@ import CreateWallet from './CreateWallet';
 import logo from '../assets/icons/logo.png';
 import { Link } from 'react-router-dom';
 import Setup from './Setup';
+import TopTitle from './Components/TopTitle';
 //import "../assets/css/common.css";
 //import "../assets/css/welcome.css";
 interface IState {
@@ -42,24 +43,34 @@ class Help extends React.Component<{}, IState>{
       return (<Link to="/"><Setup/></Link>);
       }
 
-        return(<div id="popup"><div className="container">
-        
-            <div className="row d-flex" style={{height:"150vh",width:"400px"}}>
-                <div className="col-9 mx-auto mb-4">
-                        <div className="logo-img-div my-3">
-                          <img src={logo} alt="Logo" width="50px" height="50px" />
-                        </div>
-                        <div className="grow-img-div my-3">
+        return(<div id="popup">
+          <div className="container">
+            <div className="logo-img-div my-3">
+             {/**<img src={logo} alt="Logo" width="50px" height="50px" />*/}
+                          <div className="row">
+                            <div className="col-3">
+                            <img src={logo} alt="Logo" className='topIcon' />
                           
-                            <i className="bi bi-bar-chart-fill"></i>
-
-                        </div>
-                        <div className="welcome-head ">
+                            </div>
+                            <div className="col-9">
+                            <div className="account-head title"> </div>
+                            </div>
+                          </div>
+            </div>
+        
+            <div className="row d-flex">
+              
+            {/**  <div className="col-9 mx-auto mb-4">*/}
+            <div className="col-lg-8 flex-column justify-content-center align-items-center">
+                       
+                        <div>
+                        
                                 
-                                <h3>Help us improve ChromeScan</h3>
+                                {/**<h4>Help us improve ChromeScan</h4>*/}
+                                <TopTitle title={"Help us improve ChromeScan"} />
                                 <p className="">ChromeScan would like to gather usage data to better understand how our users interact with the extension. This data will be used to continually improve the usability and user experience of our product and the Chromescan ecosystem.</p>
 
-                                <p className="my-4">
+                                {/**<p className="my-4">
                                     ChromeScan will..
                                 </p>
                                 
@@ -82,6 +93,7 @@ class Help extends React.Component<{}, IState>{
                                               </li>
                                       </ul>
                                   </div>
+    */}
                             </div>
                             <div className="btns-div d-flex ">
                                       <button 
@@ -105,8 +117,8 @@ class Help extends React.Component<{}, IState>{
                                   </p>
                               </span>
 
-                          
                         </div>
+                       
                 
                   </div>
             </div>

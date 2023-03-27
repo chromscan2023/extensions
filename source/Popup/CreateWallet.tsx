@@ -9,6 +9,7 @@ import logo from '../assets/icons/logo.png';
 import Web3 from 'web3';
 import ImportPrivateKey from './ImportPrivateKey';
 import  secureLocalStorage  from  "react-secure-storage";
+import TopTitle from './Components/TopTitle';
 const web3 = new Web3('http://rpc.terceschat.com');
 interface IState {
     redirect: string,
@@ -161,16 +162,27 @@ class CreateWallet extends React.Component<{}, IState>{
 
 <div className="container">
     {/**  <div className="row d-flex justify-content-center" style={{height:"100vh"}}> */} 
+            <div className="logo-img-div my-3">
+            <div className="row">
+            <div className="col-3">
+            <img src={logo} alt="Logo" className='topIcon' />
+
+            </div>
+
+            </div>
+        
+      </div>
         <div className="row d-flex">
-            <div className="col-9 mx-auto mb-4">
-                <div className="logo-img-div my-3"><img src={logo} alt="Logo" width="50px" height="50px" />
-                </div>
+            {/**<div className="col-9 mx-auto mb-4">*/}
+            <div className="col-lg-8 d-flex flex-column justify-content-center align-items-center">
+                
                 
 
                 <div className="col-md-7 my-2 py-2 login-form">
                   <h4>{errormessage}</h4>
                     <div className="form-head">
-                        <p className="lead gold-text">Create password</p>
+                    <TopTitle title={"Create password"} />
+                      {/**   <p className="lead gold-text">Create password</p>*/}
                     </div>
                     <Form>
                         <div className="mb-3">
@@ -193,18 +205,20 @@ class CreateWallet extends React.Component<{}, IState>{
                             </div>
                             
 
-                        </div>
-                        
+                        </div>    
+                        <div className="btns-div d-flex ">
                                         <button 
-                                      className="btn btn-primary my-3 w-25 gold-btn ms-1 py-2  rounded-pill" onClick={this.generateWallet}>
+                                      className="button btn btn-primary my-3 w-100 me-1 hollow-btn py-2 small-btn  rounded-pill" onClick={this.generateWallet}>
                                       Create a Wallet
                                       </button> 
                     
-
+                                     
                                       <button 
-                                      className="btn btn-primary my-3 w-25 gold-btn ms-1 py-2  rounded-pill" onClick={this.importWallet}>
+                                      className="button btn btn-primary my-3 gold-btn w-100 ms-1 py-2 small-btn rounded-pill" onClick={this.importWallet}>
                                       Import Wallet
                                       </button> 
+
+                        </div>
                         
                            
                     </Form>
