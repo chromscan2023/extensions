@@ -2,15 +2,17 @@ import React from 'react';
 import './styles.scss';
 import { Link } from 'react-router-dom';
 //import Home from './Home';
-import Dashboard from './Dashboard';
+//import Dashboard from './Dashboard';
 //import logo from '../assets/icons/chromescan.png';
 import Form from 'react-bootstrap/Form';
 import logo from '../assets/icons/logo.png';
-import Web3 from 'web3';
+
 import ImportPrivateKey from './ImportPrivateKey';
 import  secureLocalStorage  from  "react-secure-storage";
 import TopTitle from './Components/TopTitle';
-const web3 = new Web3('http://rpc.terceschat.com');
+import Blockchain from './Blockchain';
+import MnemonicsView from './MnemonicsView';
+
 interface IState {
     redirect: string,
     address:string,
@@ -68,8 +70,9 @@ class CreateWallet extends React.Component<{}, IState>{
         }
         if(this.state.password === this.state.password2){
 
-            var accountinfo = web3.eth.accounts.create();
-            console.log(accountinfo)
+            var wallet = Blockchain.createWallet();
+           
+            console.log(wallet)
 
             try{
             //handle accounts
@@ -80,7 +83,7 @@ class CreateWallet extends React.Component<{}, IState>{
                 let lastaccount = totalaccounts+1;
                 
                 let accountname="Account "+lastaccount;
-                let accountdata={"name":accountname,"address":accountinfo.address,"privateKey":accountinfo.privateKey};
+                let accountdata={"name":accountname,"address":wallet.address,"privateKey":wallet.privateKey};
                 accounts.push(accountdata);
                 console.log(accounts)
                 secureLocalStorage.setItem("accounts",JSON.stringify(accounts));
@@ -105,10 +108,10 @@ class CreateWallet extends React.Component<{}, IState>{
 
             secureLocalStorage.setItem("isfirstuse","true");
             secureLocalStorage.setItem("password",this.state.password);
-            secureLocalStorage.setItem("isloggedin","true");
-            secureLocalStorage.setItem("address",accountinfo.address);
-            secureLocalStorage.setItem("privateKey",accountinfo.privateKey);
-            this.setState({redirect:"home"})
+            secureLocalStorage.setItem("address",wallet.address);
+            secureLocalStorage.setItem("mnemonic",wallet.mnemonic?.phrase);
+            secureLocalStorage.setItem("privateKey",wallet.privateKey);
+            this.setState({redirect:"viewmnemonic"})
 
         }else{
             console.log("Could not create wallet")
@@ -135,9 +138,9 @@ class CreateWallet extends React.Component<{}, IState>{
 
     render(){
         //console.log(this.state)
-        if(this.state.redirect == "home"){
+        if(this.state.redirect == "viewmnemonic"){
             //console.log("Go to home")
-            return (<Link to="/dashboard"><Dashboard/></Link>);
+            return (<Link to="/viewmnemonic"><MnemonicsView/></Link>);
         }
 
         if(this.state.redirect == "importwallet"){

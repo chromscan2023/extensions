@@ -1,5 +1,5 @@
 import Web3 from 'web3';
-
+import {ethers} from "ethers";
 
 class Blockchain{
 
@@ -7,6 +7,11 @@ class Blockchain{
     constructor(){
         let rpcurl = window.localStorage.getItem("rpcnode") !==null?window.localStorage.getItem("rpcnode"):'http://rpc.terceschat.com'
          this.web3 = new Web3(rpcurl);
+    }
+
+    static createWallet(){
+        const wallet = ethers.Wallet.createRandom()
+        return wallet;
     }
 
     getBalance(address:string){
@@ -27,8 +32,22 @@ class Blockchain{
         return accountinfo;
     }
 
+    toWei(amount:number){
+        let amountBN =this.web3.utils.toBN(amount);
+        return this.web3.utils.toWei(amountBN)
+    }
+
+    estimateGas(address:string,amount:number){
+        const transaction = {
+            'to': address, 
+            'value': amount
+        }
+        return this.web3.eth.estimateGas(transaction);
+    }
+
+
     async sendCoins(amountToSend:number,address:string,gas:number,privateKey:string){
-        const amount = amountToSend*1000000000000000000;
+        const amount = this.toWei(amountToSend);
         console.log(amount)
         const transaction = {
         'to': address, 
@@ -36,6 +55,7 @@ class Blockchain{
         'gas': gas
 
         };
+        console.log(transaction)
         const signedTx = await this.web3.eth.accounts.signTransaction(transaction, privateKey.toString()) || "";
         const Tx=signedTx.rawTransaction || "";
         console.log(Tx)

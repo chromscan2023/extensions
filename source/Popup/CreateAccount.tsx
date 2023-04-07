@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 //import Home from './Home';
 import Dashboard from './Dashboard';
 //import logo from '../assets/icons/chromescan.png';
-import Form from 'react-bootstrap/Form';
+//import Form from 'react-bootstrap/Form';
 //import logo from '../assets/icons/logo.png';
 import  secureLocalStorage  from  "react-secure-storage";
 //import TopTitle from './Components/TopTitle';
@@ -149,9 +149,10 @@ class CreateNewAccount extends React.Component<{}, IState>{
         
         
        <div className="row d-flex">
-           
+       <div className="col-lg-8 flex-column justify-content-center align-items-center"> 
+       {/** 
             <div className="col-lg-8 d-flex flex-column justify-content-center align-items-center">
-                
+                */}
                 
 
                 <div className="col-md-7 my-2 py-2 login-form">
@@ -159,26 +160,31 @@ class CreateNewAccount extends React.Component<{}, IState>{
                     <div className="form-head">
                     {/**<TopTitle title={"Create New Account"} />*/}
                     </div>
-                    <Form>
+                    <form>
+
+
+                    
                         <div className="mb-3">
-                            <div className="forgot d-flex justify-content-between">
-                                <label className="form-label">Account Name</label>
-                            </div>
+                            <label className="form-label">Account Name</label>
+                          
                             <input type="text" className="form-control rounded-pill py-md-3 py-2" onChange={this.handleName} value={this.state.name} />
 
                         </div>
                         
+
+                            <div className='row'>
+                            <div className='col text-center'>
+
+                            <button 
+                            style={{width:300}} className="btn btn-primary my-3 gold-btn ms-1 py-2 rounded-pill"  onClick={this.createWallet}>
+                            Create Account
+                            </button> 
+                            </div>
+                            </div>
                          
-                        <div className="btns-div d-flex ">
-                                        <button 
-                                      className="button btn btn-primary my-3 w-100 me-1 hollow-btn py-2 small-btn  rounded-pill" onClick={this.createWallet}>
-                                      Create Account
-                                      </button> 
-                    
-                        </div>
                         
                            
-                    </Form>
+                    </form>
                 </div>
                            
             </div>

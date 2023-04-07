@@ -1,119 +1,37 @@
 import React from "react";
-import  secureLocalStorage  from  "react-secure-storage";
+import {ethers} from "ethers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowAltCircleLeft } from "@fortawesome/free-solid-svg-icons";
-import { Link } from 'react-router-dom';
-import Dashboard from './Dashboard';
+//import  secureLocalStorage  from  "react-secure-storage";
+
 interface IState {
     redirect:string,
-    text1:string,
-    text2:string,
-    text3:string,
-    text4:string,
-    text5:string,
-    text6:string,
-    text7:string,
-    text8:string,
-    text9:string,
-    text10:string,
-    text11:string,
-    text12:string,
-    message:string,
     mnemonicarr:any
     
 }
   
-class MnemonicsConfirm extends React.Component<{}, IState>{
+class ImportWalletWithMnemonics extends React.Component<{}, IState>{
 
 
     constructor(props:any){
         super(props);
-        this.state={
-            redirect:"",
-            message:"",
-            text1:"",
-    text2:"",
-    text3:"",
-    text4:"",
-    text5:"",
-    text6:"",
-    text7:"",
-    text8:"",
-    text9:"",
-    text10:"",
-    text11:"",
-    text12:"",
-
-        mnemonicarr:[]}
+        this.state={redirect:"",mnemonicarr:[]}
         this.goBack= this.goBack.bind(this);
-        this.handleText1 = this.handleText1.bind(this);
-        this.handleText7 = this.handleText7.bind(this);
-        this.handleText10 = this.handleText10.bind(this);
-        this.confirmMnemonic =this.confirmMnemonic.bind(this);
     }
 
 
     componentDidMount(){
-        this.loadMnemonics();
-    }
-
-
-    confirmMnemonic(){
-        if(this.state.text1.length<=0){
-            this.setState({message:"Please enter a valid value"})
-            return;
-        }
-        if(this.state.text7.length<=0){
-            this.setState({message:"Please enter a valid value"})
-            return;
-        }
-        if(this.state.text10.length<=0){
-            this.setState({message:"Please enter a valid value"})
-            return;
-        }
-        if(this.state.mnemonicarr[0]!==this.state.text1){
-            this.setState({message:"Recovery phase does not match"})
-            return;
-        }
-        if(this.state.mnemonicarr[6]!==this.state.text7){
-            this.setState({message:"Recovery phase does not match"})
-            return;
-        }
-        if(this.state.mnemonicarr[9]!==this.state.text10){
-            this.setState({message:"Recovery phase does not match"})
-            return;
-        }
-
-        try{
-
-
-        console.log("Setting up loggedin")
-        secureLocalStorage.setItem("isloggedin","true");
-
-        }catch(e){
-        console.log(e)
-        }
-
-        this.setState({redirect:"dashboard"})
-
-    }
-
-
-    handleText1(event:any){
-        this.setState({text1:event?.target.value})
-    }
-    handleText7(event:any){
-        this.setState({text7:event?.target.value})
-    }
-    handleText10(event:any){
-        this.setState({text10:event?.target.value})
-    }
-
-    loadMnemonics(){
-        const mnemonic=secureLocalStorage.getItem("mnemonic");
         
-        const mnemonicarr=mnemonic?.toString().split(" ")
+    }
+
+    generateWallet(){
         
+        const wallet = ethers.Wallet.createRandom()
+        const mnemonicarr=wallet.mnemonic?.phrase.split(" ")
+        console.log('address:', wallet.address)
+        console.log('mnemonic:', wallet.mnemonic?.phrase)
+        console.log('privateKey:', wallet.privateKey)
+        console.log('Length of mnemonics',mnemonicarr.length)
         this.setState({mnemonicarr:mnemonicarr})
 
     }
@@ -124,16 +42,6 @@ class MnemonicsConfirm extends React.Component<{}, IState>{
     }
 
     render(){
-        if(this.state.redirect == "dashboard"){
-            console.log("Go to home")
-            return (<Link to="/dashboard"><Dashboard/></Link>);
-        }
-
-        var errormessage=<div></div>
-        if(this.state.message !==""){
-            errormessage=<div className="alert alert-danger" role="alert">{this.state.message}</div>
-        }
-
         
         return(<div id="popup">
         <div className="container">
@@ -159,12 +67,11 @@ class MnemonicsConfirm extends React.Component<{}, IState>{
 
                 
              <div className="form-head">
-             <h4>{errormessage}</h4>
-                  
+                    <p className="lead gold-text">Import a wallet with Secret Recovery Phrase</p>
                 </div>
 
                 <p className="size-18">
-                   
+                    Only the first account on this wallet will auto load. After completing this process, to add additional accounts, click the drop down menu, then select Create Account.
                 </p>
 
             
@@ -173,7 +80,7 @@ class MnemonicsConfirm extends React.Component<{}, IState>{
                    <div className="row">
                    <div className="col-4 py-3 d-flex align-items-center">
                     1.
-                        <input type="text" className="form-control py-2"  value={this.state.text1} onChange={this.handleText1}  />
+                        <input type="text" className="form-control py-2"  value={this.state.mnemonicarr[0]} readOnly />
 
                     
                    </div>
@@ -214,7 +121,7 @@ class MnemonicsConfirm extends React.Component<{}, IState>{
                    <div className="row">
                    <div className="col-4 d-flex my-2 align-items-center">
                     7.
-                        <input type="text" className="form-control py-2" value={this.state.text7} onChange={this.handleText7} />
+                        <input type="text" className="form-control py-2" value={this.state.mnemonicarr[6]} readOnly />
 
                         
                    </div>
@@ -235,7 +142,7 @@ class MnemonicsConfirm extends React.Component<{}, IState>{
                    <div className="row">
                   <div className="col-4 py-3 d-flex my-2 align-items-center">
                     10.
-                        <input type="text" className="form-control py-2" value={this.state.text10} onChange={this.handleText10} />
+                        <input type="text" className="form-control py-2" value={this.state.mnemonicarr[9]} readOnly />
 
                         
                    </div>
@@ -260,8 +167,8 @@ class MnemonicsConfirm extends React.Component<{}, IState>{
             </div>
 
             <div className="col text-center">
-                <button type="submit" className="btn w-100 gold-btn ms-1 py-2" onClick={this.confirmMnemonic}>   
-                    Create Wallet
+                <button type="submit" className="btn w-100 gold-btn ms-1 py-2">   
+                    Import
                 </button>
             </div>
                        
@@ -273,5 +180,5 @@ class MnemonicsConfirm extends React.Component<{}, IState>{
 }
 
 
-export default MnemonicsConfirm;
+export default ImportWalletWithMnemonics;
 

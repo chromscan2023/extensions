@@ -173,7 +173,7 @@ class ImportPrivateKey extends React.Component<{}, IState>{
                                             <div className='row'>
                                               <div className='col text-center'>
                                             <button 
-                                            className="button btn btn-primary my-3 w-25 gold-btn ms-1 py-2  rounded-pill" onClick={this.doImportPrivateKey}>
+                                            className="button btn btn-primary my-3 w-100 gold-btn ms-1 py-2  rounded-pill" onClick={this.doImportPrivateKey}>
                                             Import Private Key
                                             </button> 
                                             </div>

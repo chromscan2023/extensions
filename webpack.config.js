@@ -39,8 +39,8 @@ const getExtensionFileType = (browser) => {
   }
 
   if (browser === 'firefox') {
-    return 'crx';
-    //return 'xpi';
+    //return 'crx';
+    return 'xpi';
   }
 
   return 'zip';

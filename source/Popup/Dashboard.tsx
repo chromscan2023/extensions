@@ -25,11 +25,12 @@ import ExportPrivateKey from './ExportPrivateKey';
 import AddNewBlockchain from './AddNewBlockchain';
 import AddNewPrivateKey from './AddNewPrivateKey';
 import Blockchain from './Blockchain';
-import { openWebPage } from '../utils';
+import { getCCCPricing, openWebPage } from '../utils';
 import CreateNewAccount from './CreateAccount';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 //import { BlockHeader, Block } from 'web3-eth' // ex. package types
-
+import "./Dashboard.scss";
+import Swap from './Swap';
 
 const style={
     style1:{backgroundColor:"#A5753D",color:"#FFFFFF",width:"300",borderRadius:"40"},
@@ -41,10 +42,14 @@ const style={
 
 }
 
+
 interface IState {
     redirect: string,
     isLoggedIn: boolean,
     balance:number,
+    currentprice:number,
+    pricechange:string,
+    priceusd:string,
     addressShort:string,
     defaultnetwork:string,
     defaultaccount:string,
@@ -78,6 +83,9 @@ class Dashboard extends React.Component<{}, IState>{
           modalshow:false,
           myaccountview:[],
           networksmenu:[],
+          currentprice:0.0,
+          pricechange:"0.0",
+          priceusd:"0.0",
           accountsmenu:[]};
         this.goToSend= this.goToSend.bind(this);
         this.goToReceive= this.goToReceive.bind(this);
@@ -99,9 +107,34 @@ class Dashboard extends React.Component<{}, IState>{
         this.updateDefaultAccount = this.updateDefaultAccount.bind(this);
         this.updateDefaultNetwork= this.updateDefaultNetwork.bind(this);
         this.searchAddress = this.searchAddress.bind(this);
+        this.handleAccountView = this.handleAccountView.bind(this);
         
       }
 
+
+      handleAccountView(e:any){
+        console.log(e)
+        if(e=="Explorer"){
+
+          openWebPage("https://testnet.chromescan.org");
+          return;
+
+        }
+        if(e=="ExpandView"){
+          //openWebPage("options.html");
+          return;
+        }
+        if(e=="ConnectedSites"){
+          //openWebPage("options.html");
+          return;
+        }
+        if(e=="AccountDetails"){
+          this.openAccountView();
+          return;
+
+        }
+
+      }
 
       handleClose(){
         this.setState({openaccount:false})
@@ -113,6 +146,24 @@ class Dashboard extends React.Component<{}, IState>{
         this.setState({openaccount:true})
         this.setState({modalshow:true})
       }
+
+      fetchPrice(){
+        getCCCPricing().then(res=>{
+          const lastprice=parseFloat(res.rows[0].valueInUSD);
+            const recentprice=parseFloat(res.rows[1].valueInUSD);
+            const pricediff=recentprice-lastprice;
+            const totalprice=recentprice+lastprice;
+            const avgprice= totalprice/2;
+            const pricechange=(pricediff/avgprice * 100);
+            const totalbalanceusd=this.state.balance * recentprice;
+            this.setState({currentprice:recentprice})
+            this.setState({pricechange:pricechange.toFixed(2)})
+            this.setState({priceusd:totalbalanceusd.toFixed(2)})
+       
+           
+           
+        })
+    }
 
       networkChanged(e:any){
         console.log(e)
@@ -128,7 +179,7 @@ class Dashboard extends React.Component<{}, IState>{
       accountChanged(e:any){
         console.log("Value "+e);
         if(e=="Settings"){
-          openWebPage("options.html");
+          //openWebPage("options.html");
           return;
         
         }
@@ -225,14 +276,18 @@ class Dashboard extends React.Component<{}, IState>{
             this.setState({address:myaddress?.toLowerCase()})
             this.generateAddressShort(myaddress?.toLowerCase());
             this.fetchBalance(myaddress?.toLowerCase());
+            this.fetchPrice();
             this.setState({reload:true})
             setInterval(()=>{
               let dbaddress=secureLocalStorage.getItem("address");
               let myaddress = dbaddress?.toString();
               if(myaddress!==null && myaddress!==undefined){
                 this.fetchBalance(myaddress?.toLowerCase());
+                this.fetchPrice();
               }
             },60000);
+            
+            
             
         }else{
           this.setState({redirect:"setup"});
@@ -411,8 +466,10 @@ class Dashboard extends React.Component<{}, IState>{
       }
 
       goToSwap(){
-        return;
+        this.setState({redirect:"swap"})
       }
+
+      
 
     render(){
         if(this.state.redirect === "setup"){
@@ -468,6 +525,12 @@ class Dashboard extends React.Component<{}, IState>{
           console.log("Using navigate")
          return (<Link to="/addnewprivatekey"><AddNewPrivateKey /></Link>); 
         }
+
+        if(this.state.redirect === "swap"){
+          console.log("Using navigate")
+         return (<Link to="/swap"><Swap /></Link>); 
+        }
+        
         
         var defaultaccountname="Account 1";
         if(this.state.accountsmenu.length>0){
@@ -500,7 +563,7 @@ class Dashboard extends React.Component<{}, IState>{
 
         var transactionview=<div></div>;
         if(this.state.reload && this.state.defaultnetwork==="ChromeCoin Testnet"){
-          transactionview = <Transactions  />;
+          transactionview = <Transactions currentprice={this.state.currentprice} />;
         }
 
         
@@ -515,8 +578,8 @@ class Dashboard extends React.Component<{}, IState>{
                           
                             </div>
                             <div className="col-6">
-                            <Dropdown className="active-account networklist" onSelect={this.networkChanged}>
-                              <Dropdown.Toggle variant="default" id="dropdown-basic" className="button rounded-pill">
+                            <Dropdown className="rounded-pill" onSelect={this.networkChanged}>
+                              <Dropdown.Toggle variant="default" id="dropdown-basic">
                               {this.state.defaultnetwork}
                               </Dropdown.Toggle>
                               <Dropdown.Menu>
@@ -531,7 +594,7 @@ class Dashboard extends React.Component<{}, IState>{
                             <div className='col-3' style={{paddingLeft:"30px"}}>
                             
                             <Dropdown className="active-account" onSelect={this.accountChanged}>
-                              <Dropdown.Toggle className="circlebtn topIcon">
+                              <Dropdown.Toggle className="circlebtn">
                               {this.state.defaultaccount!==""?this.state.defaultaccount.charAt(0):defaultaccountname}
                               </Dropdown.Toggle>
                      
@@ -549,10 +612,10 @@ class Dashboard extends React.Component<{}, IState>{
                       }
                       </ListGroup>
                       </div>
-                      <Dropdown.Item eventKey={"CreateAccount"}><span className="iconspacer"><FontAwesomeIcon icon={faPlus} /> </span> Create Account</Dropdown.Item>
-                      <Dropdown.Item eventKey={"ImportAccount"}><span className="iconspacer"><FontAwesomeIcon icon={faDownload} /></span>Import Account</Dropdown.Item>
-                      <Dropdown.Item eventKey={"Support"}><span className="iconspacer"><FontAwesomeIcon icon={faMessage} /></span>Support</Dropdown.Item>
-                      <Dropdown.Item eventKey={"Settings"}><span className="iconspacer"><FontAwesomeIcon icon={faGear} /></span>Settings</Dropdown.Item>
+                      <Dropdown.Item className="" eventKey={"CreateAccount"}><span className="iconspacer"><FontAwesomeIcon icon={faPlus} /> </span> Create Account</Dropdown.Item>
+                      <Dropdown.Item className="" eventKey={"ImportAccount"}><span className="iconspacer"><FontAwesomeIcon icon={faDownload} /></span>Import Account</Dropdown.Item>
+                      <Dropdown.Item className="" eventKey={"Support"}><span className="iconspacer"><FontAwesomeIcon icon={faMessage} /></span>Support</Dropdown.Item>
+                      <Dropdown.Item className="" eventKey={"Settings"}><span className="iconspacer"><FontAwesomeIcon icon={faGear} /></span>Settings</Dropdown.Item>
                       </Dropdown.Menu>
                       </Dropdown>
                             </div>
@@ -566,8 +629,19 @@ class Dashboard extends React.Component<{}, IState>{
                     <div className="account-head ms-auto">
                     {this.state.defaultaccount!==""?this.state.defaultaccount:defaultaccountname}
                     </div>
-                    <div className="more-icon ms-auto" onClick={this.openAccountView}>
-                       <FontAwesomeIcon icon={faEllipsisV} />
+                    <div className="more-icon ms-auto">
+                      {/** * <FontAwesomeIcon icon={faEllipsisV} />**/}
+                      <Dropdown onSelect={this.handleAccountView}>
+                      <Dropdown.Toggle>
+                      <FontAwesomeIcon icon={faEllipsisV} />
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu>
+                      <Dropdown.Item className="menu_item_text" eventKey={"Explorer"}>View Explorer</Dropdown.Item>
+                      <Dropdown.Item className="menu_item_text" eventKey={"ExpandView"}><span className="iconspacer"><FontAwesomeIcon icon={faDownload} /></span>Expand View</Dropdown.Item>
+                      <Dropdown.Item className="menu_item_text" eventKey={"AccountDetails"}><span className="iconspacer"><FontAwesomeIcon icon={faMessage} /></span>Account Details</Dropdown.Item>
+                      <Dropdown.Item className="menu_item_text" eventKey={"ConnectedSites"}><span className="iconspacer"><FontAwesomeIcon icon={faGear} /></span>Connected Sites</Dropdown.Item>
+                      </Dropdown.Menu>
+                      </Dropdown>
                     </div>
 
                     
@@ -585,7 +659,7 @@ class Dashboard extends React.Component<{}, IState>{
                     <b>{this.state.balance} {this.state.defaultcurrency}</b>
                     </div>
                     <div className="lower-div-usd text-center">
-                        $0.00
+                        ${this.state.priceusd}
                     </div>
                     
                 </div>

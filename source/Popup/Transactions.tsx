@@ -14,17 +14,23 @@ interface IState {
     redirect: string;
 }
 
+type MyProps = {
+  // using `interface` is also ok
+  currentprice: number;
+};
   
 const API_URL=Config.rooturl;
 //const style1={backgroundColor:"#A5753D",color:"#FFFFFF",width:"300",borderRadius:"40"}
 //const style2={backgroundColor:"#A5753D",color:"#FFFFFF",width:"150",borderRadius:"10"}
 //const style3={backgroundColor:"#FFFFFF",borderColor:"#A5753D",color:"#A5753D",width:"150",borderRadius:"10"}
-class Transactions extends React.Component<{}, IState>{
+class Transactions extends React.Component<MyProps, IState>{
 
     constructor(props:any){
         super(props);
         console.log(props)
         console.log("In Transactions");
+        console.log(this.props);
+
         this.state={redirect:"",data:[],address:"",addressShort:"",reload:props.reload!==null?props.reload:false,showmore:false}
         this.showMore = this.showMore.bind(this);
         
@@ -146,7 +152,7 @@ class Transactions extends React.Component<{}, IState>{
                                     {parseInt(this.state.data[i].value, 16) / 10 ** 18} CCC
                                     </div>
                                     <div className="lower-content">
-                                        - $0.01 USD
+                                        - ${(this.props.currentprice * parseInt(this.state.data[i].value, 16) / 10 ** 18).toFixed(2)} USD
                                     </div>
                                     
                                 </div>

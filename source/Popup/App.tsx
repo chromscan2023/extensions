@@ -17,6 +17,9 @@ import  secureLocalStorage  from  "react-secure-storage";
 import AddNewBlockchain from './AddNewBlockchain';
 import AddNewPrivateKey from './AddNewPrivateKey';
 import CreateNewAccount from './CreateAccount';
+import MnemonicsView from './MnemonicsView';
+import MnemonicsConfirm from './MnemonicsConfirm';
+import Swap from './Swap';
 
 
 
@@ -59,7 +62,7 @@ class App extends React.Component<{}, IState> {
     // Close Modal Prompt
     // Do some idle action like log out your user
     //console.log("Idle")
-    if(secureLocalStorage.getItem("isfirstuse")==="true"){
+    if(secureLocalStorage.getItem("isfirstuse")==="true" && (secureLocalStorage.getItem("isloggedin")!==undefined ||secureLocalStorage.getItem("isloggedin")!=="false")){
       
     this.setState({redirect:"showpin"});
 
@@ -118,11 +121,14 @@ class App extends React.Component<{}, IState> {
       <Route path="recoveraccount"><RecoverAccount /></Route>
       <Route path="createwallet"><CreateWallet /></Route>
       <Route path="createnewaccount"><CreateNewAccount /></Route>
+      <Route path="/viewmnemonic"><MnemonicsView /></Route>
+      <Route path="/confirmmnemonic"><MnemonicsConfirm /></Route>
       <Route path="createseed"><CreateSeed /></Route>
       <Route path="dashboard"><Dashboard /></Route>
       <Route path="help"><Help /></Route>
       <Route path="receive"><Receive /></Route>
       <Route path="send"><Send /></Route>
+      <Route path="swap"><Swap /></Route>
       <Route path="showpin"><ShowPin /></Route>
       <Route path="importwallet"><ImportPrivateKey /></Route>
       <Route path="addnewblockchain"><AddNewBlockchain /></Route>

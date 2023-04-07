@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import  secureLocalStorage  from  "react-secure-storage";
 import Blockchain from './Blockchain';
+
 //import { BlockHeader, Block } from 'web3-eth' // ex. package types
 //const web3 = new Web3('http://rpc.terceschat.com');
 
@@ -25,13 +26,13 @@ interface IState {
     errormessage:string,
     address: string;
 }
-  
+const blockchain = new Blockchain();
 
 class Send extends React.Component<{}, IState>{
 
     constructor(props:any){
         super(props);
-        this.state={redirect:"",hash:"",gas:1,gaslimit:21000,iserror:false,showtransactionreceipt:false,amount:0.0,balance:0.0,address:"",message:"",errormessage:"",defaultcurrency:""}
+        this.state={redirect:"",hash:"",gas:2000000,gaslimit:21000,iserror:false,showtransactionreceipt:false,amount:0.0,balance:0.0,address:"",message:"",errormessage:"",defaultcurrency:""}
         this.handleAddress= this.handleAddress.bind(this);
         this.handleAmount = this.handleAmount.bind(this);
         this.handleGas = this.handleGas.bind(this);
@@ -83,11 +84,14 @@ class Send extends React.Component<{}, IState>{
         this.setState({message:""})
         console.log("Sending coin")
         
-        const gas:number= 2000000;
+        //const gas:number= this.state.gas;
+        console.log(this.state.amount)
         let privateKey:string = secureLocalStorage.getItem("privateKey")?.toString() ||  "";
-        const blockchain = new Blockchain();
+        
+       
         this.setState({message:"Sending coins..."})
-        blockchain.sendCoins(this.state.amount,this.state.address,gas,privateKey).then(value=>{
+        console.log("Sending coins...")
+        blockchain.sendCoins(this.state.amount,this.state.address,this.state.gas,privateKey).then(value=>{
             console.log(value)
             this.setState({hash:value});
             this.setState({showtransactionreceipt:true});
@@ -137,7 +141,12 @@ class Send extends React.Component<{}, IState>{
         this.setState({address:event.target.value})
       }
       handleAmount(event:any){
+        
         this.setState({amount:event.target.value})
+        blockchain.estimateGas(this.state.address,this.state.amount).then(gasEstimate=>{
+            this.setState({gas:gasEstimate})
+        });
+        
       }
 
       handleGas(event:any){
@@ -212,7 +221,7 @@ class Send extends React.Component<{}, IState>{
                     <div className="d-flex align-items-center px-3" >
                        
                             
-                        <div className="col-12 my-3 d-flex align-items-center metamask-address rounded p-3" style={{border:"1px solid #037dd6", fontSize:"1.4rem", background:"white"}}>
+                        <div className="col-12 d-flex align-items-center metamask-address rounded p-3" style={{border:"1px solid #037dd6", fontSize:"1.4rem", background:"white"}}>
                             <i className="fa-solid fa-circle-check mx-2 text-success"></i>
                             <div className="address-div" style={{wordBreak: "break-all", fontSize: "20px"}}>
                             <input type="text" className="form-control" style={{fontSize: "19px",width:"300px"}} onChange={this.handleAddress} value={this.state.address} placeholder="Enter receiver address" />    
@@ -224,7 +233,7 @@ class Send extends React.Component<{}, IState>{
                    </div>
 
                 </div>
-                <div className="col-12 my-2 " style={{background:"white"}}>
+                <div className="col-12 " style={{background:"white"}}>
                      <div className="body p-3">
                          
                      {noticemessage}

@@ -196,11 +196,14 @@ class AddNewBlockchain extends React.Component<{}, IState>{
 
                                 </div>
                                 
-                                
-                                <button 
-                                              className="button btn btn-primary my-3 w-25 gold-btn ms-1 py-2  rounded-pill" onClick={this.doAddChain}>
-                                              Add New Chain
-                                              </button> 
+                              <div className='row'>
+                              <div className='col text-center'>
+                              <button 
+                              className="button btn btn-primary my-3 w-25 gold-btn ms-1 py-2  rounded-pill" onClick={this.doAddChain}>
+                              Add New Chain
+                              </button> 
+                              </div>
+                              </div>
                                 
                                    
                             </form>

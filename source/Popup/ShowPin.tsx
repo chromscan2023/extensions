@@ -72,8 +72,7 @@ class ShowPin extends React.Component<{}, IState>{
                     <div className="col-lg-8 flex-column justify-content-center align-items-center"> 
                       
                         
-        
-                        {/** <div className="col-md-7 my-5 py-4 login-form">*/}
+      
                         <div className="col-md-7 my-2 py-2 login-form">
                           <h1>{errormessage}</h1>
                             <div className="form-head">

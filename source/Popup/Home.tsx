@@ -19,6 +19,7 @@ interface IState {
     isLoggedIn: boolean,
     balance:number,
     addressShort:string,
+    currentprice:number,
     address:string;
   }
 
@@ -27,7 +28,7 @@ class Home extends React.Component<{}, IState>{
     constructor(props:any){
         super(props);
         console.log(this.props)
-        this.state={redirect:"",isLoggedIn:false,address:"",addressShort:"",balance:0.0};
+        this.state={redirect:"",currentprice:0.0,isLoggedIn:false,address:"",addressShort:"",balance:0.0};
         this.goToSend= this.goToSend.bind(this);
         this.goToReceive= this.goToReceive.bind(this);
 
@@ -172,7 +173,7 @@ class Home extends React.Component<{}, IState>{
       <Assets />
       </Tab>
       <Tab eventKey="activity" title="Activity">
-      <Transactions />
+      <Transactions currentprice={this.state.currentprice} />
       </Tab>
       
     </Tabs>
