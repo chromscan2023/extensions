@@ -12,15 +12,46 @@ body {
 }
 
 * {
-  font-family: "Euclid Circular B", Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 .dropdown-menu{
   min-width: 12.5rem;
 }
 
+
+.navbutton:hover{background-color: #e5e9ec;}
+
+.circlebtn{
+  color:#ba9e39;
+  border-color: #ba9e39;
+  background-color: #fff;
+}
+.circlebtn:hover{
+  background-color: #ba9e39 ;
+  border-color: #fff;
+ 
+}
+.copy-icon{
+  color:#ba9e39
+}
+
+.copy-icon:hover{
+  color:#7c5f0f
+}
+
+.tab-color{
+  color:#ba9e39;
+}
+
+.tab-color:hover{
+  color:white;
+  background-color: #ba9e39;
+}
+
 .menu_item_text {
     font-size: 0.875rem;
-    font-family: "Euclid Circular B", Roboto, Helvetica, Arial, sans-serif;
+    font-family: 'Open Sans', sans-serif;
+
     line-height: 140%;
     font-style: normal;
     font-weight: normal;
@@ -114,8 +145,15 @@ img:not([alt]), img:not([height]), img:not([width]) {
   width:90%;
 }
 .topIcon{
-  width:30px;
-  height:30px;
+  width:50px;
+  height:50px;
+  margin-left:18px;
+  padding-bottom: 10px;
+}
+
+.accountName{
+  text-align: left;
+  margin-left: 10px;
 }
 .acctmenu{
   z-index: 100;
@@ -125,8 +163,8 @@ img:not([alt]), img:not([height]), img:not([width]) {
   margin-right:10px;
 }
 .accountList{
-  padding: 5px 5px 5px;
-  margin-bottom:20px;
+  margin: 0.2rem;
+  border-color: red;
 }
 
 .topIcon button{
@@ -168,7 +206,10 @@ img:not([alt]), img:not([height]), img:not([width]) {
 
 .rounded-pill {
   border-radius: var(--bs-border-radius-pill)!important;
+  color: "#ba9e39"; 
+  margin:"3px";
 }
+
 
 }
   
@@ -214,8 +255,6 @@ img:not([alt]), img:not([height]), img:not([width]) {
     font-size: 18px;
     text-align: center;
   }
-
-  
 
   .menu-bar {
     display: grid;
@@ -336,7 +375,7 @@ img:not([alt]), img:not([height]), img:not([width]) {
 
 .eth-overview__primary-balance {
   font-size: 2rem;
-  font-family: "Euclid Circular B", Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', sans-serif;
   line-height: 140%;
   font-style: normal;
   font-weight: normal;
@@ -350,15 +389,15 @@ img:not([alt]), img:not([height]), img:not([width]) {
 .nav-link.active{
   background: #A5753D;
   color: white;
-
 }
-
-
-
+.rounded-pill:hover{
+  color:#ba9e39;
+}
 
 #popup-root{
   a{
     color:black;
+
   }
   a:link { text-decoration: none; }
 
@@ -371,5 +410,7 @@ a:hover { text-decoration: none; }
 
 a:active { text-decoration: none; }
 
-
 }
+
+
+

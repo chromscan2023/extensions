@@ -1,107 +1,123 @@
-import React from 'react';
+import React from "react";
 //import Web3 from 'web3';
 //import Home from './Home';
-import Dashboard from './Dashboard';
-import { Link } from 'react-router-dom';
-import logo from '../assets/icons/logo.png';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
-import  secureLocalStorage  from  "react-secure-storage";
-import Blockchain from './Blockchain';
+import Dashboard from "./Dashboard";
+import { Link } from "react-router-dom";
+import logo from "../assets/icons/logo.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowAltCircleLeft } from "@fortawesome/free-solid-svg-icons";
+import secureLocalStorage from "react-secure-storage";
+import Blockchain from "./Blockchain";
 
 //import { BlockHeader, Block } from 'web3-eth' // ex. package types
 //const web3 = new Web3('http://rpc.terceschat.com');
 
 interface IState {
-    redirect:string,
-    balance:number,
-    amount:number,
-    gas:number,
-    gaslimit:number,
-    showtransactionreceipt:boolean,
-    hash:any,
-    defaultcurrency:string,
-    iserror:boolean,
-    message:string,
-    errormessage:string,
-    address: string;
+  redirect: string;
+  balance: number;
+  amount: number;
+  gas: number;
+  gaslimit: number;
+  showtransactionreceipt: boolean;
+  hash: any;
+  defaultcurrency: string;
+  iserror: boolean;
+  message: string;
+  errormessage: string;
+  address: string;
 }
 const blockchain = new Blockchain();
 
-class Send extends React.Component<{}, IState>{
+class Send extends React.Component<{}, IState> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      redirect: "",
+      hash: "",
+      gas: 2000000,
+      gaslimit: 21000,
+      iserror: false,
+      showtransactionreceipt: false,
+      amount: 0.0,
+      balance: 0.0,
+      address: "",
+      message: "",
+      errormessage: "",
+      defaultcurrency: "",
+    };
+    this.handleAddress = this.handleAddress.bind(this);
+    this.handleAmount = this.handleAmount.bind(this);
+    this.handleGas = this.handleGas.bind(this);
+    this.handleGasLimit = this.handleGasLimit.bind(this);
+    this.sendCoin = this.sendCoin.bind(this);
+    this.goBack = this.goBack.bind(this);
+    this.setMax = this.setMax.bind(this);
+    this.openWindow = this.openWindow.bind(this);
+  }
 
-    constructor(props:any){
-        super(props);
-        this.state={redirect:"",hash:"",gas:2000000,gaslimit:21000,iserror:false,showtransactionreceipt:false,amount:0.0,balance:0.0,address:"",message:"",errormessage:"",defaultcurrency:""}
-        this.handleAddress= this.handleAddress.bind(this);
-        this.handleAmount = this.handleAmount.bind(this);
-        this.handleGas = this.handleGas.bind(this);
-        this.handleGasLimit = this.handleGasLimit.bind(this);
-        this.sendCoin = this.sendCoin.bind(this);
-        this.goBack = this.goBack.bind(this);
-        this.setMax = this.setMax.bind(this);
-        this.openWindow = this.openWindow.bind(this);
+  componentDidMount(): void {
+    console.log("web3");
+    try {
+      let defcurrency = secureLocalStorage.getItem("defaultcurrency");
+      let defaultcurrency = defcurrency?.toString();
+      if (defaultcurrency !== null && defaultcurrency !== undefined) {
+        this.setState({ defaultcurrency: defaultcurrency });
       }
+    } catch (e) {
+      console.log(e);
+    }
 
-      componentDidMount(): void {
-        console.log("web3")
-        try{
-            let defcurrency=secureLocalStorage.getItem("defaultcurrency");
-            let defaultcurrency=defcurrency?.toString();
-            if(defaultcurrency!==null && defaultcurrency!==undefined){
-              this.setState({defaultcurrency:defaultcurrency})
-            }
-            
-          }catch(e){
-            console.log(e)
-          }
+    let dbaddress = secureLocalStorage.getItem("address");
+    let myaddress = dbaddress?.toString();
+    if (myaddress !== null && myaddress !== undefined) {
+      //this.setState({address:myaddress})
+      let blockchain = new Blockchain();
+      blockchain.getBalance(myaddress?.toLowerCase()).then((value: number) => {
+        console.log(value);
+        this.setState({ balance: value });
+      });
 
-          
-        let dbaddress=secureLocalStorage.getItem("address");
-        let myaddress = dbaddress?.toString();
-        if(myaddress!==null && myaddress !==undefined){
-            //this.setState({address:myaddress})
-            let blockchain = new Blockchain();
-            blockchain.getBalance(myaddress?.toLowerCase()).then((value: number)=>{
-                console.log(value);
-            this.setState({balance:value})
-            });
-        
-            /**web3.eth.getBalance(myaddress?.toLowerCase()).then(res=>{
+      /**web3.eth.getBalance(myaddress?.toLowerCase()).then(res=>{
                 const balance:number = parseFloat(res) / 1000000000000000000;
                 console.log(balance);
                this.setState({balance:balance})
             });*/
-        }
-      }
+    }
+  }
 
+  setMax() {
+    this.setState({ amount: this.state.balance });
+  }
 
-      setMax(){
-        this.setState({amount:this.state.balance})
-      }
+  async sendCoin() {
+    this.setState({ message: "" });
+    console.log("Sending coin");
 
-      async sendCoin(){
-        this.setState({message:""})
-        console.log("Sending coin")
-        
-        //const gas:number= this.state.gas;
-        console.log(this.state.amount)
-        let privateKey:string = secureLocalStorage.getItem("privateKey")?.toString() ||  "";
-        
-       
-        this.setState({message:"Sending coins..."})
-        console.log("Sending coins...")
-        blockchain.sendCoins(this.state.amount,this.state.address,this.state.gas,privateKey).then(value=>{
-            console.log(value)
-            this.setState({hash:value});
-            this.setState({showtransactionreceipt:true});
-            this.setState({redirect:"dashboard"});
-            
-        }).catch(e=>{
-            console.log(e)
-            this.setState({errormessage:"Unable to send coins"})
-        });
-        /**const amount = this.state.amount*1000000000000000000;
+    //const gas:number= this.state.gas;
+    console.log(this.state.amount);
+    let privateKey: string =
+      secureLocalStorage.getItem("privateKey")?.toString() || "";
+
+    this.setState({ message: "Sending coins..." });
+    console.log("Sending coins...");
+    blockchain
+      .sendCoins(
+        this.state.amount,
+        this.state.address,
+        this.state.gas,
+        privateKey
+      )
+      .then((value) => {
+        console.log(value);
+        this.setState({ hash: value });
+        this.setState({ showtransactionreceipt: true });
+        this.setState({ redirect: "dashboard" });
+      })
+      .catch((e) => {
+        console.log(e);
+        this.setState({ errormessage: "Unable to send coins" });
+      });
+    /**const amount = this.state.amount*1000000000000000000;
         console.log(amount)
        
         //const nonce = await web3.eth.getTransactionCount(myaddress, 'latest'); // nonce starts counting from 0
@@ -128,238 +144,288 @@ class Send extends React.Component<{}, IState>{
         }
        });
        */
+  }
 
-    
-       
-      }
+  openWindow() {
+    window.open("http://testnet.chromescan.org/tx/" + this.state.hash);
+  }
 
-      openWindow(){
-        window.open("http://testnet.chromescan.org/tx/"+this.state.hash);
-      }
+  handleAddress(event: any) {
+    this.setState({ address: event.target.value });
+  }
+  handleAmount(event: any) {
+    this.setState({ amount: event.target.value });
+    blockchain
+      .estimateGas(this.state.address, this.state.amount)
+      .then((gasEstimate) => {
+        this.setState({ gas: gasEstimate });
+      });
+  }
 
-      handleAddress(event:any){
-        this.setState({address:event.target.value})
-      }
-      handleAmount(event:any){
-        
-        this.setState({amount:event.target.value})
-        blockchain.estimateGas(this.state.address,this.state.amount).then(gasEstimate=>{
-            this.setState({gas:gasEstimate})
-        });
-        
-      }
+  handleGas(event: any) {
+    this.setState({ gas: event.target.value });
+  }
 
-      handleGas(event:any){
-        this.setState({gas:event.target.value})
-      }
+  handleGasLimit(event: any) {
+    this.setState({ gaslimit: event.target.value });
+  }
 
+  goBack() {
+    this.setState({ redirect: "dashboard" });
+  }
 
-      handleGasLimit(event:any){
-        this.setState({gaslimit:event.target.value})
-      }
+  render() {
+    if (this.state.redirect === "dashboard") {
+      console.log("Using navigate");
+      return (
+        <Link to="/dashboard">
+          <Dashboard />
+        </Link>
+      );
+    }
+    var noticemessage = <div></div>;
+    if (this.state.message !== "") {
+      noticemessage = (
+        <div className="alert alert-success" role="alert">
+          {this.state.message}
+        </div>
+      );
+    } else [(noticemessage = <div></div>)];
+    if (this.state.errormessage !== "") {
+      noticemessage = (
+        <div className="alert alert-danger" role="alert">
+          {this.state.errormessage}
+        </div>
+      );
+    } else {
+      noticemessage = <div></div>;
+    }
 
-      goBack(){
-        this.setState({redirect:"dashboard"})
-      }
-
-    render(){
-        if(this.state.redirect === "dashboard"){
-            console.log("Using navigate")
-           return (<Link to="/dashboard"><Dashboard/></Link>);
-           
-        }
-        var noticemessage=<div></div>
-        if(this.state.message !==""){
-          noticemessage=<div className="alert alert-success" role="alert">{this.state.message}</div>
-        }else[
-             noticemessage=<div></div>
-        ]
-        if(this.state.errormessage!==""){
-            noticemessage=<div className="alert alert-danger" role="alert">{this.state.errormessage}</div>
-        }else{
-             noticemessage=<div></div>
-        }
-        
-        var showerror=<div></div>
-        if(this.state.iserror){
-          showerror=<div className="col-12 my-3 funds-error rounded p-3">
+    var showerror = <div></div>;
+    if (this.state.iserror) {
+      showerror = (
+        <div className="col-12 my-3 funds-error rounded p-3">
           Insufficient funds for gas
-      </div>
-        }else{
-            showerror=<div></div>
-        }
-        
+        </div>
+      );
+    } else {
+      showerror = <div></div>;
+    }
 
-        return(<div id="popup">
-        <div className="container" style={{width:"400px"}}>
-        <div className="logo-img-div my-3">
-                          <div className="row">
-                            <div className="col-3">
-                            <FontAwesomeIcon onClick={this.goBack} icon={faArrowAltCircleLeft} size="2x"  className='topIcon' />
-                          
-                            </div>
-                            <div className="col-9">
-                            <div className="account-head title">Send</div>
-                            </div>
-                          </div>
-                          
-                         
-                        
-                    </div>
-        <div className="row d-flex justify-content-center">
-        
-
-            <div className="col-lg-5 col-md-7 p-0 rounded" style={{boxShadow:"0px 2px 4px 0px #00000024"}}>
-           
-
-                     
-                     <div className="">
-                         
-                   
-                     
-                <div className="col-12 ">
-                    <div className="d-flex align-items-center px-3" >
-                       
-                            
-                        <div className="col-12 d-flex align-items-center metamask-address rounded p-3" style={{border:"1px solid #037dd6", fontSize:"1.4rem", background:"white"}}>
-                            <i className="fa-solid fa-circle-check mx-2 text-success"></i>
-                            <div className="address-div" style={{wordBreak: "break-all", fontSize: "20px"}}>
-                            <input type="text" className="form-control" style={{fontSize: "19px",width:"300px"}} onChange={this.handleAddress} value={this.state.address} placeholder="Enter receiver address" />    
-                        
-                            </div>
-                        <i className="fa-solid fa-x mx-2 " style={{color:"#24272a",cursor:"pointer"}}></i>
-                    </div>                       
-                     
-                   </div>
-
+    return (
+      <div id="popup">
+        <div className="container" style={{ width: "400px" }}>
+          <div className="logo-img-div my-3">
+            <div className="row">
+              <div className="col-3">
+                <FontAwesomeIcon
+                  onClick={this.goBack}
+                  icon={faArrowAltCircleLeft}
+                  style={{ height: "35px", width: "35px" }}
+                  className="topIcon"
+                />
+              </div>
+              <div className="col-9">
+                <div
+                  className="account-head title"
+                  style={{ marginLeft: "3rem" }}
+                >
+                  Send
                 </div>
-                <div className="col-12 " style={{background:"white"}}>
-                     <div className="body p-3">
-                         
-                     {noticemessage}
+              </div>
+            </div>
+          </div>
+          <div className="row d-flex justify-content-center">
+            <div
+              className="col-lg-5 col-md-7 p-0 rounded"
+              style={{ boxShadow: "0px 2px 4px 0px #00000024" }}
+            >
+              <div className="">
+                <div className="col-12 ">
+                  <div className="d-flex align-items-center px-3">
+                    <div
+                      className="col-12 d-flex align-items-center metamask-address rounded p-3"
+                      style={{
+                        border: "1px solid #037dd6",
+                        fontSize: "1.4rem",
+                        background: "white",
+                      }}
+                    >
+                      <i className="fa-solid fa-circle-check mx-2 text-success"></i>
+                      <div
+                        className="address-div"
+                        style={{ wordBreak: "break-all", fontSize: "20px" }}
+                      >
+                        <input
+                          type="text"
+                          className="form-control"
+                          style={{ fontSize: "19px", width: "300px" }}
+                          onChange={this.handleAddress}
+                          value={this.state.address}
+                          placeholder="Enter receiver address"
+                        />
+                      </div>
+                      <i
+                        className="fa-solid fa-x mx-2 "
+                        style={{ color: "#24272a", cursor: "pointer" }}
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-12 " style={{ background: "white" }}>
+                  <div className="body p-3">
+                    {noticemessage}
                     {showerror}
                     {/*<div className="col-12 my-3 new-detection rounded p-3" style={{cursor:"pointer"}}>
                         New address detected! Click here to add to your address book.
                         
     </div>*/}
                     <div className="assets d-flex align-items-center my-3">
-                        <div className="col-3 d-inline">
-                            <label className="col-form-label" style={{fontSize:"1rem"}}>Asset:</label>
-                        </div>
-                        <div className="col-9 d-inline">
-                            <div className="p-3 d-flex rounded" style={{border:"1px solid #d6d9dc"}}>
-                                <div className="img-div mx-1">
-                                 <img src={logo} alt="img" width="30px" height="30px" />
-                                    
-                                </div>
-                                <div className="balances mx-1">
-                                    <div className="upper">
-                                        Chromecoin
-                                    </div>
-                                    <div className="lower">
-                                        Balance : {this.state.balance} CCC
-                                    </div>
-                                    
-                                </div>
+                      <div className="col-3 d-inline">
+                        <label
+                          className="col-form-label"
+                          style={{ fontSize: "1rem" }}
+                        >
+                          Asset:
+                        </label>
+                      </div>
+                      <div className="col-9 d-inline">
+                        <div
+                          className="p-3 d-flex rounded"
+                          style={{ border: "1px solid #d6d9dc" }}
+                        >
+                          <div className="img-div mx-1">
+                            <img
+                              src={logo}
+                              alt="img"
+                              width="30px"
+                              height="30px"
+                            />
+                          </div>
+                          <div className="balances mx-1">
+                            <div className="upper">Chromecoin</div>
+                            <div className="lower">
+                              Balance : {this.state.balance} CCC
                             </div>
-                         </div>
-
-                        
-                    </div>
-                   
-                   
-                    <div className="amounts d-flex align-items-center my-3">
-                        <div className="col-3 d-inline">
-                            <label className="col-form-label d-block" style={{fontSize:"1rem"}}>Amount:</label>
-                            <button className="btn btn-tiny gold-btn"  onClick={this.setMax}>Max</button>
+                          </div>
                         </div>
-                        <div className="col-9 d-inline">
-                            <div className="p-3 d-flex rounded" style={{border:"1px solid #d6d9dc"}}>
-                                
-                                <div className="balances mx-1">
-                                    <div className="upper">
-                                        <input type="text"  style={{border:"1px solid #d6d9dc"}} onChange={this.handleAmount} value={this.state.amount} /> CCC
-                                    </div>
-                                    <div className="lower">
-                                        $0.00 USD
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            {showerror}
-                         </div>
-                         
+                      </div>
                     </div>
-
-
 
                     <div className="amounts d-flex align-items-center my-3">
-                        <div className="col-3 d-inline">
-                            
+                      <div className="col-3 d-inline">
+                        <label
+                          className="col-form-label d-block"
+                          style={{ fontSize: "1rem" }}
+                        >
+                          Amount:
+                        </label>
+                        <button
+                          className="btn btn-tiny gold-btn"
+                          onClick={this.setMax}
+                        >
+                          Max
+                        </button>
+                      </div>
+                      <div className="col-9 d-inline">
+                        <div
+                          className="p-3 d-flex rounded"
+                          style={{ border: "1px solid #d6d9dc" }}
+                        >
+                          <div className="balances mx-1">
+                            <div className="upper">
+                              <input
+                                type="text"
+                                style={{ border: "1px solid #d6d9dc" }}
+                                onChange={this.handleAmount}
+                                value={this.state.amount}
+                              />{" "}
+                              CCC
+                            </div>
+                            <div className="lower">$0.00 USD</div>
+                          </div>
                         </div>
-                        <div className="col-4 d-inline">
-                            <div className="p-3 d-flex rounded" style={{border:"1px solid #d6d9dc"}}>
-                                
-                                <div className="balances mx-1">
-                                    <div className="upper">
-                                        <input type="text" onChange={this.handleGas} value={this.state.gas}  style={{border:"1px solid #d6d9dc",width:"95px"}}/> Gas
-                                    </div>
-                                   
-                                    
-                                </div>
-                            </div>
-                         
-                         </div>
-
-                         <div className="col-4 d-inline">
-                            <div className="p-3 d-flex rounded" style={{border:"1px solid #d6d9dc"}}>
-                                
-                                <div className="balances mx-1">
-                                    <div className="upper">
-                                        <input type="text" onChange={this.handleGasLimit} value={this.state.gaslimit} style={{border:"1px solid #d6d9dc",width:"95px"}}/> Gas Price
-                                    </div>
-                                   
-                                    
-                                </div>
-                            </div>
-                         
-                         </div>
-                        
+                        {showerror}
+                      </div>
                     </div>
 
-
-
-
-                </div>
-                    <div className="footer d-flex p-3 mt-2" style={{borderTop:"1px solid #d6d9dc"}}>
-                        <div className="col-6">
-                                    
-                                <button className="button btn btn-primary my-3 w-100 me-1 hollow-btn py-2 small-btn  rounded-pill" onClick={this.goBack}>
-                                    
-                                Cancel
-                            </button>
+                    <div className="amounts d-flex align-items-center my-3">
+                      <div className="col-3 d-inline"></div>
+                      <div className="col-4 d-inline">
+                        <div
+                          className="p-3 d-flex rounded"
+                          style={{ border: "1px solid #d6d9dc" }}
+                        >
+                          <div className="balances mx-1">
+                            <div className="upper">
+                              <input
+                                type="text"
+                                onChange={this.handleGas}
+                                value={this.state.gas}
+                                style={{
+                                  border: "1px solid #d6d9dc",
+                                  width: "95px",
+                                }}
+                              />{" "}
+                              Gas
+                            </div>
+                          </div>
                         </div>
-                        
-                        <div className="col-6">
-                                
-                            
-                            <button className="button btn btn-primary my-3 gold-btn w-100 ms-1 py-2 small-btn rounded-pill"  onClick={this.sendCoin}>
-                               Send
-                            </button>
+                      </div>
+
+                      <div className="col-4 d-inline">
+                        <div
+                          className="p-3 d-flex rounded"
+                          style={{ border: "1px solid #d6d9dc" }}
+                        >
+                          <div className="balances mx-1">
+                            <div className="upper">
+                              <input
+                                type="text"
+                                onChange={this.handleGasLimit}
+                                value={this.state.gaslimit}
+                                style={{
+                                  border: "1px solid #d6d9dc",
+                                  width: "95px",
+                                }}
+                              />{" "}
+                              Gas Price
+                            </div>
+                          </div>
                         </div>
-                        
+                      </div>
                     </div>
-                    
+                  </div>
+                  <div
+                    className="footer d-flex p-3 mt-2"
+                    style={{ borderTop: "1px solid #d6d9dc" }}
+                  >
+                    <div className="col-6">
+                      <button
+                        className="button btn btn-primary my-3 w-100 me-1 hollow-btn py-2 small-btn  rounded-pill"
+                        onClick={this.goBack}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+
+                    <div className="col-6">
+                      <button
+                        className="button btn btn-primary my-3 gold-btn w-100 ms-1 py-2 small-btn rounded-pill"
+                        onClick={this.sendCoin}
+                      >
+                        Send
+                      </button>
+                    </div>
+                  </div>
                 </div>
-             </div>
+              </div>
             </div>
-           
+          </div>
         </div>
-    </div>
-      </div>)
-    }
-
+      </div>
+    );
+  }
 }
-
 
 export default Send;
