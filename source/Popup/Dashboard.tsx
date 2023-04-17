@@ -21,6 +21,8 @@ import {
   faCircleArrowDown,
   faCircleArrowUp,
   faRotate,
+  faLock,
+  faFile,
   //faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import Nav from "react-bootstrap/Nav";
@@ -104,6 +106,7 @@ class Dashboard extends React.Component<{}, IState> {
       priceusd: "0.0",
       accountsmenu: [],
     };
+    this.goToSignOut = this.goToSignOut.bind(this);
     this.goToSend = this.goToSend.bind(this);
     this.changeAddress = this.changeAddress.bind(this);
     this.goToReceive = this.goToReceive.bind(this);
@@ -217,6 +220,10 @@ class Dashboard extends React.Component<{}, IState> {
       this.goToCreateNewAccount();
       return;
     }
+    if (e == "SignOut") {
+      this.goToSignOut();
+      return;
+    }
     this.setAccountAsDefault(e);
   }
 
@@ -261,12 +268,13 @@ class Dashboard extends React.Component<{}, IState> {
     this.setState({ redirect: "createnewaccount" });
   }
 
+  goToSignOut() {
+    this.setState({ redirect: "showpin" });
+  }
   componentDidMount(): void {
     console.log("componentDidMount...");
 
-    // setInterval(() => {
-    //   this.setState({address: this.state.address})
-    // },10)
+   
 
     //console.log(window.localStorage.getItem("isfirstuse"));
     if (secureLocalStorage.getItem("isfirstuse") !== "true") {
@@ -301,7 +309,12 @@ class Dashboard extends React.Component<{}, IState> {
         let dbaddress = secureLocalStorage.getItem("address");
         let myaddress = dbaddress?.toString();
         if (myaddress !== null && myaddress !== undefined) {
+          // this.changeAddress();
           this.setState({ address: myaddress?.toLowerCase() });
+
+          // setInterval(() => {
+          //   this.setState({address: this.state.address})
+          // },10)
           this.generateAddressShort(myaddress?.toLowerCase());
           this.fetchBalance(myaddress?.toLowerCase());
           this.fetchPrice();
@@ -310,19 +323,21 @@ class Dashboard extends React.Component<{}, IState> {
             let dbaddress = secureLocalStorage.getItem("address");
             let myaddress = dbaddress?.toString();
             if (myaddress !== null && myaddress !== undefined) {
+              // this.changeAddress();
               this.fetchBalance(myaddress?.toLowerCase());
               this.fetchPrice();
             }
-          }, 60000);
+          }, 6000);
         } else {
           this.setState({ redirect: "setup" });
         }
       }
     }
   }
+  
   // componentDidUpdate(){
   //   setInterval(() => {
-  //     this.setState({address: this.state.address})
+  //     this.changeAddress()
   //   },10)
   // }
 
@@ -644,6 +659,7 @@ class Dashboard extends React.Component<{}, IState> {
     ) {
       transactionview = <Transactions currentprice={this.state.currentprice} />;
     }
+   
 
     return (
       <div id="pop" className="extension-spacer">
@@ -701,7 +717,7 @@ class Dashboard extends React.Component<{}, IState> {
                   className="active-account"
                   onSelect={this.accountChanged}
                 >
-                  <Dropdown.Toggle className="circlebtn">
+                  <Dropdown.Toggle className="circlebtn" style={{backgroundColor:"#ba9e39",borderColor:"#fff"}}>
                     {this.state.defaultaccount !== ""
                       ? this.state.defaultaccount.charAt(0)
                       : defaultaccountname}
@@ -719,9 +735,14 @@ class Dashboard extends React.Component<{}, IState> {
                           onChange={this.searchAddress}
                         />
                       </div> */}
-                      <h2 className="accountName">My Accounts</h2>
+                      <h2 className="accountName" style={{ cursor: "default" }}>
+                        My Accounts
+                      </h2>
                       <Dropdown.Divider />
-                      <ListGroup variant="flush" style={{ height: "100%" }}>
+                      <ListGroup
+                        variant="flush"
+                        style={{ height: "100%", cursor: "pointer" }}
+                      >
                         <ListGroup
                           variant="flush"
                           style={{ height: "70px", overflowY: "scroll" }}
@@ -776,6 +797,15 @@ class Dashboard extends React.Component<{}, IState> {
                           </span>
                           Settings
                         </ListGroup.Item>
+                        <ListGroup.Item
+                          className="menu_item_text"
+                          eventKey={"SignOut"}
+                        >
+                          <span className="iconspacer">
+                            <FontAwesomeIcon icon={faLock} />
+                          </span>
+                          SignOut
+                        </ListGroup.Item>
                       </ListGroup>
                     </div>
                   </Dropdown.Menu>
@@ -791,7 +821,7 @@ class Dashboard extends React.Component<{}, IState> {
             >
               <div
                 className="account-head ms-auto"
-                style={{ textAlign: "center" }}
+                style={{ textAlign: "center", cursor: "default" }}
               >
                 {this.state.defaultaccount !== ""
                   ? this.state.defaultaccount
@@ -806,6 +836,7 @@ class Dashboard extends React.Component<{}, IState> {
                     icon={faCopy}
                     className="copy-icon"
                     onClick={this.copyTextToClipboard}
+                    style={{ cursor:"pointer"}}
                   />
                   {/* {noticemessage} */}
                 </h6>
@@ -821,6 +852,9 @@ class Dashboard extends React.Component<{}, IState> {
                       className="menu_item_text"
                       eventKey={"Explorer"}
                     >
+                      <span className="iconspacer">
+                        <FontAwesomeIcon icon={faFile} />
+                      </span>
                       View Explorer
                     </Dropdown.Item>
                     <Dropdown.Item
@@ -864,9 +898,14 @@ class Dashboard extends React.Component<{}, IState> {
             <div className="interaction-btns d-flex justify-content-center align-items-center my-2 py-3">
               <div className="send-btn mx-2 text-center">
                 <FontAwesomeIcon
+                  className="icon"
                   icon={faCircleArrowDown}
                   onClick={this.goToReceive}
-                  style={{ color: "#ba9e39", height: "45px", width: "45px" }}
+                  style={{
+                    height: "45px",
+                    width: "45px",
+                    cursor: "pointer",
+                  }}
                 />
                 <h3>Receive</h3>
                 {/* <img
@@ -877,9 +916,14 @@ class Dashboard extends React.Component<{}, IState> {
               </div>
               <div className="Receive-btn mx-2 text-center">
                 <FontAwesomeIcon
+                  className="icon"
                   icon={faCircleArrowUp}
                   onClick={this.goToSend}
-                  style={{ color: "#ba9e39", height: "45px", width: "45px" }}
+                  style={{
+                    height: "45px",
+                    width: "45px",
+                    cursor: "pointer",
+                  }}
                 />
                 <h3>Send</h3>
                 {/* <img
@@ -890,9 +934,14 @@ class Dashboard extends React.Component<{}, IState> {
               </div>
               <div className="Receive-btn mx-2 text-center">
                 <FontAwesomeIcon
+                  className="icon"
                   icon={faRotate}
                   onClick={this.goToSwap}
-                  style={{ color: "#ba9e39", height: "45px", width: "45px" }}
+                  style={{
+                    height: "45px",
+                    width: "45px",
+                    cursor: "pointer",
+                  }}
                 />
                 <h3>Swap</h3>
                 {/* <img
@@ -914,25 +963,45 @@ class Dashboard extends React.Component<{}, IState> {
               id="transactions"
               className="mb-3"
               fill
+              style={{ cursor: "default" }}
             >
-              <Tab tabClassName="tab-color" eventKey="assets" title="Assets">
+              <Tab
+                tabClassName="tab-color"
+                eventKey="assets"
+                title="Assets"
+                style={{ cursor: "default" }}
+              >
                 {assetview}
               </Tab>
               <Tab
                 tabClassName="tab-color"
                 eventKey="activity"
                 title="Activity"
+                style={{ cursor: "default" }}
               >
                 {transactionview}
               </Tab>
             </Tabs>
 
-            <br />
+            <hr />
 
-            <div style={{ textAlign: "center" }}>
-                <h5>Don't see your token?</h5>
-                <h3>Need help? Contact ChromeCoin</h3>
-              </div>
+            <div style={{ textAlign: "center",cursor:"default" }}>
+              <h5>
+                Don't see your token? <br />
+                <a style={{ color: "#367BCF", cursor: "pointer",paddingTop:"10px" }}>
+                  Import Tokens
+                </a>
+              </h5>
+
+              <h3>
+                Need help?{" "}
+                <a style={{ color: "#367BCF", cursor: "pointer" }}>
+                  {" "}
+                  Contact ChromeCoin{" "}
+                </a>
+              </h3>
+            </div>
+            <br></br>
             {/**  
                 <div className="get-help grey-text col-12 py-4 d-flex flex-column align-items-center justify-content-center">
                     <div className="first-text my-1" style={style.font16}>

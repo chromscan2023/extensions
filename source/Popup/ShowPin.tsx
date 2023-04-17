@@ -1,6 +1,7 @@
 import React from "react";
 import "./styles.scss";
 import { Link } from "react-router-dom";
+import Alert from '@mui/material/Alert';
 //import logo from '../assets/icons/chromescan.png';
 import logo from "../assets/icons/logo.png";
 import Dashboard from "./Dashboard";
@@ -47,9 +48,7 @@ class ShowPin extends React.Component<{}, IState> {
     var errormessage = <div></div>;
     if (this.state.message !== "") {
       errormessage = (
-        <div className="alert alert-danger" role="alert">
-          {this.state.message}
-        </div>
+        <Alert severity="error">{this.state.message}</Alert>
       );
     }
     return (
@@ -70,7 +69,7 @@ class ShowPin extends React.Component<{}, IState> {
             {/**<div className="col-9 mx-auto mb-4">*/}
             <div className="col-lg-8 flex-column justify-content-center align-items-center">
               <div className="col-md-7 my-2 py-2 login-form">
-                <h1>{errormessage}</h1>
+                {/* <h1>{errormessage}</h1> */}
                 <div className="form-head">
                   {/**<h2 className="lead gold-text">Welcome Back!</h2>*/}
                   <TopTitle title={"Welcome Back!"} />
@@ -81,6 +80,7 @@ class ShowPin extends React.Component<{}, IState> {
                 <br />
                 <form>
                   <div className="mb-3">
+                  
                     <label className="form-label">Password</label>
                     <input
                       type="password"
@@ -93,6 +93,7 @@ class ShowPin extends React.Component<{}, IState> {
                   </div>
 
                   <div className="row">
+                  <h1>{errormessage}</h1>
                     <div className="col text-center">
                       <button
                         style={{ width: 300 }}

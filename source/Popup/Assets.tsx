@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import Config from "./Config";
 import logo from "../assets/icons/logo.png";
-
+import { getCCCPricing } from "../utils";
 //import logo from '../assets/icons/chromescan.png';
 import secureLocalStorage from "react-secure-storage";
 //import Web3 from 'web3';
@@ -25,6 +25,7 @@ const style = {
 
 interface IState {
   redirect: string;
+    priceusd: number;
   reload: boolean;
   balance: number;
 }
@@ -42,12 +43,19 @@ class Assets extends React.Component<{}, IState> {
     this.state = {
       redirect: "",
       balance: 0,
+            priceusd: 0.0,
       reload: props.reload !== null ? props.reload : false,
     };
    
   }
 
- 
+   fetchPrice() {
+    getCCCPricing().then((res) => {
+      const recentprice = parseFloat(res.rows[1].valueInUSD);
+      const totalbalanceusd = this.state.balance * recentprice;
+      this.setState({ priceusd: Number(totalbalanceusd.toFixed(2)) });
+    });
+  }
 
   componentDidMount(): void {
     this.getTransactions();
@@ -62,6 +70,14 @@ class Assets extends React.Component<{}, IState> {
       blockchain.getBalance(myaddress?.toLowerCase()).then((value: number) => {
         console.log(value);
         this.setState({ balance: value });
+        this.fetchPrice();
+        setInterval(() => {
+          let dbaddress = secureLocalStorage.getItem("address");
+          let myaddress = dbaddress?.toString();
+          if (myaddress !== null && myaddress !== undefined) {
+            this.fetchPrice();
+          }
+        }, 60000);
       });
 
       /**  web3.eth.getBalance(myaddress?.toLowerCase()).then((res: string)=>{
@@ -95,7 +111,7 @@ class Assets extends React.Component<{}, IState> {
               <div className="upper-div" style={style.font20}>
                 {this.state.balance} CCC
               </div>
-              <div className="lower-div">$0.00</div>
+              <div className="lower-div">${this.state.priceusd}</div>
             </div>
             <div className="chevron mx-1">
               <i className="fa-solid fa-chevron-right me-2"></i>
