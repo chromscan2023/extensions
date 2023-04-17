@@ -3,6 +3,8 @@ import React from "react";
 //import Home from './Home';
 import Dashboard from "./Dashboard";
 import { Link } from "react-router-dom";
+import TextField from "@mui/material/TextField";
+import { getCCCPricing } from "../utils";
 import logo from "../assets/icons/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowAltCircleLeft } from "@fortawesome/free-solid-svg-icons";
@@ -17,6 +19,7 @@ interface IState {
   balance: number;
   amount: number;
   gas: number;
+  priceusd: number;
   gaslimit: number;
   showtransactionreceipt: boolean;
   hash: any;
@@ -43,6 +46,7 @@ class Send extends React.Component<{}, IState> {
       address: "",
       message: "",
       errormessage: "",
+      priceusd: 0.0,
       defaultcurrency: "",
     };
     this.handleAddress = this.handleAddress.bind(this);
@@ -53,6 +57,14 @@ class Send extends React.Component<{}, IState> {
     this.goBack = this.goBack.bind(this);
     this.setMax = this.setMax.bind(this);
     this.openWindow = this.openWindow.bind(this);
+  }
+
+  fetchPrice() {
+    getCCCPricing().then((res) => {
+      const recentprice = parseFloat(res.rows[1].valueInUSD);
+      const totalbalanceusd = this.state.balance * recentprice;
+      this.setState({ priceusd: Number(totalbalanceusd.toFixed(2)) });
+    });
   }
 
   componentDidMount(): void {
@@ -75,6 +87,14 @@ class Send extends React.Component<{}, IState> {
       blockchain.getBalance(myaddress?.toLowerCase()).then((value: number) => {
         console.log(value);
         this.setState({ balance: value });
+        this.fetchPrice();
+        setInterval(() => {
+          let dbaddress = secureLocalStorage.getItem("address");
+          let myaddress = dbaddress?.toString();
+          if (myaddress !== null && myaddress !== undefined) {
+            this.fetchPrice();
+          }
+        }, 60000);
       });
 
       /**web3.eth.getBalance(myaddress?.toLowerCase()).then(res=>{
@@ -211,30 +231,37 @@ class Send extends React.Component<{}, IState> {
     } else {
       showerror = <div></div>;
     }
+    let price = this.state.priceusd;
+    let max = this.state.balance;
+    let val = this.state.amount;
+    var price1 = (price / max) * val;
 
     return (
       <div id="popup">
-        <div className="container" style={{ width: "400px" }}>
-          <div className="logo-img-div my-3">
+        <div className="container" style={{ width: "100%" }}>
+        <FontAwesomeIcon onClick={this.goBack} className="backArrow" icon={faArrowAltCircleLeft} />
+          <div
+            className="title"
+            style={{ textAlign: "center" }}
+          >
+            Send To
+          </div>
+          {/* <div className="logo-img-div my-3">
             <div className="row">
               <div className="col-3">
                 <FontAwesomeIcon
                   onClick={this.goBack}
                   icon={faArrowAltCircleLeft}
-                  style={{ height: "35px", width: "35px" }}
+                  size="2x"
+                  style={{ height: "45px", width: "45px" }}
                   className="topIcon"
                 />
               </div>
               <div className="col-9">
-                <div
-                  className="account-head title"
-                  style={{ marginLeft: "3rem" }}
-                >
-                  Send
-                </div>
+                <div className="account-head title">Send</div>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="row d-flex justify-content-center">
             <div
               className="col-lg-5 col-md-7 p-0 rounded"
@@ -246,13 +273,20 @@ class Send extends React.Component<{}, IState> {
                     <div
                       className="col-12 d-flex align-items-center metamask-address rounded p-3"
                       style={{
-                        border: "1px solid #037dd6",
                         fontSize: "1.4rem",
-                        background: "white",
+                        background: "#f3f3f3",
                       }}
                     >
-                      <i className="fa-solid fa-circle-check mx-2 text-success"></i>
-                      <div
+                      <TextField
+                        id="filled-basic"
+                        type="text"
+                        label="Reciver Address"
+                        variant="filled"
+                        sx={{ width: "25ch" }}
+                        onChange={this.handleAddress}
+                        value={this.state.address}
+                      />
+                      {/* <div
                         className="address-div"
                         style={{ wordBreak: "break-all", fontSize: "20px" }}
                       >
@@ -264,7 +298,7 @@ class Send extends React.Component<{}, IState> {
                           value={this.state.address}
                           placeholder="Enter receiver address"
                         />
-                      </div>
+                      </div> */}
                       <i
                         className="fa-solid fa-x mx-2 "
                         style={{ color: "#24272a", cursor: "pointer" }}
@@ -279,7 +313,7 @@ class Send extends React.Component<{}, IState> {
                     {/*<div className="col-12 my-3 new-detection rounded p-3" style={{cursor:"pointer"}}>
                         New address detected! Click here to add to your address book.
                         
-    </div>*/}
+                        </div>*/}
                     <div className="assets d-flex align-items-center my-3">
                       <div className="col-3 d-inline">
                         <label
@@ -323,6 +357,7 @@ class Send extends React.Component<{}, IState> {
                         <button
                           className="btn btn-tiny gold-btn"
                           onClick={this.setMax}
+                          style={{ borderRadius: "20px" }}
                         >
                           Max
                         </button>
@@ -334,15 +369,23 @@ class Send extends React.Component<{}, IState> {
                         >
                           <div className="balances mx-1">
                             <div className="upper">
-                              <input
+                              <TextField
+                                id="standard-basic"
+                                type="number"
+                                variant="standard"
+                                value={this.state.amount}
+                                onChange={this.handleAmount}
+                                sx={{ width: "20ch" }}
+                              />
+                              {/* <input
                                 type="text"
                                 style={{ border: "1px solid #d6d9dc" }}
                                 onChange={this.handleAmount}
                                 value={this.state.amount}
-                              />{" "}
+                              />{" "} */}
                               CCC
                             </div>
-                            <div className="lower">$0.00 USD</div>
+                            <div className="lower">${price1}</div>
                           </div>
                         </div>
                         {showerror}
@@ -358,37 +401,57 @@ class Send extends React.Component<{}, IState> {
                         >
                           <div className="balances mx-1">
                             <div className="upper">
-                              <input
+                              <TextField
+                                id="standard-basic"
+                                type="number"
+                                variant="standard"
+                                value={this.state.gas}
+                                onChange={this.handleGas}
+                                sx={{ overflow: "hidden" }}
+                              />
+                              {/* <input
                                 type="text"
                                 onChange={this.handleGas}
                                 value={this.state.gas}
                                 style={{
                                   border: "1px solid #d6d9dc",
                                   width: "95px",
+                                  borderRadius: "10px",
                                 }}
-                              />{" "}
+                              /> */}{" "}
                               Gas
                             </div>
                           </div>
                         </div>
                       </div>
 
-                      <div className="col-4 d-inline">
+                      <div
+                        className="col-4 d-inline"
+                        style={{ marginLeft: "30px" }}
+                      >
                         <div
                           className="p-3 d-flex rounded"
                           style={{ border: "1px solid #d6d9dc" }}
                         >
                           <div className="balances mx-1">
                             <div className="upper">
-                              <input
+                              <TextField
+                                id="standard-basic"
+                                type="number"
+                                variant="standard"
+                                value={this.state.gaslimit}
+                                onChange={this.handleGasLimit}
+                              />
+                              {/* <input
                                 type="text"
                                 onChange={this.handleGasLimit}
                                 value={this.state.gaslimit}
                                 style={{
                                   border: "1px solid #d6d9dc",
                                   width: "95px",
+                                  borderRadius: "10px",
                                 }}
-                              />{" "}
+                              /> */}{" "}
                               Gas Price
                             </div>
                           </div>

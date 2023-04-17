@@ -6,6 +6,7 @@ import {
   faArrowCircleDown,
   faArrowCircleUp,
 } from "@fortawesome/free-solid-svg-icons";
+import "./styles.scss";
 //import logo from '../assets/icons/chromescan.png';
 import secureLocalStorage from "react-secure-storage";
 interface IState {
@@ -21,6 +22,7 @@ type MyProps = {
   // using `interface` is also ok
   currentprice: number;
 };
+
 
 const API_URL = Config.rooturl;
 //const style1={backgroundColor:"#A5753D",color:"#FFFFFF",width:"300",borderRadius:"40"}
@@ -149,60 +151,62 @@ class Transactions extends React.Component<MyProps, IState> {
     }
 
     return (
-      <div id="popup" style={{ height: "fit-content" }}>
-        {this.state.data.map(
-          (
-            object: { blocknumber: React.Key | null | undefined },
-            i: string | number
-          ) => (
-            <div className="activities d-flex" key={object.blocknumber}>
-              <div className="col-lg-1 col-2 p-2 d-flex justify-content-center align-items-center">
-                {this.state.data[i].fromaddress == this.state.address ? (
-                  <FontAwesomeIcon icon={faArrowCircleUp} />
-                ) : (
-                  <FontAwesomeIcon icon={faArrowCircleDown} />
-                )}
-              </div>
-              <div className="col-lg-9 col-7 p-3">
-                <div className="upper-content">
-                  <b style={{ color: "#A5753D" }}>
+      <div className="wrap">
+        <div style={{height: "fit-content"}}>
+          {this.state.data.map(
+            (
+              object: { blocknumber: React.Key | null | undefined },
+              i: string | number
+            ) => (
+              <div id="alternate" className="activities d-flex" key={object.blocknumber}>
+                <div className="col-lg-1 col-2 p-2 d-flex justify-content-center align-items-center">
+                  {this.state.data[i].fromaddress == this.state.address ? (
+                    <FontAwesomeIcon icon={faArrowCircleUp} />
+                  ) : (
+                    <FontAwesomeIcon icon={faArrowCircleDown} />
+                  )}
+                </div>
+                <div className="col-lg-9 col-7 p-3">
+                  <div className="upper-content">
+                    <b style={{ color: "#A5753D" }}>
+                      {this.state.data[i].fromaddress == this.state.address
+                        ? "Send"
+                        : "Receive"}
+                    </b>
+                  </div>
+                  <div className="lower-content">
+                    <span>
+                      {" "}
+                      <b>{this.formatDate(this.state.data[i].time_stamp)}</b>
+                    </span>{" "}
+                    - <br />
                     {this.state.data[i].fromaddress == this.state.address
-                      ? "Send"
-                      : "Receive"}
-                  </b>
+                      ? "To"
+                      : "From"}{" "}
+                    - {this.shortenAddress(this.state.data[i].toaddress)}
+                  </div>
                 </div>
-                <div className="lower-content">
-                  <span>
-                    {" "}
-                    <b>{this.formatDate(this.state.data[i].time_stamp)}</b>
-                  </span>{" "}
-                  - <br />
-                  {this.state.data[i].fromaddress == this.state.address
-                    ? "To"
-                    : "From"}{" "}
-                  - {this.shortenAddress(this.state.data[i].toaddress)}
-                </div>
-              </div>
-              <div className="col-lg-2 col-3 text-end p-3">
-                <div className="upper-content">
-                  {parseInt(this.state.data[i].value, 16) / 10 ** 18} CCC
-                </div>
-                <div className="lower-content">
-                  - $
-                  {(
-                    (this.props.currentprice *
-                      parseInt(this.state.data[i].value, 16)) /
-                    10 ** 18
-                  ).toFixed(2)}{" "}
-                  USD
+                <div className="col-lg-2 col-3 text-end p-3">
+                  <div className="upper-content">
+                    {parseInt(this.state.data[i].value, 16) / 10 ** 18} CCC
+                  </div>
+                  <div className="lower-content">
+                    - $
+                    {(
+                      (this.props.currentprice *
+                        parseInt(this.state.data[i].value, 16)) /
+                      10 ** 18
+                    ).toFixed(2)}{" "}
+                    USD
+                  </div>
                 </div>
               </div>
-            </div>
-          )
-        )}
+            )
+          )}
 
-        <div className="col-lg-8 d-flex flex-column justify-content-center align-items-center">
-          <div className="col-6">{showmorebutton}</div>
+          <div className="col-lg-8 d-flex flex-column justify-content-center align-items-center">
+            <div className="col-6">{showmorebutton}</div>
+          </div>
         </div>
       </div>
     );

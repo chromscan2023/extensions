@@ -116,7 +116,7 @@ class App extends React.Component<{}, IState> {
       //onAction={this.onAction}
     >
       <Switch>
-      <Route path="/"><ShowPin /></Route>
+      <Route path="/"><Dashboard /></Route>
       <Route path="createpassword"><CreatePassword /></Route>
       <Route path="recoveraccount"><RecoverAccount /></Route>
       <Route path="createwallet"><CreateWallet /></Route>
@@ -129,7 +129,7 @@ class App extends React.Component<{}, IState> {
       <Route path="receive"><Receive /></Route>
       <Route path="send"><Send /></Route>
       <Route path="swap"><Swap /></Route>
-      <Route path="showpin"></Route>
+      <Route path="showpin"><ShowPin /></Route>
       <Route path="importwallet"><ImportPrivateKey /></Route>
       <Route path="addnewblockchain"><AddNewBlockchain /></Route>
       <Route path="addnewprivatekey"><AddNewPrivateKey /></Route>

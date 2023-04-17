@@ -53,7 +53,7 @@ class Popup extends React.Component {
     }*/
     return (
       <div id="popup">
-        <h1 className="spacer">Welcome to ChromeCoin Wallet</h1>
+        <h1 className="spacer">Welcome to ChromeScan Wallet</h1>
         <h2 className="spacer">
           Connecting you to ChromeNetwork and the Decentralized Web.
         </h2>
