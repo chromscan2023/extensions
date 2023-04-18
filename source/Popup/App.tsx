@@ -20,6 +20,7 @@ import CreateNewAccount from './CreateAccount';
 import MnemonicsView from './MnemonicsView';
 import MnemonicsConfirm from './MnemonicsConfirm';
 import Swap from './Swap';
+import ImportToken from './ImportToken';
 
 
 
@@ -118,6 +119,7 @@ class App extends React.Component<{}, IState> {
       <Switch>
       <Route path="/"><Dashboard /></Route>
       <Route path="createpassword"><CreatePassword /></Route>
+      <Route path="importoken"><ImportToken /></Route>
       <Route path="recoveraccount"><RecoverAccount /></Route>
       <Route path="createwallet"><CreateWallet /></Route>
       <Route path="createnewaccount"><CreateNewAccount /></Route>

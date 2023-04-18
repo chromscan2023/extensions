@@ -154,12 +154,25 @@ class AddNewBlockchain extends React.Component<{}, IState> {
       <div id="popup">
         <div className="container">
           <FontAwesomeIcon
-                  onClick={this.goBack}
-                  icon={faArrowAltCircleLeft}
-                  style={{height:"35px",width:"35px",position:"absolute",top:"1rem"}}
-                />
-          <div className='title' style={{textAlign:"center", marginTop:"25px"}}>Add New Network</div>
-          <div className="row d-flex" style={{ position:"relative", top:"3rem"}}>
+            onClick={this.goBack}
+            icon={faArrowAltCircleLeft}
+            style={{
+              height: "35px",
+              width: "35px",
+              position: "absolute",
+              top: "1rem",
+            }}
+          />
+          <div
+            className="title"
+            style={{ textAlign: "center", position:"relative", top:"4rem" }}
+          >
+            Add New Network
+          </div>
+          <div
+            className="row d-flex"
+            style={{ position: "relative", top: "3rem" }}
+          >
             <div className="col-lg-8 flex-column justify-content-center align-items-center">
               <div className="col-md-7 my-2 py-2 login-form">
                 <h4>{errormessage}</h4>
