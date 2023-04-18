@@ -37,26 +37,88 @@ class Swap extends React.Component<{}, IState> {
     return (
       <div id="popup">
         <div className="container">
-          <div className="logo-img-div my-3">
-            <div className="row">
-              <div className="col-3">
-                <FontAwesomeIcon
-                  onClick={this.goBack}
-                  icon={faArrowAltCircleLeft}
-                  size="2x"
-                  className="topIcon"
-                />
-              </div>
-              <div className="col-9">
-                <div className="account-head title">Swap</div>
-              </div>
-            </div>
+          <FontAwesomeIcon
+            onClick={this.goBack}
+            icon={faArrowAltCircleLeft}
+            style={{
+              height: "35px",
+              width: "35px",
+              position: "absolute",
+              top: "1rem",
+            }}
+          />
+          <div
+            className="title"
+            style={{ textAlign: "center", marginTop: "15px" }}
+          >
+            Swap
           </div>
           <div className="row d-flex">
             <div className="col-lg-8 flex-column justify-content-center align-items-center">
               {/** <div className="col-md-7 my-5 py-4 login-form">*/}
               <div className="col-md-7 my-2 py-2 login-form">
-                <h1>Coming Soon</h1>
+                <form>
+                  <div className="mb-3">
+                    {/* <div className="forgot d-flex justify-content-between">
+                      <label className="form-label" placeholder="Network Name">Network Name</label>
+                    </div> */}
+                    <input
+                      type="text"
+                      className="form-control rounded-pill py-md-3 py-2"
+                      placeholder="Network Name"
+                    />
+                  </div>
+                  <div className="mb-3">
+                    {/* <label className="form-label">RPC Node</label> */}
+                    <input
+                      type="text"
+                      className="form-control rounded-pill py-md-3 py-2"
+                      placeholder="RPC Node"
+                    />
+                  </div>
+
+                  <div className="mb-3">
+                    {/* <label className="form-label">Network ID</label> */}
+                    <input
+                      type="text"
+                      className="form-control rounded-pill py-md-3 py-2"
+                      placeholder="Network ID"
+                    />
+                  </div>
+
+                  <div className="mb-3">
+                    {/* <label className="form-label">Currency Symbol</label> */}
+                    <input
+                      type="text"
+                      className="form-control rounded-pill py-md-3 py-2"
+                      placeholder="Currency Symbol"
+                    />
+                  </div>
+                  <div className="mb-3">
+                    {/* <label className="form-label">
+                      Block Explorer(optional)
+                    </label> */}
+                    <input
+                      type="text"
+                      className="form-control rounded-pill py-md-3 py-2"
+                      placeholder="Block Explorer"
+                    />
+                  </div>
+
+                  <div className="row">
+                    <div className="col text-center">
+                      {/* <button
+                        className="button btn btn-primary my-3 w-25 gold-btn ms-1 py-2  rounded-pill"
+                        onClick={this.goBack}
+                      >
+                        Cancel
+                      </button> */}
+                      <button className="button btn btn-primary my-3 w-25 gold-btn ms-1 py-2  rounded-pill">
+                        Add New Chain
+                      </button>
+                    </div>
+                  </div>
+                </form>
               </div>
             </div>
           </div>

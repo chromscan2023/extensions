@@ -153,22 +153,13 @@ class AddNewBlockchain extends React.Component<{}, IState> {
     return (
       <div id="popup">
         <div className="container">
-          <div className="logo-img-div my-3">
-            <div className="row">
-              <div className="col-3">
-                <FontAwesomeIcon
+          <FontAwesomeIcon
                   onClick={this.goBack}
                   icon={faArrowAltCircleLeft}
-                  className="topIcon"
-                  style={{height:"35px", width:"35px"}}
+                  style={{height:"35px",width:"35px",position:"absolute",top:"1rem"}}
                 />
-              </div>
-              <div className="col-9">
-                <div className="account-head title" >Add New Network</div>
-              </div>
-            </div>
-          </div>
-          <div className="row d-flex">
+          <div className='title' style={{textAlign:"center", marginTop:"25px"}}>Add New Network</div>
+          <div className="row d-flex" style={{ position:"relative", top:"3rem"}}>
             <div className="col-lg-8 flex-column justify-content-center align-items-center">
               <div className="col-md-7 my-2 py-2 login-form">
                 <h4>{errormessage}</h4>

@@ -337,7 +337,7 @@ class Send extends React.Component<{}, IState> {
                             />
                           </div>
                           <div className="balances mx-1">
-                            <div className="upper">Chromecoin</div>
+                            <div className="upper">ChromeScan</div>
                             <div className="lower">
                               Balance : {this.state.balance} CCC
                             </div>

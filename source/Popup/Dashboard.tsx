@@ -18,8 +18,8 @@ import {
   faMessage,
   faPlus,
   faCopy,
-  faCircleArrowDown,
-  faCircleArrowUp,
+  faArrowDown,
+  faArrowUp,
   faRotate,
   faLock,
   faFile,
@@ -899,7 +899,7 @@ class Dashboard extends React.Component<{}, IState> {
               <div className="send-btn mx-2 text-center">
                 <FontAwesomeIcon
                   className="icon"
-                  icon={faCircleArrowDown}
+                  icon={faArrowDown}
                   onClick={this.goToReceive}
                   style={{
                     height: "45px",
@@ -917,7 +917,7 @@ class Dashboard extends React.Component<{}, IState> {
               <div className="Receive-btn mx-2 text-center">
                 <FontAwesomeIcon
                   className="icon"
-                  icon={faCircleArrowUp}
+                  icon={faArrowUp}
                   onClick={this.goToSend}
                   style={{
                     height: "45px",
@@ -997,7 +997,7 @@ class Dashboard extends React.Component<{}, IState> {
                 Need help?{" "}
                 <a style={{ color: "#367BCF", cursor: "pointer" }}>
                   {" "}
-                  Contact ChromeCoin{" "}
+                  Contact ChromeScan{" "}
                 </a>
               </h3>
             </div>
