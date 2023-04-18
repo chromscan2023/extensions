@@ -73,7 +73,7 @@ class Help extends React.Component<{}, IState> {
                   ChromeScan would like to gather usage data to better
                   understand how our users interact with the extension. This
                   data will be used to continually improve the usability and
-                  user experience of our product and the Chromescan ecosystem.
+                  user experience of our product and the ChromeScan ecosystem.
                 </p>
 
                 {/**<p className="my-4">

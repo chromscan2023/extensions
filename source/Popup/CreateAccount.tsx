@@ -138,20 +138,21 @@ class CreateNewAccount extends React.Component<{}, IState> {
     return (
       <div id="popup">
         <div className="container">
-          <div className="logo-img-div my-3">
-            <div className="row">
-              <div className="col-3">
-                <FontAwesomeIcon
-                  onClick={this.goBack}
-                  icon={faArrowAltCircleLeft}
-                  size="2x"
-                  className="topIcon"
-                />
-              </div>
-              <div className="col-9">
-                <div className="account-head title">Create New Account</div>
-              </div>
-            </div>
+          <FontAwesomeIcon
+            onClick={this.goBack}
+            icon={faArrowAltCircleLeft}
+            style={{
+              height: "35px",
+              width: "35px",
+              position: "absolute",
+              top: "1rem",
+            }}
+          />
+          <div
+            className="title"
+            style={{ textAlign: "center", marginTop: "15px" }}
+          >
+            Create New Account
           </div>
 
           <div className="row d-flex">

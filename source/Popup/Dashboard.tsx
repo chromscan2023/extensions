@@ -18,8 +18,8 @@ import {
   faMessage,
   faPlus,
   faCopy,
-  faCircleArrowDown,
-  faCircleArrowUp,
+  faArrowDown,
+  faArrowUp,
   faRotate,
   faLock,
   faFile,
@@ -40,6 +40,7 @@ import { ListGroup, Button, ListGroupItem } from "react-bootstrap";
 //import { BlockHeader, Block } from 'web3-eth' // ex. package types
 import "./Dashboard.scss";
 import Swap from "./Swap";
+import ImportToken from "./ImportToken";
 
 const style = {
   style1: {
@@ -121,6 +122,7 @@ class Dashboard extends React.Component<{}, IState> {
     this.goToCreateNewAccount = this.goToCreateNewAccount.bind(this);
     this.goToExport = this.goToExport.bind(this);
     this.goToSwap = this.goToSwap.bind(this);
+    this.goToImportToken = this.goToImportToken.bind(this);
     this.populateAccounts = this.populateAccounts.bind(this);
     this.populateNetworks = this.populateNetworks.bind(this);
     this.accountChanged = this.accountChanged.bind(this);
@@ -508,6 +510,10 @@ class Dashboard extends React.Component<{}, IState> {
     this.setState({ redirect: "swap" });
   }
 
+  goToImportToken(){
+    this.setState({ redirect: "importToken" });
+  }
+
   render() {
     // let noticemessage = <div style={{height:"1rem"}} ></div>;
     // if (this.state.message !== "") {
@@ -523,6 +529,15 @@ class Dashboard extends React.Component<{}, IState> {
       return (
         <Link to="/setup">
           <Setup />
+        </Link>
+      );
+    }
+
+    if (this.state.redirect === "importToken") {
+      console.log("Using navigate");
+      return (
+        <Link to="/importtoken">
+          <ImportToken />
         </Link>
       );
     }
@@ -899,11 +914,11 @@ class Dashboard extends React.Component<{}, IState> {
               <div className="send-btn mx-2 text-center">
                 <FontAwesomeIcon
                   className="icon"
-                  icon={faCircleArrowDown}
+                  icon={faArrowDown}
                   onClick={this.goToReceive}
                   style={{
-                    height: "45px",
-                    width: "45px",
+                    height: "40px",
+                    width: "40px",
                     cursor: "pointer",
                   }}
                 />
@@ -917,11 +932,11 @@ class Dashboard extends React.Component<{}, IState> {
               <div className="Receive-btn mx-2 text-center">
                 <FontAwesomeIcon
                   className="icon"
-                  icon={faCircleArrowUp}
+                  icon={faArrowUp}
                   onClick={this.goToSend}
                   style={{
-                    height: "45px",
-                    width: "45px",
+                    height: "40px",
+                    width: "40px",
                     cursor: "pointer",
                   }}
                 />
@@ -938,9 +953,10 @@ class Dashboard extends React.Component<{}, IState> {
                   icon={faRotate}
                   onClick={this.goToSwap}
                   style={{
-                    height: "45px",
-                    width: "45px",
+                    height: "38px",
+                    width: "38px",
                     cursor: "pointer",
+                    marginLeft:"5px"
                   }}
                 />
                 <h3>Swap</h3>
@@ -988,7 +1004,7 @@ class Dashboard extends React.Component<{}, IState> {
             <div style={{ textAlign: "center",cursor:"default" }}>
               <h5>
                 Don't see your token? <br />
-                <a style={{ color: "#367BCF", cursor: "pointer",paddingTop:"10px" }}>
+                <a onClick={this.goToImportToken} style={{ color: "#367BCF", cursor: "pointer",paddingTop:"10px" }}>
                   Import Tokens
                 </a>
               </h5>
@@ -997,7 +1013,7 @@ class Dashboard extends React.Component<{}, IState> {
                 Need help?{" "}
                 <a style={{ color: "#367BCF", cursor: "pointer" }}>
                   {" "}
-                  Contact ChromeCoin{" "}
+                  Contact ChromeScan{" "}
                 </a>
               </h3>
             </div>

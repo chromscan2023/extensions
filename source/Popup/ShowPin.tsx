@@ -109,8 +109,8 @@ class ShowPin extends React.Component<{}, IState> {
                 {/* <footer> */}
                 <h3 style={{ textAlign: "center" }}>
                   Need help? Contact{" "}
-                  <a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox">
-                    ChromeCoin
+                  <a>
+                    ChromeScan
                   </a>{" "}
                 </h3>
                 {/* </footer> */}

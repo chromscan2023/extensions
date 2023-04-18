@@ -37,26 +37,27 @@ class Swap extends React.Component<{}, IState> {
     return (
       <div id="popup">
         <div className="container">
-          <div className="logo-img-div my-3">
-            <div className="row">
-              <div className="col-3">
-                <FontAwesomeIcon
-                  onClick={this.goBack}
-                  icon={faArrowAltCircleLeft}
-                  size="2x"
-                  className="topIcon"
-                />
-              </div>
-              <div className="col-9">
-                <div className="account-head title">Swap</div>
-              </div>
-            </div>
+          <FontAwesomeIcon
+            onClick={this.goBack}
+            icon={faArrowAltCircleLeft}
+            style={{
+              height: "35px",
+              width: "35px",
+              position: "absolute",
+              top: "1rem",
+            }}
+          />
+          <div
+            className="title"
+            style={{ textAlign: "center", marginTop: "15px" }}
+          >
+            Swap
           </div>
           <div className="row d-flex">
             <div className="col-lg-8 flex-column justify-content-center align-items-center">
               {/** <div className="col-md-7 my-5 py-4 login-form">*/}
               <div className="col-md-7 my-2 py-2 login-form">
-                <h1>Coming Soon</h1>
+                <h1>Comming Soon</h1>
               </div>
             </div>
           </div>

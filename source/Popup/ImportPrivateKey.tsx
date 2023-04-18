@@ -134,21 +134,12 @@ class ImportPrivateKey extends React.Component<{}, IState> {
         <div className="container">
           {/**  <div className="row d-flex justify-content-center" style={{height:"100vh"}}> */}
 
-          <div className="logo-img-div my-3">
-            <div className="row">
-              <div className="col-3">
-                <FontAwesomeIcon
+          <FontAwesomeIcon
                   onClick={this.goBack}
                   icon={faArrowAltCircleLeft}
-                  size="2x"
-                  className="topIcon"
+                  style={{height:"35px",width:"35px",position:"absolute",top:"1rem"}}
                 />
-              </div>
-              <div className="col-9">
-                <div className="account-head title">Import Private Key</div>
-              </div>
-            </div>
-          </div>
+          <div className='title' style={{textAlign:"center", marginTop:"15px"}}>Import Private Key</div>
           <div className="row d-flex">
             <div className="col-lg-8 flex-column justify-content-center align-items-center">
               <div className="col-md-7 my-2 py-2 login-form">

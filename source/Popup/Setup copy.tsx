@@ -142,10 +142,10 @@ class Setup extends React.Component<{}, IState> {
 
             <div className="col-lg-8 d-flex flex-column justify-content-center align-items-center">
               {/**<h4 style={{fontSize:"18px"}}>Welcome to Chromecoin</h4>*/}
-              <TopTitle title={"Welcome to Chromecoin"} />
+              <TopTitle title={"Welcome to ChromeScan"} />
               <div className="contentBody">
                 <p className="lead grey-text">
-                  Connecting you to Chromecoin and the Decentralized Web
+                  Connecting you to ChromeScan and the Decentralized Web
                 </p>
                 <p className="grey-text">We're happy to see you</p>
               </div>

@@ -98,20 +98,21 @@ class Receive extends React.Component<{}, IState> {
     return (
       <div id="popup">
         <div className="container" style={{ width: "400px" }}>
-          <div className="logo-img-div my-3">
-            <div className="row">
-              <div className="col-3">
-                <FontAwesomeIcon
-                  onClick={this.goBack}
-                  icon={faArrowAltCircleLeft}
-                  style={{height:"35px", width:"35px"}}
-                  className="topIcon"
-                />
-              </div>
-              <div className="col-9">
-                <div className="account-head title" style={{marginLeft:"3rem"}}>Receive</div>
-              </div>
-            </div>
+          <FontAwesomeIcon
+            onClick={this.goBack}
+            icon={faArrowAltCircleLeft}
+            style={{
+              height: "35px",
+              width: "35px",
+              position: "absolute",
+              top: "1rem",
+            }}
+          />
+          <div
+            className="title"
+            style={{ textAlign: "center", marginTop: "15px" }}
+          >
+            Receive
           </div>
           <div className="row d-flex justify-content-center">
             {/*<div className="col-md-9 col-12 mx-auto d-flex mt-2 mb-4">
