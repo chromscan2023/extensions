@@ -89,7 +89,7 @@ class ExportPrivateKey extends React.Component<{}, IState> {
               >
                 <FontAwesomeIcon icon={faArrowAltCircleLeft} size="2x" />
               </div>
-              <div className="account-head title">Export Private Key</div>
+              <div className="account-head title" >Export Private Key</div>
             </div>
             <div className="col-9 mx-auto mb-4">
               <div className="col-md-7 my-5 py-4 login-form">
