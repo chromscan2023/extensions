@@ -2,6 +2,7 @@ import React from "react";
 //import Web3 from 'web3';
 //import Home from './Home';
 import Dashboard from "./Dashboard";
+import Alert from "@mui/material/Alert";
 import { Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import { getCCCPricing } from "../utils";
@@ -205,18 +206,10 @@ class Send extends React.Component<{}, IState> {
     }
     var noticemessage = <div></div>;
     if (this.state.message !== "") {
-      noticemessage = (
-        <div className="alert alert-success" role="alert">
-          {this.state.message}
-        </div>
-      );
+      noticemessage = <Alert severity="error">{this.state.message}</Alert>;
     } else [(noticemessage = <div></div>)];
     if (this.state.errormessage !== "") {
-      noticemessage = (
-        <div className="alert alert-danger" role="alert">
-          {this.state.errormessage}
-        </div>
-      );
+      noticemessage = <Alert severity="error">{this.state.message}</Alert>;
     } else {
       noticemessage = <div></div>;
     }
@@ -237,13 +230,17 @@ class Send extends React.Component<{}, IState> {
     var price1 = (price / max) * val;
 
     return (
-      <div id="popup">
-        <div className="container" style={{ width: "100%" }}>
-        <FontAwesomeIcon onClick={this.goBack} className="backArrow" icon={faArrowAltCircleLeft} />
-          <div
-            className="title"
-            style={{ textAlign: "center" }}
-          >
+      <div id="popup" style={{overflowY: "scroll"}}>
+        <div
+          className="container"
+          style={{ width: "100%"}}
+        >
+          <FontAwesomeIcon
+            onClick={this.goBack}
+            className="backArrow"
+            icon={faArrowAltCircleLeft}
+          />
+          <div className="title" style={{ textAlign: "center" }}>
             Send To
           </div>
           {/* <div className="logo-img-div my-3">
@@ -262,12 +259,12 @@ class Send extends React.Component<{}, IState> {
               </div>
             </div>
           </div> */}
-          <div className="row d-flex justify-content-center">
+          <div className="row d-flex justify-content-center" >
             <div
               className="col-lg-5 col-md-7 p-0 rounded"
               style={{ boxShadow: "0px 2px 4px 0px #00000024" }}
             >
-              <div className="">
+              <div className="" >
                 <div className="col-12 ">
                   <div className="d-flex align-items-center px-3">
                     <div
@@ -345,7 +342,6 @@ class Send extends React.Component<{}, IState> {
                         </div>
                       </div>
                     </div>
-
                     <div className="amounts d-flex align-items-center my-3">
                       <div className="col-3 d-inline">
                         <label
