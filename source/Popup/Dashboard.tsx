@@ -329,7 +329,7 @@ class Dashboard extends React.Component<{}, IState> {
               this.fetchBalance(myaddress?.toLowerCase());
               this.fetchPrice();
             }
-          }, 6000);
+          }, 60000);
         } else {
           this.setState({ redirect: "setup" });
         }
