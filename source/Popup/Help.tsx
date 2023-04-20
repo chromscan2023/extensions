@@ -76,31 +76,18 @@ class Help extends React.Component<{}, IState> {
                   user experience of our product and the ChromeScan ecosystem.
                 </p>
 
-                {/**<p className="my-4">
-                                    ChromeScan will..
-                                </p>
-                                
-                                  <div className="do-list">
-                                      <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                                              <li className="nav-item">
-                                               Always allow you to opt-out via Settings
-                                              </li>
-                                              <li className="nav-item">
-                                                Send anonymized click & pageview events
-                                              </li>
-                                              <li className="nav-item">
-                                                Never collect keys, addresses, transactions, balances, hashes, or any personal information
-                                              </li>
-                                              <li className="nav-item">
-                                               Never collect your full IP address
-                                              </li>
-                                              <li className="nav-item">
-                                               Never sell data for profit. Ever!
-                                              </li>
-                                      </ul>
-                                  </div>
-    */}
+               
               </div>
+
+              <span>
+                <p className="pb-4">
+                  This data is aggregated and is therefore anonymous for the
+                  purposes of General Data Protection Regulation (EU) 2016/679.
+                  For more information in relation to our privacy practices,
+                  please see our{" "}
+                  <span className="gold-text"> Privacy policy here. </span>
+                </p>
+              </span>
               <div className="btns-div d-flex ">
                 <button
                   className="btn btn-primary my-3 w-100 me-1 hollow-btn py-2 small-btn  rounded-pill"
@@ -116,16 +103,6 @@ class Help extends React.Component<{}, IState> {
                   I Agree
                 </button>
               </div>
-
-              <span>
-                <p className="pb-4">
-                  This data is aggregated and is therefore anonymous for the
-                  purposes of General Data Protection Regulation (EU) 2016/679.
-                  For more information in relation to our privacy practices,
-                  please see our{" "}
-                  <span className="gold-text"> Privacy policy here. </span>
-                </p>
-              </span>
             </div>
           </div>
         </div>
