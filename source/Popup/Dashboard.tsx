@@ -41,6 +41,7 @@ import { ListGroup, Button, ListGroupItem } from "react-bootstrap";
 import "./Dashboard.scss";
 import Swap from "./Swap";
 import ImportToken from "./ImportToken";
+import { Alert } from "@mui/material";
 
 const style = {
   style1: {
@@ -61,6 +62,7 @@ const style = {
 
 interface IState {
   redirect: string;
+  copied:boolean;
   message: string;
   showToast: boolean;
   isLoggedIn: boolean;
@@ -89,6 +91,7 @@ class Dashboard extends React.Component<{}, IState> {
     this.state = {
       redirect: "",
       showToast: false,
+      copied:false,
       message: "",
       isLoggedIn: false,
       reload: false,
@@ -116,6 +119,7 @@ class Dashboard extends React.Component<{}, IState> {
     this.networkChanged = this.networkChanged.bind(this);
     this.openAccountView = this.openAccountView.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.close = this.close.bind(this);
     this.goToCreate = this.goToCreate.bind(this);
     this.goToImport = this.goToImport.bind(this);
     this.goToAddNewPrivateKey = this.goToAddNewPrivateKey.bind(this);
@@ -137,7 +141,9 @@ class Dashboard extends React.Component<{}, IState> {
   changeAddress() {
     this.setState({ address: this.state.address });
   }
-
+  close(){
+    this.setState({ copied: false });
+  }
   handleAccountView(e: any) {
     console.log(e);
     if (e == "Explorer") {
@@ -186,7 +192,7 @@ class Dashboard extends React.Component<{}, IState> {
 
   async copyTextToClipboard() {
     console.log("copied to clipboard");
-    this.setState({ message: "copied" });
+    this.setState({ copied: true });
     this.setState({ showToast: true });
     if ("clipboard" in navigator) {
       return await navigator.clipboard.writeText(this.state.address);
@@ -523,6 +529,11 @@ class Dashboard extends React.Component<{}, IState> {
     //     </p>
     //   );
     // }
+   
+    var noticemessage ;
+    if (this.state.copied) {
+      noticemessage = <Alert severity="success" onClick={this.close} style={{width:"8rem"}}>Copied</Alert>;
+    }
 
     if (this.state.redirect === "setup") {
       console.log("Using navigate");
@@ -853,7 +864,7 @@ class Dashboard extends React.Component<{}, IState> {
                     onClick={this.copyTextToClipboard}
                     style={{ cursor:"pointer"}}
                   />
-                  {/* {noticemessage} */}
+                  {noticemessage}
                 </h6>
               </div>
               <div className="more-icon ms-auto">

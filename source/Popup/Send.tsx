@@ -118,8 +118,11 @@ class Send extends React.Component<{}, IState> {
     console.log(this.state.amount);
     let privateKey: string =
       secureLocalStorage.getItem("privateKey")?.toString() || "";
-
-    this.setState({ message: "Sending coins..." });
+    this.state.amount < 1
+      ? this.setState({ message: "Enter Valid Amount!" })
+      : this.state.address.length > 3
+      ? this.setState({ message: "Sending coins..." })
+      : this.setState({ message: "Enter Address" });
     console.log("Sending coins...");
     blockchain
       .sendCoins(
@@ -230,11 +233,8 @@ class Send extends React.Component<{}, IState> {
     var price1 = (price / max) * val;
 
     return (
-      <div id="popup" style={{overflowY: "scroll"}}>
-        <div
-          className="container"
-          style={{ width: "100%"}}
-        >
+      <div id="popup" style={{ overflowY: "scroll" }}>
+        <div className="container" style={{ width: "100%" }}>
           <FontAwesomeIcon
             onClick={this.goBack}
             className="backArrow"
@@ -259,12 +259,12 @@ class Send extends React.Component<{}, IState> {
               </div>
             </div>
           </div> */}
-          <div className="row d-flex justify-content-center" >
+          <div className="row d-flex justify-content-center">
             <div
               className="col-lg-5 col-md-7 p-0 rounded"
               style={{ boxShadow: "0px 2px 4px 0px #00000024" }}
             >
-              <div className="" >
+              <div className="">
                 <div className="col-12 ">
                   <div className="d-flex align-items-center px-3">
                     <div
@@ -296,17 +296,12 @@ class Send extends React.Component<{}, IState> {
                           placeholder="Enter receiver address"
                         />
                       </div> */}
-                      <i
-                        className="fa-solid fa-x mx-2 "
-                        style={{ color: "#24272a", cursor: "pointer" }}
-                      ></i>
                     </div>
                   </div>
                 </div>
                 <div className="col-12 " style={{ background: "white" }}>
                   <div className="body p-3">
                     {noticemessage}
-                    {showerror}
                     {/*<div className="col-12 my-3 new-detection rounded p-3" style={{cursor:"pointer"}}>
                         New address detected! Click here to add to your address book.
                         
@@ -381,7 +376,9 @@ class Send extends React.Component<{}, IState> {
                               />{" "} */}
                               CCC
                             </div>
-                            <div className="lower">${price1}</div>
+                            <div className="lower">
+                              {price1 > 0 ? `$${price1}` : "$0"}
+                            </div>
                           </div>
                         </div>
                         {showerror}

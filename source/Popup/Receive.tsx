@@ -8,6 +8,7 @@ import Dashboard from "./Dashboard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowAltCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import secureLocalStorage from "react-secure-storage";
+import { Alert } from "@mui/material";
 //import { BlockHeader, Block } from 'web3-eth' // ex. package types
 const web3 = new Web3("http://rpc.terceschat.com");
 
@@ -89,9 +90,9 @@ class Receive extends React.Component<{}, IState> {
     var noticemessage = <div></div>;
     if (this.state.message !== "") {
       noticemessage = (
-        <div className="alert alert-success" role="alert">
+        <Alert severity="success">
           {this.state.message}
-        </div>
+        </Alert>
       );
     }
 
@@ -127,7 +128,7 @@ class Receive extends React.Component<{}, IState> {
         </div>*/}
             <div className="mb-3">
               <div className="col text-center">
-                {noticemessage}
+                <br/>
                 <div
                   className="spacer"
                   style={{ background: "white", padding: "16px" }}
@@ -142,7 +143,9 @@ class Receive extends React.Component<{}, IState> {
                     {this.generateAddressShort(this.state.address)}
                   </b>
                 </div>
-
+                
+                {noticemessage}
+                
                 <button
                   className="button btn btn-primary my-3 w-25 gold-btn ms-1 py-2  rounded-pill"
                   type="button"
