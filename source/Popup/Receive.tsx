@@ -14,6 +14,7 @@ const web3 = new Web3("http://rpc.terceschat.com");
 
 interface IState {
   redirect: string;
+  copied:boolean;
   showToast: boolean;
   message: string;
   address: string;
@@ -22,7 +23,7 @@ interface IState {
 class Receive extends React.Component<{}, IState> {
   constructor(props: any) {
     super(props);
-    this.state = { redirect: "", address: "", showToast: false, message: "" };
+    this.state = { redirect: "", address: "", showToast: false, message: "",copied:false };
     this.refreshWallet = this.refreshWallet.bind(this);
     this.goBack = this.goBack.bind(this);
     this.toggleShow = this.toggleShow.bind(this);
@@ -36,6 +37,7 @@ class Receive extends React.Component<{}, IState> {
   }
 
   componentDidMount(): void {
+    setInterval(()=>{this.setState({copied:false})},2000)
     console.log("web3");
     let dbaddress = secureLocalStorage.getItem("address");
     let myaddress = dbaddress?.toString();
@@ -56,6 +58,7 @@ class Receive extends React.Component<{}, IState> {
 
   async copyTextToClipboard() {
     console.log("copied to clipboard");
+    this.setState({ copied: true });
     this.setState({ message: "copied to clipboard" });
     this.setState({ showToast: true });
     if ("clipboard" in navigator) {
@@ -88,7 +91,7 @@ class Receive extends React.Component<{}, IState> {
     }
 
     var noticemessage = <div></div>;
-    if (this.state.message !== "") {
+    if (this.state.copied) {
       noticemessage = (
         <Alert severity="success">
           {this.state.message}
@@ -98,24 +101,16 @@ class Receive extends React.Component<{}, IState> {
 
     return (
       <div id="popup">
-        <div className="container" style={{ width: "400px" }}>
-          <FontAwesomeIcon
+        <div className="container" style={{ width: "100%" }}>
+        <FontAwesomeIcon
             onClick={this.goBack}
+            className="backArrow"
             icon={faArrowAltCircleLeft}
-            style={{
-              height: "35px",
-              width: "35px",
-              position: "absolute",
-              top: "1rem",
-            }}
           />
-          <div
-            className="title"
-            style={{ textAlign: "center", marginTop: "15px" }}
-          >
-            Receive
+          <div className="title" style={{ textAlign: "center", marginBottom:"10px" }}>
+            Send To
           </div>
-          <div className="row d-flex justify-content-center">
+          <div className="row d-flex justify-content-center" style={{backgroundColor:"#fff"}}>
             {/*<div className="col-md-9 col-12 mx-auto d-flex mt-2 mb-4">
                 <div onClick={this.goBack} style={{width:"50px",height:"50px"}}>
                     <FontAwesomeIcon icon={faArrowAltCircleLeft} size="2x" />

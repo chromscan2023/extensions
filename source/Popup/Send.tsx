@@ -331,7 +331,7 @@ class Send extends React.Component<{}, IState> {
                           <div className="balances mx-1">
                             <div className="upper">ChromeScan</div>
                             <div className="lower">
-                              Balance : {this.state.balance} CCC
+                              Balance : {this.state.balance.toFixed(2)} CCC
                             </div>
                           </div>
                         </div>
@@ -377,7 +377,7 @@ class Send extends React.Component<{}, IState> {
                               CCC
                             </div>
                             <div className="lower">
-                              {price1 > 0 ? `$${price1}` : "$0"}
+                              {price1 > 0 ? `$${price1.toFixed(2)}` : "$ 0.00"}
                             </div>
                           </div>
                         </div>
