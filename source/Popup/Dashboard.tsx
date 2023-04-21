@@ -62,7 +62,7 @@ const style = {
 
 interface IState {
   redirect: string;
-  copied:boolean;
+  copied: boolean;
   message: string;
   showToast: boolean;
   isLoggedIn: boolean;
@@ -91,7 +91,7 @@ class Dashboard extends React.Component<{}, IState> {
     this.state = {
       redirect: "",
       showToast: false,
-      copied:false,
+      copied: false,
       message: "",
       isLoggedIn: false,
       reload: false,
@@ -119,7 +119,6 @@ class Dashboard extends React.Component<{}, IState> {
     this.networkChanged = this.networkChanged.bind(this);
     this.openAccountView = this.openAccountView.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    this.close = this.close.bind(this);
     this.goToCreate = this.goToCreate.bind(this);
     this.goToImport = this.goToImport.bind(this);
     this.goToAddNewPrivateKey = this.goToAddNewPrivateKey.bind(this);
@@ -141,9 +140,7 @@ class Dashboard extends React.Component<{}, IState> {
   changeAddress() {
     this.setState({ address: this.state.address });
   }
-  close(){
-    this.setState({ copied: false });
-  }
+
   handleAccountView(e: any) {
     console.log(e);
     if (e == "Explorer") {
@@ -281,8 +278,24 @@ class Dashboard extends React.Component<{}, IState> {
   }
   componentDidMount(): void {
     console.log("componentDidMount...");
+    setInterval(() => {
+      this.setState({ copied: false });
+    }, 2000);
 
-   
+    setInterval(() => {
+      let dbaddress = secureLocalStorage.getItem("address");
+      let myaddress = dbaddress?.toString();
+      if (myaddress !== null && myaddress !== undefined) {
+        this.setState({ address: myaddress?.toLowerCase() });
+      }
+    });
+    setInterval(() => {
+      getCCCPricing().then((res) => {
+        const recentprice = parseFloat(res.rows[1].valueInUSD);
+        const totalbalanceusd = this.state.balance * recentprice;
+        this.setState({ priceusd: totalbalanceusd.toFixed(2) });
+      });
+    }, 500);
 
     //console.log(window.localStorage.getItem("isfirstuse"));
     if (secureLocalStorage.getItem("isfirstuse") !== "true") {
@@ -342,7 +355,7 @@ class Dashboard extends React.Component<{}, IState> {
       }
     }
   }
-  
+
   // componentDidUpdate(){
   //   setInterval(() => {
   //     this.changeAddress()
@@ -516,7 +529,7 @@ class Dashboard extends React.Component<{}, IState> {
     this.setState({ redirect: "swap" });
   }
 
-  goToImportToken(){
+  goToImportToken() {
     this.setState({ redirect: "importToken" });
   }
 
@@ -529,10 +542,14 @@ class Dashboard extends React.Component<{}, IState> {
     //     </p>
     //   );
     // }
-   
-    var noticemessage ;
+
+    var noticemessage;
     if (this.state.copied) {
-      noticemessage = <Alert severity="success" onClick={this.close} style={{width:"8rem"}}>Copied</Alert>;
+      noticemessage = (
+        <Alert severity="success" style={{ width: "8rem" }}>
+          Copied
+        </Alert>
+      );
     }
 
     if (this.state.redirect === "setup") {
@@ -685,7 +702,6 @@ class Dashboard extends React.Component<{}, IState> {
     ) {
       transactionview = <Transactions currentprice={this.state.currentprice} />;
     }
-   
 
     return (
       <div id="pop" className="extension-spacer">
@@ -743,7 +759,10 @@ class Dashboard extends React.Component<{}, IState> {
                   className="active-account"
                   onSelect={this.accountChanged}
                 >
-                  <Dropdown.Toggle className="circlebtn" style={{backgroundColor:"#ba9e39",borderColor:"#fff"}}>
+                  <Dropdown.Toggle
+                    className="circlebtn"
+                    style={{ backgroundColor: "#ba9e39", borderColor: "#fff" }}
+                  >
                     {this.state.defaultaccount !== ""
                       ? this.state.defaultaccount.charAt(0)
                       : defaultaccountname}
@@ -862,7 +881,7 @@ class Dashboard extends React.Component<{}, IState> {
                     icon={faCopy}
                     className="copy-icon"
                     onClick={this.copyTextToClipboard}
-                    style={{ cursor:"pointer"}}
+                    style={{ cursor: "pointer" }}
                   />
                   {noticemessage}
                 </h6>
@@ -967,7 +986,7 @@ class Dashboard extends React.Component<{}, IState> {
                     height: "38px",
                     width: "38px",
                     cursor: "pointer",
-                    marginLeft:"5px"
+                    marginLeft: "5px",
                   }}
                 />
                 <h3>Swap</h3>
@@ -1012,10 +1031,17 @@ class Dashboard extends React.Component<{}, IState> {
 
             <hr />
 
-            <div style={{ textAlign: "center",cursor:"default" }}>
+            <div style={{ textAlign: "center", cursor: "default" }}>
               <h5>
                 Don't see your token? <br />
-                <a onClick={this.goToImportToken} style={{ color: "#367BCF", cursor: "pointer",paddingTop:"10px" }}>
+                <a
+                  onClick={this.goToImportToken}
+                  style={{
+                    color: "#367BCF",
+                    cursor: "pointer",
+                    paddingTop: "10px",
+                  }}
+                >
                   Import Tokens
                 </a>
               </h5>
