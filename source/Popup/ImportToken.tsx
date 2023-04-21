@@ -167,7 +167,7 @@ class AddNewBlockchain extends React.Component<{}, IState> {
             className="title"
             style={{ textAlign: "center", position:"relative", top:"4rem" }}
           >
-            Add New Network
+            Import Token
           </div>
           <div
             className="row d-flex"
@@ -238,7 +238,7 @@ class AddNewBlockchain extends React.Component<{}, IState> {
                       <button
                         className="button btn btn-primary my-3 w-25 gold-btn ms-1 py-2  rounded-pill"
                       >
-                        Add New Chain
+                        Import
                       </button>
                     </div>
                   </div>
