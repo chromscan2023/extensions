@@ -25,7 +25,7 @@ const style = {
 
 interface IState {
   redirect: string;
-    priceusd: number;
+  priceusd: string;
   reload: boolean;
   balance: number;
 }
@@ -43,17 +43,16 @@ class Assets extends React.Component<{}, IState> {
     this.state = {
       redirect: "",
       balance: 0,
-            priceusd: 0.0,
+      priceusd: "0.0",
       reload: props.reload !== null ? props.reload : false,
     };
-   
   }
 
-   fetchPrice() {
+  fetchPrice() {
     getCCCPricing().then((res) => {
       const recentprice = parseFloat(res.rows[1].valueInUSD);
       const totalbalanceusd = this.state.balance * recentprice;
-      this.setState({ priceusd: Number(totalbalanceusd.toFixed(2)) });
+      this.setState({ priceusd: totalbalanceusd.toFixed(2) });
     });
   }
 
@@ -97,7 +96,7 @@ class Assets extends React.Component<{}, IState> {
     }
 
     return (
-      <div id="popup" style={{height:"fit-content"}} >
+      <div id="popup" style={{ height: "fit-content" }}>
         <div
           className="col-12 d-flex align-items-center px-3 py-4 tab-pane"
           id="1a"

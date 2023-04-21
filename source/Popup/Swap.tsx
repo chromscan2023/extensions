@@ -6,9 +6,7 @@ import SwapToToken from "./Components/SwapToToken";
 //import logo from '../assets/icons/logo.png';
 import Dashboard from "./Dashboard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowAltCircleLeft,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowAltCircleLeft } from "@fortawesome/free-solid-svg-icons";
 
 interface IState {
   redirect: string;
@@ -76,7 +74,6 @@ class Swap extends React.Component<{}, IState> {
                   Swap To
                   <SwapToToken />
                 </div>
-                <br />
                 {/* <p
                   style={{ color: "blue", textAlign: "center" }}
                   onClick={this.advanceOption}
@@ -102,7 +99,6 @@ class Swap extends React.Component<{}, IState> {
                     Terms of services
                   </p>
                 </div>
-                <br />
               </div>
             </div>
           </div>

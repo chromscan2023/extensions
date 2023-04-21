@@ -91,10 +91,10 @@ export default function CustomizedSelects() {
       </FormControl>
       <FormControl className={classes.margin}>
         
-        <InputLabel htmlFor="demo-customized-textbox">Receiver Address</InputLabel>
+        <InputLabel htmlFor="demo-customized-textbox">Amount</InputLabel>
         <BootstrapInput id="demo-customized-textbox" style={{width:"11rem"}} placeholder="0" value={count} onChange={handelInput}/>
       </FormControl>
-      <p style={{fontSize:".85rem"}}>{count} {age} available to swap.</p>
+      <p style={{fontSize:".85rem"}}> {age} available to swap = {count} .</p>
     </div>
   );
 }

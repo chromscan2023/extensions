@@ -1,7 +1,7 @@
 import React from "react";
 import "./styles.scss";
 import { Link } from "react-router-dom";
-import Alert from '@mui/material/Alert';
+import Alert from "@mui/material/Alert";
 //import logo from '../assets/icons/chromescan.png';
 import logo from "../assets/icons/logo.png";
 import Dashboard from "./Dashboard";
@@ -47,9 +47,7 @@ class ShowPin extends React.Component<{}, IState> {
 
     var errormessage = <div></div>;
     if (this.state.message !== "") {
-      errormessage = (
-        <Alert severity="error">{this.state.message}</Alert>
-      );
+      errormessage = <Alert severity="error">{this.state.message}</Alert>;
     }
     return (
       <div id="popup">
@@ -57,11 +55,9 @@ class ShowPin extends React.Component<{}, IState> {
           <div className="logo-img-div my-3">
             {/**<img src={logo} alt="Logo" width="50px" height="50px" />*/}
             <div className="row">
-              <div className="col-3">
+             
+              <div className="col-3" style={{position:'relative',top:'.60rem', right:".65rem"}}>
                 <img src={logo} alt="Logo" className="topIcon" />
-              </div>
-              <div className="col-9">
-                <div className="account-head title"> </div>
               </div>
             </div>
           </div>
@@ -80,7 +76,6 @@ class ShowPin extends React.Component<{}, IState> {
                 <br />
                 <form>
                   <div className="mb-3">
-                  
                     <label className="form-label">Password</label>
                     <input
                       type="password"
@@ -93,7 +88,7 @@ class ShowPin extends React.Component<{}, IState> {
                   </div>
 
                   <div className="row">
-                  <h1>{errormessage}</h1>
+                    <h1>{errormessage}</h1>
                     <div className="col text-center">
                       <button
                         style={{ width: 300 }}
@@ -108,10 +103,7 @@ class ShowPin extends React.Component<{}, IState> {
                 <br />
                 {/* <footer> */}
                 <h3 style={{ textAlign: "center" }}>
-                  Need help? Contact{" "}
-                  <a>
-                    ChromeScan
-                  </a>{" "}
+                  Need help? Contact <a>ChromeScan</a>{" "}
                 </h3>
                 {/* </footer> */}
               </div>
