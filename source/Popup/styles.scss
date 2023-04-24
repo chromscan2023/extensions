@@ -10,6 +10,7 @@ body {
 .icon{
   color: #ba9e39;
 }
+
 #alternate:nth-child(odd){
   background-color: #F1EFE5;
 }
@@ -94,9 +95,9 @@ body {
   border-color: #6e6e6e !important;
 }
 
-.active-account button {
-  //border: 1px solid #6e6e6e !important;
-}
+// .active-account button {
+//   //border: 1px solid #6e6e6e !important;
+// }
 
 .user-icon i.fa-regular.fa-circle {
   font-size: 30px;

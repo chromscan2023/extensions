@@ -6,6 +6,7 @@ import Dashboard from "./Dashboard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowAltCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import secureLocalStorage from "react-secure-storage";
+import { Alert } from "@mui/material";
 //import TopTitle from './Components/TopTitle';
 //import logo from '../assets/icons/chromescan.png';
 //import  secureLocalStorage  from  "react-secure-storage";
@@ -165,7 +166,7 @@ class AddNewBlockchain extends React.Component<{}, IState> {
           />
           <div
             className="title"
-            style={{ textAlign: "center", position:"relative", top:"4rem" }}
+            style={{ textAlign: "center", position: "relative", top: "2rem" }}
           >
             Import Token
           </div>
@@ -177,8 +178,17 @@ class AddNewBlockchain extends React.Component<{}, IState> {
               <div className="col-md-7 my-2 py-2 login-form">
                 <h4>{errormessage}</h4>
                 <div className="form-head">
-                  {/**<TopTitle title={"Add New Blockchain"} />*/}
+                  <Alert  severity="warning">
+                    Before manually importing a token, make sure you trust it.
+                    Learn about{" "}
+                    <a
+                      style={{ cursor: "pointer", color: "blue", borderColor:"red"}}
+                    >
+                      scams and security risks.
+                    </a>{" "}
+                  </Alert>
                 </div>
+                <br />
                 <form>
                   <div className="mb-3">
                     {/* <div className="forgot d-flex justify-content-between">
@@ -187,7 +197,7 @@ class AddNewBlockchain extends React.Component<{}, IState> {
                     <input
                       type="text"
                       className="form-control rounded-pill py-md-3 py-2"
-                      placeholder="Network Name"
+                      placeholder="Token Contact Address"
                     />
                   </div>
                   <div className="mb-3">
@@ -195,7 +205,7 @@ class AddNewBlockchain extends React.Component<{}, IState> {
                     <input
                       type="text"
                       className="form-control rounded-pill py-md-3 py-2"
-                      placeholder="RPC Node"
+                      placeholder="Token Symbol"
                     />
                   </div>
 
@@ -204,12 +214,12 @@ class AddNewBlockchain extends React.Component<{}, IState> {
                     <input
                       type="text"
                       className="form-control rounded-pill py-md-3 py-2"
-                      placeholder="Network ID"
+                      placeholder="Token Decimal"
                     />
                   </div>
 
-                  <div className="mb-3">
-                    {/* <label className="form-label">Currency Symbol</label> */}
+                  {/* <div className="mb-3">
+                    { <label className="form-label">Currency Symbol</label> }
                     <input
                       type="text"
                       className="form-control rounded-pill py-md-3 py-2"
@@ -217,15 +227,15 @@ class AddNewBlockchain extends React.Component<{}, IState> {
                     />
                   </div>
                   <div className="mb-3">
-                    {/* <label className="form-label">
+                    { <label className="form-label">
                       Block Explorer(optional)
-                    </label> */}
+                    </label> }
                     <input
                       type="text"
                       className="form-control rounded-pill py-md-3 py-2"
                       placeholder="Block Explorer"
                     />
-                  </div>
+                  </div> */}
 
                   <div className="row">
                     <div className="col text-center">
@@ -235,9 +245,7 @@ class AddNewBlockchain extends React.Component<{}, IState> {
                       >
                         Cancel
                       </button> */}
-                      <button
-                        className="button btn btn-primary my-3 w-25 gold-btn ms-1 py-2  rounded-pill"
-                      >
+                      <button className="button btn btn-primary my-3 w-25 gold-btn ms-1 py-2  rounded-pill">
                         Import
                       </button>
                     </div>
