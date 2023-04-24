@@ -70,7 +70,7 @@ class ShowPin extends React.Component<{}, IState> {
                   {/**<h2 className="lead gold-text">Welcome Back!</h2>*/}
                   <TopTitle title={"Welcome Back!"} />
                   <p className="lead gold-text" style={{ textAlign: "center" }}>
-                    The decentralized web awaits
+                    The decentralized wallet awaits
                   </p>
                 </div>
                 <br />

@@ -4,6 +4,8 @@ import Receive from "./Receive";
 import Send from "./Send";
 import Setup from "./Setup";
 import logo from "../assets/icons/logo.png";
+import logo1 from "../assets/icons/bnb.png";
+
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import Transactions from "./Transactions";
@@ -355,12 +357,6 @@ class Dashboard extends React.Component<{}, IState> {
       }
     }
   }
-
-  // componentDidUpdate(){
-  //   setInterval(() => {
-  //     this.changeAddress()
-  //   },10)
-  // }
 
   defaultAccountPicked(e: any) {
     this.setAccountAsDefault(e);
@@ -925,7 +921,19 @@ class Dashboard extends React.Component<{}, IState> {
               </div>
             </div>
             <div className="diamond-img col-12 d-flex justify-content-center my-2 py-3">
-              <img src={logo} alt="img" width="30px" height="30px" />
+              {(this.state.defaultnetwork === "ChromeCoin Testnet" ||
+                this.state.defaultnetwork === "ChromeCoin Mainnet") && (
+                <img src={logo} alt="img" width="30px" height="30px" />
+              )}
+              {this.state.defaultnetwork === "Smart Chain" && (
+                <img
+                  className="icon"
+                  src={logo1}
+                  alt="img"
+                  width="30px"
+                  height="30px"
+                />
+              )}
             </div>
 
             {accountview}
@@ -1013,6 +1021,7 @@ class Dashboard extends React.Component<{}, IState> {
             >
               <Tab
                 tabClassName="tab-color"
+                onClick={this.goToSend}
                 eventKey="assets"
                 title="Assets"
                 style={{ cursor: "default" }}
