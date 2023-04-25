@@ -32,6 +32,7 @@ class ShowPin extends React.Component<{}, IState> {
   }
 
   handlePassword(event: any) {
+    this.setState({message: ""});
     this.setState({ password: event.target.value });
   }
 
@@ -103,7 +104,7 @@ class ShowPin extends React.Component<{}, IState> {
                 <br />
                 {/* <footer> */}
                 <h3 style={{ textAlign: "center" }}>
-                  Need help? Contact <a>ChromeScan</a>{" "}
+                  Need help? Contact <a style={{color:"blue"}}>ChromeScan</a>{" "}
                 </h3>
                 {/* </footer> */}
               </div>

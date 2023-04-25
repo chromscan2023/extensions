@@ -26,6 +26,7 @@ const style = {
 interface IState {
   redirect: string;
   priceusd: string;
+  defaultcurrency:string;
   reload: boolean;
   balance: number;
 }
@@ -43,6 +44,7 @@ class Assets extends React.Component<{}, IState> {
     this.state = {
       redirect: "",
       balance: 0,
+      defaultcurrency:"CCC",
       priceusd: "0.0",
       reload: props.reload !== null ? props.reload : false,
     };
@@ -58,6 +60,16 @@ class Assets extends React.Component<{}, IState> {
 
   componentDidMount(): void {
     this.getTransactions();
+    try {
+      let defcurrency = secureLocalStorage.getItem("defaultcurrency");
+      let defaultcurrency = defcurrency?.toString();
+      if (defaultcurrency !== null && defaultcurrency !== undefined) {
+        this.setState({ defaultcurrency: defaultcurrency });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    
   }
 
   getTransactions(): void {
@@ -108,7 +120,7 @@ class Assets extends React.Component<{}, IState> {
           <div className="col-11 d-flex justify-content-between align-items-center px-sm-0 px-3 mx-1">
             <div className="amount-div">
               <div className="upper-div" style={style.font20}>
-                {this.state.balance} CCC
+                {this.state.balance} {this.state.defaultcurrency}
               </div>
               <div className="lower-div">${this.state.priceusd}</div>
             </div>
