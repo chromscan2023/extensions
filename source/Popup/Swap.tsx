@@ -5,23 +5,37 @@ import DropDown from "./Components/DropDown";
 import SwapToToken from "./Components/SwapToToken";
 //import logo from '../assets/icons/logo.png';
 import Dashboard from "./Dashboard";
+import { getCCCPricing } from "../utils";
+import secureLocalStorage from "react-secure-storage";
+import Blockchain from "./Blockchain";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowAltCircleLeft } from "@fortawesome/free-solid-svg-icons";
 
 interface IState {
   redirect: string;
+  balance:number;
   message: string;
   password: string;
   option: boolean;
+   priceusd: number;
 }
 
 class Swap extends React.Component<{}, IState> {
   constructor(props: any) {
     super(props);
-    this.state = { redirect: "", password: "", message: "", option: false };
+    this.state = {priceusd: 0.0, balance:0.0 ,redirect: "", password: "", message: "", option: false };
     this.goBack = this.goBack.bind(this);
     this.advanceOption = this.advanceOption.bind(this);
   }
+
+    fetchPrice() {
+    getCCCPricing().then((res) => {
+      const recentprice = parseFloat(res.rows[1].valueInUSD);
+      const totalbalanceusd = this.state.balance * recentprice;
+      this.setState({ priceusd: Number(totalbalanceusd.toFixed(2)) });
+    });
+  }
+
 
   advanceOption() {
     this.setState({ option: true });
@@ -30,6 +44,27 @@ class Swap extends React.Component<{}, IState> {
     this.setState({ redirect: "dashboard" });
   }
 
+  componentDidMount(): void {
+     let dbaddress = secureLocalStorage.getItem("address");
+    let myaddress = dbaddress?.toString();
+    if (myaddress !== null && myaddress !== undefined) {
+      //this.setState({address:myaddress})
+      let blockchain = new Blockchain();
+      blockchain.getBalance(myaddress?.toLowerCase()).then((value: number) => {
+        console.log(value);
+        this.setState({ balance: value });
+        this.fetchPrice();
+        setInterval(() => {
+          let dbaddress = secureLocalStorage.getItem("address");
+          let myaddress = dbaddress?.toString();
+          if (myaddress !== null && myaddress !== undefined) {
+            this.fetchPrice();
+          }
+        }, 60000);
+      });
+    }
+  }
+  
   render() {
     if (this.state.redirect == "dashboard") {
       console.log("Go to home");
@@ -72,7 +107,7 @@ class Swap extends React.Component<{}, IState> {
                 <br />
                 <div>
                   Swap To
-                  <SwapToToken />
+                  <SwapToToken  />
                 </div>
                 {/* <p
                   style={{ color: "blue", textAlign: "center" }}

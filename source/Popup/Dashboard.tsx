@@ -686,7 +686,7 @@ class Dashboard extends React.Component<{}, IState> {
     var assetview = <div></div>;
     if (
       this.state.reload &&
-      this.state.defaultnetwork === "ChromeCoin Testnet"
+      this.state.defaultnetwork  
     ) {
       assetview = <Assets />;
     }
