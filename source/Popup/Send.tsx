@@ -279,7 +279,7 @@ class Send extends React.Component<{}, IState> {
                         type="text"
                         label="Reciver Address"
                         variant="filled"
-                        sx={{ width: "25ch" }}
+                        sx={{ width: "100%" }}
                         onChange={this.handleAddress}
                         value={this.state.address}
                       />

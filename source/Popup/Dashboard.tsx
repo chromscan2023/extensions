@@ -25,11 +25,9 @@ import {
   faRotate,
   faLock,
   faFile,
-  //faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import Nav from "react-bootstrap/Nav";
 import Modal from "react-bootstrap/Modal";
-//import Avatar from 'react-avatar';
 import CreateWallet from "./CreateWallet";
 import ImportPrivateKey from "./ImportPrivateKey";
 import ExportPrivateKey from "./ExportPrivateKey";
@@ -39,7 +37,6 @@ import Blockchain from "./Blockchain";
 import { getCCCPricing, openWebPage } from "../utils";
 import CreateNewAccount from "./CreateAccount";
 import { ListGroup, Button, ListGroupItem } from "react-bootstrap";
-//import { BlockHeader, Block } from 'web3-eth' // ex. package types
 import "./Dashboard.scss";
 import Swap from "./Swap";
 import ImportToken from "./ImportToken";
@@ -332,12 +329,9 @@ class Dashboard extends React.Component<{}, IState> {
         let dbaddress = secureLocalStorage.getItem("address");
         let myaddress = dbaddress?.toString();
         if (myaddress !== null && myaddress !== undefined) {
-          // this.changeAddress();
           this.setState({ address: myaddress?.toLowerCase() });
 
-          // setInterval(() => {
-          //   this.setState({address: this.state.address})
-          // },10)
+          
           this.generateAddressShort(myaddress?.toLowerCase());
           this.fetchBalance(myaddress?.toLowerCase());
           this.fetchPrice();
@@ -346,7 +340,6 @@ class Dashboard extends React.Component<{}, IState> {
             let dbaddress = secureLocalStorage.getItem("address");
             let myaddress = dbaddress?.toString();
             if (myaddress !== null && myaddress !== undefined) {
-              // this.changeAddress();
               this.fetchBalance(myaddress?.toLowerCase());
               this.fetchPrice();
             }
@@ -457,16 +450,7 @@ class Dashboard extends React.Component<{}, IState> {
     if (accountlist !== null && accountlist !== undefined) {
       console.log("show accounts");
       let accounts = JSON.parse(accountlist?.toString());
-      //console.log(accounts)
-      /**for(var i=0;i<=accounts.length+1;i++){
-              console.log(accounts[i]);
-            }**/
-      /** var accountsmenu=[];
-            for(var i=0;i<=accounts.length+1;i++){
-                console.log(accounts[i]);
-                
-                //accountsmenu.push(<Dropdown.Item href={accounts[i].name}>{accounts[i].name}</Dropdown.Item>);
-            }*/
+     
       this.setState({ accountsmenu: accounts });
     }
   }
@@ -485,12 +469,7 @@ class Dashboard extends React.Component<{}, IState> {
       .catch((e) => {
         console.log(e);
       });
-    /**web3.eth.getBalance(myaddress).then(res=>{
-            const balance:number = parseFloat(res) / 1000000000000000000;
-            console.log(balance);
-           this.setState({balance:balance});
-           this.setState({reload:true})
-        })*/
+   
   }
 
   goToAddNewBlockchain() {
@@ -530,14 +509,7 @@ class Dashboard extends React.Component<{}, IState> {
   }
 
   render() {
-    // let noticemessage = <div style={{height:"1rem"}} ></div>;
-    // if (this.state.message !== "") {
-    //   noticemessage = (
-    //     <p className="alert alert-success" role="alert" style={{height:"1rem", padding:"5px"}}>
-    //       {this.state.message}
-    //     </p>
-    //   );
-    // }
+   
 
     var noticemessage;
     if (this.state.copied) {
@@ -702,7 +674,7 @@ class Dashboard extends React.Component<{}, IState> {
           className="row d-flex justify-content-center"
           style={{ width: "400px" }}
         >
-          <div className="logo-img-div my-3">
+          <div className="logo-img-div my-3" style={{width:"100%"}}>
             <div className="row">
               <div className="col-3">
               
@@ -764,16 +736,7 @@ class Dashboard extends React.Component<{}, IState> {
 
                   <Dropdown.Menu className="acctmenu">
                     <div className="accountList">
-                      {/* <div className="searchbox">
-                        <span className="iconspacer">
-                          <FontAwesomeIcon icon={faSearch} />
-                        </span>
-                        <input
-                          type="text"
-                          value={this.state.address}
-                          onChange={this.searchAddress}
-                        />
-                      </div> */}
+                     
                       <h2 className="accountName" style={{ cursor: "default" }}>
                         My Accounts
                       </h2>
@@ -959,11 +922,7 @@ class Dashboard extends React.Component<{}, IState> {
                   }}
                 />
                 <h3>Receive</h3>
-                {/* <img
-                  src={receive}
-                  className="rounded float-right"
-                  onClick={this.goToReceive}
-                /> */}
+               
               </div>
               <div className="Receive-btn mx-2 text-center">
                 <FontAwesomeIcon
@@ -977,11 +936,7 @@ class Dashboard extends React.Component<{}, IState> {
                   }}
                 />
                 <h3>Send</h3>
-                {/* <img
-                  src={send}
-                  className="rounded float-left"
-                  onClick={this.goToSend}
-                /> */}
+                
               </div>
               <div className="Receive-btn mx-2 text-center">
                 <FontAwesomeIcon
@@ -996,19 +951,11 @@ class Dashboard extends React.Component<{}, IState> {
                   }}
                 />
                 <h3>Swap</h3>
-                {/* <img
-                  src={swap}
-                  className="rounded float-left"
-                  onClick={this.goToSwap}
-                /> */}
+               
               </div>
             </div>
 
-            {/**<div className="col-12 text-center py-3" style={style.font16}>
-                  <img src="https://webcreaters.com/dev/chromescan/new/images/protfolio-icon.png" alt="img" className="mx-2" />                      
-                    Portfolio Site
-                
-      </div>*/}
+           
 
             <Tabs
               defaultActiveKey="assets"
@@ -1062,43 +1009,7 @@ class Dashboard extends React.Component<{}, IState> {
               </h3>
             </div>
             <br></br>
-            {/**  
-                <div className="get-help grey-text col-12 py-4 d-flex flex-column align-items-center justify-content-center">
-                    <div className="first-text my-1" style={style.font16}>
-                       <a href="">
-                           
-                        Don’t see your token
-                       </a>
-                    </div>
-                    <div className="second-text my-1" style={style.font16}>
-                        <span className="gold-text">
-                            <a href="">
-                                
-                             Refresh list
-                            </a>
-                        </span> 
-                     or 
-                     <span className="gold-text">
-                        <a href="">
-                         
-                         import tokens?
-                        </a> 
-                     </span>
-                    </div>
-                    <div className="third-text my-1" style={style.font18}>
-                      <a href="">
-                           Need help? Contact
-                      </a>  
-                      <span className="gold-text">
-                          <a href="">
-                              
-                           ChromeScan
-                          </a>
-                     </span>
-                   </div>
-                    
-                </div>
-                */}
+           
           </div>
         </div>
       </div>
