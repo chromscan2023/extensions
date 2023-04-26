@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import Config from "./Config";
 import logo from "../assets/icons/logo.png";
+import logo1 from "../assets/icons/bnb.png";
 import { getCCCPricing } from "../utils";
 //import logo from '../assets/icons/chromescan.png';
 import secureLocalStorage from "react-secure-storage";
@@ -26,25 +27,31 @@ const style = {
 interface IState {
   redirect: string;
   priceusd: string;
-  defaultcurrency:string;
+  defaultnetwork:string,
+  defaultcurrency: string;
   reload: boolean;
   balance: number;
+}
+
+type MyProps={
+  defaultnetwork?:string;
 }
 
 const API_URL = Config.rooturl;
 //const style1={backgroundColor:"#A5753D",color:"#FFFFFF",width:"300",borderRadius:"40"}
 //const style2={backgroundColor:"#A5753D",color:"#FFFFFF",width:"150",borderRadius:"10"}
 //const style3={backgroundColor:"#FFFFFF",borderColor:"#A5753D",color:"#A5753D",width:"150",borderRadius:"10"}
-class Assets extends React.Component<{}, IState> {
+class Assets extends React.Component<MyProps,IState,{}> {
   constructor(props: any) {
     super(props);
     console.log("In Assets");
     console.log(props);
     //this.props = props;
     this.state = {
+      defaultnetwork:"ChromeCoin Testnet",
       redirect: "",
       balance: 0,
-      defaultcurrency:"CCC",
+      defaultcurrency: "CCC",
       priceusd: "0.0",
       reload: props.reload !== null ? props.reload : false,
     };
@@ -69,7 +76,6 @@ class Assets extends React.Component<{}, IState> {
     } catch (e) {
       console.log(e);
     }
-    
   }
 
   getTransactions(): void {
@@ -108,14 +114,27 @@ class Assets extends React.Component<{}, IState> {
     }
 
     return (
-      <div id="popup" style={{ height: "fit-content" }}>
+      <div id="popup" style={{ height: "fit-content",width:"100%" }}>
         <div
           className="col-12 d-flex align-items-center px-3 py-4 tab-pane"
           id="1a"
           style={{ background: "#F1EFE5" }}
         >
           <div className="col-1  diamond-img mx-1">
-            <img src={logo} alt="img" width="30px" height="30px" />
+            {(this.props.defaultnetwork === "ChromeCoin Testnet" ||
+              this.props.defaultnetwork === "ChromeCoin Mainnet") && (
+              <img src={logo} alt="img"  style={{marginLeft:"5px"}} width="30px" height="30px" />
+            )}
+            {this.props.defaultnetwork === "Smart Chain" && (
+              <img
+                className="icon"
+                src={logo1}
+                alt="img"
+                style={{marginLeft:"5px",backgroundColor: "#F1EFE5"}}
+                width="30px"
+                height="30px"
+              />
+            )}{" "}
           </div>
           <div className="col-11 d-flex justify-content-between align-items-center px-sm-0 px-3 mx-1">
             <div className="amount-div">

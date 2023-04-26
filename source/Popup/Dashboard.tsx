@@ -684,11 +684,8 @@ class Dashboard extends React.Component<{}, IState> {
     }
 
     var assetview = <div></div>;
-    if (
-      this.state.reload &&
-      this.state.defaultnetwork  
-    ) {
-      assetview = <Assets />;
+    if (this.state.reload && this.state.defaultnetwork) {
+      assetview = <Assets defaultnetwork={this.state.defaultnetwork} />;
     }
 
     var transactionview = <div></div>;
@@ -708,6 +705,7 @@ class Dashboard extends React.Component<{}, IState> {
           <div className="logo-img-div my-3">
             <div className="row">
               <div className="col-3">
+              
                 <img src={logo} alt="Logo" className="topIcon" />
               </div>
               <div className="col-6">

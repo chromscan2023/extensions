@@ -152,7 +152,7 @@ class AddNewBlockchain extends React.Component<{}, IState> {
     }
 
     return (
-      <div id="popup">
+      <div id="popup" style={{width:"400px"}}>
         <div className="container">
           <FontAwesomeIcon
             onClick={this.goBack}

@@ -233,7 +233,7 @@ class Send extends React.Component<{}, IState> {
     var price1 = (price / max) * val;
 
     return (
-      <div id="popup" style={{ overflowY: "scroll" }}>
+      <div id="popup" style={{ overflowY: "scroll", width:"100%"}}>
         <div className="container" style={{ width: "100%" }}>
           <FontAwesomeIcon
             onClick={this.goBack}
@@ -456,7 +456,7 @@ class Send extends React.Component<{}, IState> {
                     className="footer d-flex p-3 mt-2"
                     style={{ borderTop: "1px solid #d6d9dc" }}
                   >
-                    <div className="col-6">
+                    <div className="col-6" style={{paddingRight:"4px"}}>
                       <button
                         className="button btn btn-primary my-3 w-100 me-1 hollow-btn py-2 small-btn  rounded-pill"
                         onClick={this.goBack}

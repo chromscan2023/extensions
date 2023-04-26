@@ -269,7 +269,7 @@ class ForgotPassword extends React.Component<{}, IState> {
           </div>
         </div>
 
-        <form style={{ width: "18rem", marginLeft:"3.25rem" }}>
+        <form style={{ width: "24rem", marginLeft:".6rem" }}>
           <div className="mb-3" >
             <input
               type="text"
@@ -288,7 +288,7 @@ class ForgotPassword extends React.Component<{}, IState> {
         </form>
 
         <br />
-        <div className="col text-center" style={{ width: "24.5rem" }}>
+        <div className="col text-center" style={{ width: "14rem", marginLeft:"5.25rem" }}>
           <button
             type="submit"
             className="btn w-100 gold-btn ms-1 py-2"
