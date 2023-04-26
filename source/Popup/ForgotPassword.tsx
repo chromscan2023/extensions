@@ -17,7 +17,7 @@ interface IState {
   networkid: number;
   privatekey: string;
 }
-class AddNewBlockchain extends React.Component<{}, IState> {
+class ForgotPassword extends React.Component<{}, IState> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -121,12 +121,10 @@ class AddNewBlockchain extends React.Component<{}, IState> {
 
       return (
         <Link to="showpin">
-          <ShowPin/>
+          <ShowPin />
         </Link>
       );
     }
-    
-    
 
     return (
       <div id="popup">
@@ -145,58 +143,164 @@ class AddNewBlockchain extends React.Component<{}, IState> {
             className="title"
             style={{ textAlign: "center", position: "relative", top: "2rem" }}
           >
-            Import Token
+            Reset Password
           </div>
-          <div
-            className="row d-flex"
-            style={{ position: "relative", top: "3rem" }}
-          >
-            <div className="col-lg-8 flex-column justify-content-center align-items-center">
-              <div className="col-md-7 my-2 py-2 login-form">
-                
-                <br />
-                <form>
-                  <div className="mb-3">
-                    <input
-                      type="text"
-                      className="form-control rounded-pill py-md-3 py-2"
-                      placeholder="Last Password"
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <input
-                      type="text"
-                      className="form-control rounded-pill py-md-3 py-2"
-                      placeholder="New Password"
-                    />
-                  </div>
+          <br />
+          <br />
+          <div className="multi-inputs col-12 my-2 mt-3 d-flex flex-wrap">
+            <div className="row">
+              <div className="col-4 py-3 d-flex align-items-center">
+                1.
+                <input
+                  type="text"
+                  className="form-control py-2"
+                  // value={this.state.text1}
+                  //onChange={this.handleText1}
+                />
+              </div>
+              <div className="col-4  py-3 d-flex align-items-center">
+                2.
+                <input
+                  type="text"
+                  className="form-control py-2"
+                  //  value={this.state.mnemonicarr[1]}
+                  // readOnly
+                />
+              </div>
+              <div className="col-4  py-3 d-flex  align-items-center">
+                3.
+                <input
+                  type="text"
+                  className="form-control py-2"
+                  // value={this.state.mnemonicarr[2]}
+                  //readOnly
+                />
+              </div>
+            </div>
 
-                  <div className="mb-3">
-                    <input
-                      type="text"
-                      className="form-control rounded-pill py-md-3 py-2"
-                      placeholder="Re-Enter New Password"
-                    />
-                  </div>
+            <div className="row">
+              <div className="col-4 py-3 d-flex align-items-center">
+                4.
+                <input
+                  type="text"
+                  className="form-control py-2"
+                  //value={this.state.mnemonicarr[3]}
+                  // readOnly
+                />
+              </div>
+              <div className="col-4 py-3 d-flex align-items-center">
+                5.
+                <input
+                  type="text"
+                  className="form-control py-2"
+                  // value={this.state.mnemonicarr[4]}
+                  // readOnly
+                />
+              </div>
+              <div className="col-4 py-3 d-flex align-items-center">
+                6.
+                <input
+                  type="text"
+                  className="form-control py-2"
+                  //value={this.state.mnemonicarr[5]}
+                  // readOnly
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-4 d-flex my-2 align-items-center">
+                7.
+                <input
+                  type="text"
+                  className="form-control py-2"
+                  // value={this.state.text7}
+                  // onChange={this.handleText7}
+                />
+              </div>
+              <div className="col-4  d-flex my-2 align-items-center">
+                8.
+                <input
+                  type="text"
+                  className="form-control py-2"
+                  //value={this.state.mnemonicarr[7]}
+                  //  readOnly
+                />
+              </div>
+              <div className="col-4 d-flex my-2 align-items-center">
+                9.
+                <input
+                  type="text"
+                  className="form-control py-2"
+                  // value={this.state.mnemonicarr[8]}
+                  // readOnly
+                />
+              </div>
+            </div>
 
-                  
-
-                  <div className="row">
-                    <div className="col text-center">
-                   
-                      <button className="button btn btn-primary my-3 w-25 gold-btn ms-1 py-2  rounded-pill">
-                        Reset
-                      </button>
-                    </div>
-                  </div>
-                </form>
+            <div className="row">
+              <div className="col-4 py-3 d-flex my-2 align-items-center">
+                10.
+                <input
+                  type="text"
+                  className="form-control py-2"
+                  // value={this.state.text10}
+                  //onChange={this.handleText10}
+                />
+              </div>
+              <div className="col-4 py-3 d-flex my-2 align-items-center">
+                11.
+                <input
+                  type="text"
+                  className="form-control py-2"
+                  // value={this.state.mnemonicarr[10]}
+                  //  readOnly
+                />
+              </div>
+              <div className="col-4 py-3 d-flex my-2 align-items-center">
+                12.
+                <input
+                  type="text"
+                  className="form-control py-2"
+                  //  value={this.state.mnemonicarr[11]}
+                  // readOnly
+                />
               </div>
             </div>
           </div>
+        </div>
+
+        <form style={{ width: "18rem", marginLeft:"3.25rem" }}>
+          <div className="mb-3" >
+            <input
+              type="text"
+              className="form-control rounded-pill py-md-3 py-2"
+              placeholder="New Password"
+            />
+          </div>
+
+          <div className="mb-3">
+            <input
+              type="text"
+              className="form-control rounded-pill py-md-3 py-2"
+              placeholder="Re-Enter New Password"
+            />
+          </div>
+        </form>
+
+        <br />
+        <div className="col text-center" style={{ width: "24.5rem" }}>
+          <button
+            type="submit"
+            className="btn w-100 gold-btn ms-1 py-2"
+            style={{ borderRadius: "20px" }}
+            //  onClick={this.confirmMnemonic}
+          >
+            Reset Password
+          </button>
         </div>
       </div>
     );
   }
 }
 
-export default AddNewBlockchain;
+export default ForgotPassword;
