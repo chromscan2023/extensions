@@ -6,6 +6,7 @@ import CreateSeed from './CreateSeed';
 import CreateWallet from './CreateWallet';
 import Help from './Help';
 import Receive from './Receive';
+import ForgotPassword from "./ForgotPassword"
 import Send from './Send';
 //import Setup from './Setup';
 import Dashboard from './Dashboard';
@@ -119,6 +120,7 @@ class App extends React.Component<{}, IState> {
       <Switch>
       <Route path="/"><Dashboard /></Route>
       <Route path="createpassword"><CreatePassword /></Route>
+      <Route path="reset"><ForgotPassword /> </Route>
       <Route path="importoken"><ImportToken /></Route>
       <Route path="recoveraccount"><RecoverAccount /></Route>
       <Route path="createwallet"><CreateWallet /></Route>

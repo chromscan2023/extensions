@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Alert from "@mui/material/Alert";
 //import logo from '../assets/icons/chromescan.png';
 import logo from "../assets/icons/logo.png";
+import ForgotPassword from "./ForgotPassword"
 import Dashboard from "./Dashboard";
 import secureLocalStorage from "react-secure-storage";
 import TopTitle from "./Components/TopTitle";
@@ -18,6 +19,7 @@ class ShowPin extends React.Component<{}, IState> {
     super(props);
     this.state = { redirect: "", password: "", message: "" };
     this.doAuth = this.doAuth.bind(this);
+    this.setpass = this.setpass.bind(this)
     this.handlePassword = this.handlePassword.bind(this);
   }
 
@@ -29,6 +31,9 @@ class ShowPin extends React.Component<{}, IState> {
     } else {
       this.setState({ message: "Invalid password" });
     }
+  }
+  setpass(){
+    this.setState({redirect:"resetpassword"})
   }
 
   handlePassword(event: any) {
@@ -42,6 +47,13 @@ class ShowPin extends React.Component<{}, IState> {
       return (
         <Link to="/dashboard">
           <Dashboard />
+        </Link>
+      );
+    }
+    if (this.state.redirect == "resetpassword") {
+      return (
+        <Link to="reset">
+          <ForgotPassword />
         </Link>
       );
     }
@@ -105,6 +117,9 @@ class ShowPin extends React.Component<{}, IState> {
                 {/* <footer> */}
                 <h3 style={{ textAlign: "center" }}>
                   Need help? Contact <a style={{color:"blue"}}>ChromeScan</a>{" "}
+                </h3>
+                <h3 style={{ textAlign: "center" }}>
+                  <a style={{color:"blue"}} onClick={this.setpass}>Forgot Pasword</a>{" "}
                 </h3>
                 {/* </footer> */}
               </div>
