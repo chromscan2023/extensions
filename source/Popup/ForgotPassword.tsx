@@ -1,16 +1,10 @@
 import React from "react";
 import "./styles.scss";
-//import logo from '../assets/icons/logo.png';
 import { Link } from "react-router-dom";
-import Dashboard from "../Dashboard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowAltCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import secureLocalStorage from "react-secure-storage";
-//import TopTitle from './Components/TopTitle';
-//import logo from '../assets/icons/chromescan.png';
-//import  secureLocalStorage  from  "react-secure-storage";
-//import Web3 from 'web3';
-//const web3 = new Web3('http://rpc.terceschat.com');
+import ShowPin from "./ShowPin";
 
 interface IState {
   redirect: string;
@@ -118,37 +112,21 @@ class AddNewBlockchain extends React.Component<{}, IState> {
   }
 
   goBack() {
-    this.setState({ redirect: "dashboard" });
+    this.setState({ redirect: "showpin" });
   }
 
   render() {
-    if (this.state.redirect == "home") {
+    if (this.state.redirect == "showpin") {
       console.log("Go to home");
 
       return (
-        <Link to="/dashboard">
-          <Dashboard />
+        <Link to="showpin">
+          <ShowPin/>
         </Link>
       );
     }
-    if (this.state.redirect == "dashboard") {
-      console.log("Go to home");
-
-      return (
-        <Link to="/dashboard">
-          <Dashboard />
-        </Link>
-      );
-    }
-
-    var errormessage = <div></div>;
-    if (this.state.message !== "") {
-      errormessage = (
-        <div className="alert alert-danger" role="alert">
-          {this.state.message}
-        </div>
-      );
-    }
+    
+    
 
     return (
       <div id="popup">
@@ -167,7 +145,7 @@ class AddNewBlockchain extends React.Component<{}, IState> {
             className="title"
             style={{ textAlign: "center", position: "relative", top: "2rem" }}
           >
-            Password Reset
+            Import Token
           </div>
           <div
             className="row d-flex"
@@ -175,14 +153,10 @@ class AddNewBlockchain extends React.Component<{}, IState> {
           >
             <div className="col-lg-8 flex-column justify-content-center align-items-center">
               <div className="col-md-7 my-2 py-2 login-form">
-                <h4>{errormessage}</h4>
-             
+                
                 <br />
                 <form>
                   <div className="mb-3">
-                    {/* <div className="forgot d-flex justify-content-between">
-                      <label className="form-label" placeholder="Network Name">Network Name</label>
-                    </div> */}
                     <input
                       type="text"
                       className="form-control rounded-pill py-md-3 py-2"
@@ -190,7 +164,6 @@ class AddNewBlockchain extends React.Component<{}, IState> {
                     />
                   </div>
                   <div className="mb-3">
-                    {/* <label className="form-label">RPC Node</label> */}
                     <input
                       type="text"
                       className="form-control rounded-pill py-md-3 py-2"
@@ -199,7 +172,6 @@ class AddNewBlockchain extends React.Component<{}, IState> {
                   </div>
 
                   <div className="mb-3">
-                    {/* <label className="form-label">Network ID</label> */}
                     <input
                       type="text"
                       className="form-control rounded-pill py-md-3 py-2"
@@ -207,12 +179,13 @@ class AddNewBlockchain extends React.Component<{}, IState> {
                     />
                   </div>
 
-              
+                  
 
                   <div className="row">
                     <div className="col text-center">
+                   
                       <button className="button btn btn-primary my-3 w-25 gold-btn ms-1 py-2  rounded-pill">
-                        Change Password
+                        Reset
                       </button>
                     </div>
                   </div>
